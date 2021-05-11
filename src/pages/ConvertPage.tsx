@@ -4,7 +4,6 @@ import ConvertForm from '../components/ConvertForm';
 import { Row, Col } from 'antd';
 import { DEFAULT_MARKET, MarketProvider } from '../utils/markets';
 import { useLocalStorageState } from '../utils/utils';
-import {TVChartContainer} from "../components/TradingView";
 
 const Wrapper = styled.div`
   height: 100%;
