@@ -4,7 +4,7 @@ export const helpUrls = {
   contactEmail: 'mailto:samoyedloverbuysamoyed@gmail.com',
   discord: 'https://discord.gg/mD38zFCdYH',
   telegram: 'https://t.me/samoyedlovers',
-  github: 'https://github.com/codeislaw1993/serum-dex-ui',
+  github: 'https://github.com/project-serum/serum-dex-ui',
   projectSerum: 'https://projectserum.com/',
   developerResources: 'https://projectserum.com/developer-resources',
   solanaBeach: 'https://solanabeach.io',

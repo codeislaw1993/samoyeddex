@@ -52,7 +52,7 @@ const EXTERNAL_LINKS = {
   '/srm-faq': 'https://projectserum.com/srm-faq',
   '/discord': 'https://discord.gg/mD38zFCdYH',
   '/telegram': 'https://t.me/samoyedlovers',
-  '/github': 'https://github.com/codeislaw1993/serum-dex-ui',
+  '/github': 'https://github.com/project-serum/serum-dex-ui',
   '/twitter': 'https://twitter.com/lover_samoyed',
 };
 
