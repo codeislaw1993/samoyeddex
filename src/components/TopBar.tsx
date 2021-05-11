@@ -186,17 +186,6 @@ export default function TopBar() {
                 </a>
               </Menu.Item>
           )}
-          {(!searchFocussed || location.pathname === '/github') && (
-              <Menu.Item key="/github" style={{ margin: '0 10px' }}>
-                <a
-                    href={EXTERNAL_LINKS['/github']}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                  <GithubOutlined />
-                </a>
-              </Menu.Item>
-          )}
           {(!searchFocussed || location.pathname === '/telegram') && (
               <Menu.Item key="/telegram" style={{ margin: '0 10px' }}>
                 <a
@@ -205,6 +194,17 @@ export default function TopBar() {
                     rel="noopener noreferrer"
                 >
                   <SendOutlined />
+                </a>
+              </Menu.Item>
+          )}
+          {(!searchFocussed || location.pathname === '/github') && (
+              <Menu.Item key="/github" style={{ margin: '0 10px' }}>
+                <a
+                    href={EXTERNAL_LINKS['/github']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                  <GithubOutlined />
                 </a>
               </Menu.Item>
           )}

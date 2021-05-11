@@ -28,12 +28,9 @@ export default function ConvertPage() {
       >
       <Wrapper style={{ flex: 1, paddingTop: 10 }}>
         <Row justify="center">
-          <Col>
-            <TVChartContainer/>
-          </Col>
-          <Col>
-            <ConvertForm />
-          </Col>
+            <Col>
+                <ConvertForm />
+            </Col>
         </Row>
       </Wrapper>
       </MarketProvider>

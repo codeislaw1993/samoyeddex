@@ -6,9 +6,10 @@ import {
   IChartingLibraryWidget,
   ResolutionString,
 } from '../../charting_library/charting_library.min'; // Make sure to follow step 1 of the README
-import { useMarket } from '../../utils/markets';
+import {DEFAULT_MARKET, useMarket} from '../../utils/markets';
 import { BONFIDA_DATA_FEED } from '../../utils/bonfidaConnector';
 import { findTVMarketFromAddress } from '../../utils/tradingview';
+import {useLocalStorageState} from "../../utils/utils";
 
 // This is a basic example of how to create a TV widget
 // You can add more feature such as storing charts in localStorage
@@ -24,6 +25,7 @@ export interface ChartContainerProps {
   userId: ChartingLibraryWidgetOptions['user_id'];
   fullscreen: ChartingLibraryWidgetOptions['fullscreen'];
   autosize: ChartingLibraryWidgetOptions['autosize'];
+  height: ChartingLibraryWidgetOptions['height'];
   studiesOverrides: ChartingLibraryWidgetOptions['studies_overrides'];
   containerId: ChartingLibraryWidgetOptions['container_id'];
   theme: string;
@@ -42,16 +44,22 @@ export const TVChartContainer = () => {
     libraryPath: '/charting_library/',
     fullscreen: false,
     autosize: false,
+    height: 500,
     studiesOverrides: {},
   };
 
   const tvWidgetRef = React.useRef<IChartingLibraryWidget | null>(null);
   const { market } = useMarket();
 
+  const [marketAddress] = useLocalStorageState(
+      'marketAddress',
+      DEFAULT_MARKET?.address.toBase58(),
+  );
+
   React.useEffect(() => {
     const widgetOptions: ChartingLibraryWidgetOptions = {
       symbol: findTVMarketFromAddress(
-        market?.address.toBase58() || '',
+          marketAddress || '',
       ) as string,
       // BEWARE: no trailing slash is expected in feed URL
       // tslint:disable-next-line:no-any
@@ -69,6 +77,7 @@ export const TVChartContainer = () => {
       user_id: defaultProps.userId,
       fullscreen: defaultProps.fullscreen,
       autosize: defaultProps.autosize,
+      height: defaultProps.height,
       studies_overrides: defaultProps.studiesOverrides,
       theme: 'Dark'
     };
