@@ -117,7 +117,7 @@ function TradePageInner() {
       );
     } else if (width < 1000) {
       return <RenderSmaller {...componentProps} />;
-    } else if (width < 1650) {
+    } else if (width < 1600) {
       return <RenderSmall {...componentProps} />;
     } else {
       return <RenderNormal {...componentProps} />;
@@ -154,8 +154,8 @@ function TradePageInner() {
       />
       <Wrapper>
           <Row>
-            <Col flex="3 3 5px"> <></> </Col>
-            <Col flex="1 1 1400px">
+            <Col flex="1 1 5px"> <></> </Col>
+            <Col flex="2 2 900px">
               <MarketSelector
                 markets={markets}
                 setHandleDeprecated={setHandleDeprecated}
@@ -309,10 +309,10 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
       <Wrapper>
         <Row>
-          <Col flex="3 3 auto">
+          <Col flex="1 1 auto">
             <></>
           </Col>
-          <Col flex="1 1 auto">
+          <Col flex="2 2 auto">
             <TVChartContainer/>
             <UserInfoTable />
           </Col>
@@ -320,11 +320,11 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
             <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
             <TradesTable smallScreen={false} />
           </Col>
-          <Col flex="1 1 auto" style={{ height: '100%'}}>
+          <Col flex="1 1 300px" style={{ height: '100%'}}>
             <TradeForm setChangeOrderRef={onChangeOrderRef} />
             <StandaloneBalancesDisplay />
           </Col>
-          <Col flex="3 3 auto">
+          <Col flex="1 1 auto">
             <></>
           </Col>
         </Row>
