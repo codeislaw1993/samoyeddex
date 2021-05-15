@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ConfigProvider, Table } from 'antd';
 
 export default function DataTable({
@@ -22,15 +22,34 @@ export default function DataTable({
     </div>
   );
 
-  return (
-    <ConfigProvider renderEmpty={customizeRenderEmpty}>
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        pagination={pagination ? { pagination: true, pageSize } : false}
-        loading={loading}
-        scroll={{ y: 240 }}
-      />
-    </ConfigProvider>
-  );
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+
+  const width = dimensions?.width;
+  if (width < 1000) {
+    return (
+      <ConfigProvider renderEmpty={customizeRenderEmpty}>
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          pagination={pagination ? { pagination: true, pageSize } : false}
+          loading={loading}
+          scroll={{ y: true }}
+        />
+      </ConfigProvider>
+    );
+  } else {
+    return (
+      <ConfigProvider renderEmpty={customizeRenderEmpty}>
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          pagination={pagination ? { pagination: true, pageSize } : false}
+          loading={loading}
+        />
+      </ConfigProvider>
+    );
+  }
 }
