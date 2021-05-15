@@ -23,7 +23,7 @@ import AppSearch from './AppSearch';
 import { getTradePageUrl } from '../utils/markets';
 
 const Wrapper = styled.div`
-  background-color: #0d1017;
+  background-color: #000000;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -170,11 +170,6 @@ export default function TopBar() {
               Swap
             </Menu.Item>
           )}
-          {(!searchFocussed || location.pathname === '/list-new-market') && (
-            <Menu.Item key="/list-new-market" style={{ margin: '0 10px' }}>
-              Add Market
-            </Menu.Item>
-          )}
           {(!searchFocussed || location.pathname === '/twitter') && (
               <Menu.Item key="/twitter" style={{ margin: '0 10px' }}>
                 <a
@@ -210,7 +205,7 @@ export default function TopBar() {
           )}
           {!searchFocussed && (
             <Menu.SubMenu
-              title="Documentations"
+              title="Learn"
               onTitleClick={() =>
                 window.open(EXTERNAL_LINKS['/learn'], '_blank')
               }

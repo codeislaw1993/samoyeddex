@@ -10,6 +10,7 @@ import {DEFAULT_MARKET, useMarket} from '../../utils/markets';
 import { BONFIDA_DATA_FEED } from '../../utils/bonfidaConnector';
 import { findTVMarketFromAddress } from '../../utils/tradingview';
 import {useLocalStorageState} from "../../utils/utils";
+import {useState} from "react";
 
 // This is a basic example of how to create a TV widget
 // You can add more feature such as storing charts in localStorage
@@ -43,24 +44,29 @@ export const TVChartContainer = () => {
     datafeedUrl: BONFIDA_DATA_FEED,
     libraryPath: '/charting_library/',
     fullscreen: false,
-    autosize: false,
-    height: 500,
+    autosize: true,
     studiesOverrides: {},
   };
 
   const tvWidgetRef = React.useRef<IChartingLibraryWidget | null>(null);
   const { market } = useMarket();
+  const [oldMarket, setOldMarket] = useState<String>("");
 
   const [marketAddress] = useLocalStorageState(
       'marketAddress',
       DEFAULT_MARKET?.address.toBase58(),
   );
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
 
   React.useEffect(() => {
+    const width = dimensions?.width;
+    const marketName = findTVMarketFromAddress(marketAddress || '');
+
     const widgetOptions: ChartingLibraryWidgetOptions = {
-      symbol: findTVMarketFromAddress(
-          marketAddress || '',
-      ) as string,
+      symbol: marketName as string,
       // BEWARE: no trailing slash is expected in feed URL
       // tslint:disable-next-line:no-any
       datafeed: new (window as any).Datafeeds.UDFCompatibleDatafeed(
@@ -82,25 +88,12 @@ export const TVChartContainer = () => {
       theme: 'Dark'
     };
 
-    const tvWidget = new widget(widgetOptions);
-    tvWidgetRef.current = tvWidget;
+    if (oldMarket !== marketName) {
+      const tvWidget = new widget(widgetOptions);
+      tvWidgetRef.current = tvWidget;
+    }
 
-    // tslint:disable-next-line:no-unused-expression
-    tvWidget.onChartReady(() => {
-        const button = tvWidget.createButton();
-        button.setAttribute('title', 'Click to show a notification popup');
-        button.classList.add('apply-common-tooltip');
-        button.addEventListener('click', () =>
-          tvWidget.showNoticeDialog({
-            title: 'Notification',
-            body: 'TradingView Charting Library API works correctly',
-            callback: () => {
-              console.log('It works!!');
-            },
-          }),
-        );
-        button.innerHTML = 'Check API';
-    });
+    setOldMarket(marketName);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [market]);

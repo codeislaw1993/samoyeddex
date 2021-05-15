@@ -22,6 +22,7 @@ interface PoolCreateRedeemPanel {
   mintInfo: MintInfo;
 }
 
+// eslint-disable-next-line
 export default function PoolCreateRedeemPanel({
   poolInfo,
   mintInfo,

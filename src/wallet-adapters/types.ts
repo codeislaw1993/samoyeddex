@@ -12,5 +12,7 @@ export interface WalletAdapter {
   signAllTransactions: (transaction: Transaction[]) => Promise<Transaction[]>;
   connect: () => any;
   disconnect: () => any;
+
+  // eslint-disable-next-line
   on<T>(event: string, fn: () => void): this;
 }
