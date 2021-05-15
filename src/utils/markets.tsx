@@ -36,9 +36,18 @@ const samoUSDCMarketsInfo = {
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
 
+const stnkUSDCMarketsInfo = {
+  address: new PublicKey("7vJhxNnkPBTJKNHsbjZUhmCVCxmYKgV6vgJ56eH2MQaC"),
+  deprecated: false,
+  name : "STNK/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "STNK",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+
 export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
-  ? MARKETS.concat(samoUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
-  : MARKETS.concat(samoUSDCMarketsInfo);
+  ? MARKETS.concat(samoUSDCMarketsInfo).concat(stnkUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+  : MARKETS.concat(samoUSDCMarketsInfo).concat(stnkUSDCMarketsInfo);
 
 export function useMarketsList() {
   return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));

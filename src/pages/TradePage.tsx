@@ -155,7 +155,7 @@ function TradePageInner() {
       <Wrapper>
           <Row>
             <Col flex="1 1 5px"> <></> </Col>
-            <Col flex="2 2 900px">
+            <Col flex="2 2 auto">
               <MarketSelector
                 markets={markets}
                 setHandleDeprecated={setHandleDeprecated}

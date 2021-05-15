@@ -29,6 +29,7 @@ export default function DataTable({
         columns={columns}
         pagination={pagination ? { pagination: true, pageSize } : false}
         loading={loading}
+        scroll={{ y: 240 }}
       />
     </ConfigProvider>
   );

@@ -4,14 +4,12 @@ import React from 'react';
 import { Tabs, Typography } from 'antd';
 import FillsTable from './FillsTable';
 import FloatingElement from '../layout/FloatingElement';
-import FeesTable from './FeesTable';
-import { useOpenOrders, useBalances, useMarket } from '../../utils/markets';
+import { useOpenOrders, useBalances } from '../../utils/markets';
 
 const { Paragraph } = Typography;
 const { TabPane } = Tabs;
 
 export default function Index() {
-  const { market } = useMarket();
   return (
     <FloatingElement style={{ flex: '1 1 auto', paddingTop: 20 }}>
       <Typography>
@@ -28,17 +26,12 @@ export default function Index() {
         <TabPane tab="Open Orders" key="orders">
           <OpenOrdersTab />
         </TabPane>
-        <TabPane tab="Recent Trade History" key="fills">
+        <TabPane tab="Recent Trade" key="fills">
           <FillsTable />
         </TabPane>
         <TabPane tab="Balances" key="balances">
           <BalancesTab />
         </TabPane>
-        {market && market.supportsSrmFeeDiscounts ? (
-          <TabPane tab="Fee discounts" key="fees">
-            <FeesTable />
-          </TabPane>
-        ) : null}
       </Tabs>
     </FloatingElement>
   );
