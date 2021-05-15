@@ -22,7 +22,7 @@ export default function DataTable({
     </div>
   );
 
-  const [dimensions, setDimensions] = useState({
+  const [dimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
   });
