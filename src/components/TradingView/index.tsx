@@ -56,13 +56,8 @@ export const TVChartContainer = () => {
       'marketAddress',
       DEFAULT_MARKET?.address.toBase58(),
   );
-  const [dimensions, setDimensions] = useState({
-    height: window.innerHeight,
-    width: window.innerWidth,
-  });
 
   React.useEffect(() => {
-    const width = dimensions?.width;
     const marketName = findTVMarketFromAddress(marketAddress || '');
 
     const widgetOptions: ChartingLibraryWidgetOptions = {

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Col, Popover, Row, Select, Typography } from 'antd';
+import { Col, Popover, Row, Select } from 'antd';
 import styled from 'styled-components';
 import Orderbook from '../components/Orderbook';
 import UserInfoTable from '../components/UserInfoTable';
@@ -10,7 +10,6 @@ import {
   MarketProvider,
   useMarket,
   useMarketsList,
-  useUnmigratedDeprecatedMarkets,
 } from '../utils/markets';
 import TradeForm from '../components/TradeForm';
 import TradesTable from '../components/TradesTable';
@@ -72,7 +71,6 @@ function TradePageInner() {
   const markets = useMarketsList();
   const [handleDeprecated, setHandleDeprecated] = useState(false);
   const [addMarketVisible, setAddMarketVisible] = useState(false);
-  const deprecatedMarkets = useUnmigratedDeprecatedMarkets();
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -119,7 +117,7 @@ function TradePageInner() {
       );
     } else if (width < 1000) {
       return <RenderSmaller {...componentProps} />;
-    } else if (width < 1450) {
+    } else if (width < 1650) {
       return <RenderSmall {...componentProps} />;
     } else {
       return <RenderNormal {...componentProps} />;
@@ -155,53 +153,32 @@ function TradePageInner() {
         onAddCustomMarket={onAddCustomMarket}
       />
       <Wrapper>
-        <Row
-          align="middle"
-          style={{ paddingLeft: 5, paddingRight: 5 }}
-          gutter={16}
-        >
-          <Col>
-            <MarketSelector
-              markets={markets}
-              setHandleDeprecated={setHandleDeprecated}
-              placeholder={'Select market'}
-              customMarkets={customMarkets}
-              onDeleteCustomMarket={onDeleteCustomMarket}
-            />
-          </Col>
-          {market ? (
-            <Col>
+          <Row>
+            <Col flex="3 3 5px"> <></> </Col>
+            <Col flex="1 1 1400px">
+              <MarketSelector
+                markets={markets}
+                setHandleDeprecated={setHandleDeprecated}
+                placeholder={'Select market'}
+                customMarkets={customMarkets}
+                onDeleteCustomMarket={onDeleteCustomMarket}
+              />
+            {market ? (
               <Popover
-                content={<LinkAddress address={market.publicKey.toBase58()} />}
-                placement="bottomRight"
-                title="Market address"
-                trigger="click"
+                  content={<LinkAddress address={market.publicKey.toBase58()} />}
+                  placement="bottomRight"
+                  title="Market address"
+                  trigger="click"
               >
-                <InfoCircleOutlined style={{ color: '#2abdd2' }} />
+                <InfoCircleOutlined style={{ color: '#2abdd2',  marginLeft: '5px' }} />
               </Popover>
-            </Col>
-          ) : null}
-          <Col>
+            ) : null}
             <PlusCircleOutlined
-              style={{ color: '#2abdd2' }}
-              onClick={() => setAddMarketVisible(true)}
+                style={{ color: '#2abdd2', marginLeft: '5px' }}
+                onClick={() => setAddMarketVisible(true)}
             />
           </Col>
-          {deprecatedMarkets && deprecatedMarkets.length > 0 && (
-            <React.Fragment>
-              <Col>
-                <Typography>
-                  You have unsettled funds on old markets! Please go through
-                  them to claim your funds.
-                </Typography>
-              </Col>
-              <Col>
-                <Button onClick={() => setHandleDeprecated(!handleDeprecated)}>
-                  {handleDeprecated ? 'View new markets' : 'Handle old markets'}
-                </Button>
-              </Col>
-            </React.Fragment>
-          )}
+          <Col flex="5 5 auto"> <></> </Col>
         </Row>
         {component}
       </Wrapper>
@@ -332,22 +309,23 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
       <Wrapper>
         <Row>
-          <Col flex="3 1 auto">
+          <Col flex="3 3 auto">
+            <></>
+          </Col>
+          <Col flex="1 1 auto">
             <TVChartContainer/>
             <UserInfoTable />
           </Col>
-
           <Col flex="1 1 auto" style={{ height: '100%' }}>
             <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
             <TradesTable smallScreen={false} />
           </Col>
-
-          <Col
-              flex="2 1 auto"
-              style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-          >
+          <Col flex="1 1 auto" style={{ height: '100%'}}>
             <TradeForm setChangeOrderRef={onChangeOrderRef} />
             <StandaloneBalancesDisplay />
+          </Col>
+          <Col flex="3 3 auto">
+            <></>
           </Col>
         </Row>
       </Wrapper>
@@ -392,18 +370,14 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
 const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
     <>
-      <Row
-        style={{
-          height: '500px',
-        }}
-      >
+      <Row>
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
-          <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
+          <TVChartContainer />
         </Col>
       </Row>
       <Row>
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
-          <TVChartContainer />
+          <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
         </Col>
       </Row>
       <Row>
