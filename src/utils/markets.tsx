@@ -45,9 +45,18 @@ const stnkUSDCMarketsInfo = {
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
 
+const felonUSDCMarketsInfo = {
+  address: new PublicKey("HwmgM7i8wo5qCjyQsrQxrDJEs3eJULXmiKAStWLUQJf"),
+  deprecated: false,
+  name : "FELON/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "FELON",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+
 export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
-  ? MARKETS.concat(samoUSDCMarketsInfo).concat(stnkUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
-  : MARKETS.concat(samoUSDCMarketsInfo).concat(stnkUSDCMarketsInfo);
+  ? MARKETS.concat(samoUSDCMarketsInfo).concat(stnkUSDCMarketsInfo).concat(felonUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+  : MARKETS.concat(samoUSDCMarketsInfo).concat(stnkUSDCMarketsInfo).concat(felonUSDCMarketsInfo);
 
 export function useMarketsList() {
   return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));
