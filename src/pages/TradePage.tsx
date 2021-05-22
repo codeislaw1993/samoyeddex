@@ -153,7 +153,7 @@ function TradePageInner() {
       />
       <Wrapper>
           <Row>
-            <Col span={4}>
+            <Col span={width <1000 ? 24 : 4}>
               <h4>Click a market below: </h4>
               <MarketSelector
                 markets={markets}
