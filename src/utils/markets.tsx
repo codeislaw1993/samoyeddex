@@ -59,7 +59,7 @@ const sHBLUSDCMarketsInfo = {
   deprecated: false,
   name : "SHBL/USDC",
   quoteLabel: "USDC",
-  baseLabel: "FELON",
+  baseLabel: "SHBL",
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
 
