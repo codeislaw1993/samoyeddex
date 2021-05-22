@@ -11,6 +11,7 @@ import { BONFIDA_DATA_FEED } from '../../utils/bonfidaConnector';
 import { findTVMarketFromAddress } from '../../utils/tradingview';
 import {useLocalStorageState} from "../../utils/utils";
 import {useState} from "react";
+import { useThemeSwitcher } from "react-css-theme-switcher";
 
 // This is a basic example of how to create a TV widget
 // You can add more feature such as storing charts in localStorage
@@ -50,7 +51,9 @@ export const TVChartContainer = () => {
 
   const tvWidgetRef = React.useRef<IChartingLibraryWidget | null>(null);
   const { market } = useMarket();
-  const [oldMarket, setOldMarket] = useState<String>("");
+  const [ oldMarket, setOldMarket ] = useState<String>("");
+  const [ oldTheme, setOldTheme ] = useState<string | undefined>("");
+  const { currentTheme } = useThemeSwitcher();
 
   const [marketAddress] = useLocalStorageState(
       'marketAddress',
@@ -80,18 +83,19 @@ export const TVChartContainer = () => {
       autosize: defaultProps.autosize,
       height: defaultProps.height,
       studies_overrides: defaultProps.studiesOverrides,
-      theme: 'Dark'
+      theme: currentTheme === 'dark' ? 'Dark' : 'Light'
     };
 
-    if (oldMarket !== marketName) {
+    if (oldMarket !== marketName || oldTheme !== currentTheme) {
       const tvWidget = new widget(widgetOptions);
       tvWidgetRef.current = tvWidget;
     }
 
     setOldMarket(marketName);
+    setOldTheme(currentTheme);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [market]);
+  }, [market, currentTheme]);
 
   return <div id={defaultProps.containerId} className="tradingview-chart" />;
 };

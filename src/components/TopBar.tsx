@@ -21,19 +21,20 @@ import { Connection } from '@solana/web3.js';
 import WalletConnect from './WalletConnect';
 import AppSearch from './AppSearch';
 import { getTradePageUrl } from '../utils/markets';
+import { useThemeSwitcher } from "react-css-theme-switcher";
+import { Switch } from "antd";
 
 const Wrapper = styled.div`
-  background-color: #000000;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   padding: 0px 30px;
   flex-wrap: wrap;
 `;
+
 const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
-  color: #2abdd2;
   font-weight: bold;
   cursor: pointer;
   img {
@@ -70,6 +71,15 @@ export default function TopBar() {
   const location = useLocation();
   const history = useHistory();
   const [searchFocussed, setSearchFocussed] = useState(false);
+  const [isDarkMode, setIsDarkMode] = React.useState();
+  const { switcher, themes } = useThemeSwitcher();
+
+  const toggleTheme = (isChecked) => {
+    setIsDarkMode(isChecked);
+    switcher({
+      theme: isChecked ? themes.dark : themes.light
+    });
+  };
 
   const handleClick = useCallback(
     (e) => {
@@ -145,8 +155,8 @@ export default function TopBar() {
         onAddCustomEndpoint={onAddCustomEndpoint}
         onClose={() => setAddEndpointVisible(false)}
       />
-      <Wrapper>
-        <LogoWrapper onClick={() => history.push(tradePageUrl)}>
+      <Wrapper className="topBarWrapper">
+        <LogoWrapper className="logoTitle" onClick={() => history.push(tradePageUrl)}>
           <img src={logo} alt="" />
           {'Samoyed Lover BUIDL Samoyed DEX'}
         </LogoWrapper>
@@ -161,6 +171,7 @@ export default function TopBar() {
             alignItems: 'flex-end',
             flex: 1,
           }}
+          className="topBarMenu"
         >
           <Menu.Item key={tradePageUrl} style={{ margin: '0 10px 0 20px' }}>
             Order book
@@ -170,6 +181,11 @@ export default function TopBar() {
               Swap
             </Menu.Item>
           )}
+          {(!searchFocussed || location.pathname === '/convert') && (
+              <Menu.Item key="/list-new-market" style={{ margin: '0 10px' }}>
+                Add Market
+              </Menu.Item>
+          )}
           {(!searchFocussed || location.pathname === '/twitter') && (
               <Menu.Item key="/twitter" style={{ margin: '0 10px' }}>
                 <a
@@ -177,7 +193,7 @@ export default function TopBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                  <TwitterOutlined />
+                  <TwitterOutlined className="topBarMenu" />
                 </a>
               </Menu.Item>
           )}
@@ -188,7 +204,7 @@ export default function TopBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                  <SendOutlined />
+                  <SendOutlined className="topBarMenu" />
                 </a>
               </Menu.Item>
           )}
@@ -199,7 +215,7 @@ export default function TopBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                  <GithubOutlined />
+                  <GithubOutlined className="topBarMenu" />
                 </a>
               </Menu.Item>
           )}
@@ -319,6 +335,15 @@ export default function TopBar() {
             </Col>
           </Row>
         </div>
+        <div style={{
+          alignItems: 'center',
+          paddingRight: 5,
+        }}  className="topBarMenu">
+          <Row>
+            <Col>Light / Dark {'\u00A0'}</Col>
+            <Col><Switch checked={isDarkMode} onChange={toggleTheme} /> </Col>
+          </Row>
+        </div>
         {connected && (
           <div>
             <Popover
@@ -334,7 +359,7 @@ export default function TopBar() {
             </Popover>
           </div>
         )}
-        <div>
+        <div className="topBarMenu">
           <WalletConnect />
         </div>
       </Wrapper>

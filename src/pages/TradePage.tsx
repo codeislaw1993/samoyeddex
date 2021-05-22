@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Col, Popover, Row, Select } from 'antd';
+import { Col, Popover, Row, List } from 'antd';
 import styled from 'styled-components';
 import Orderbook from '../components/Orderbook';
 import UserInfoTable from '../components/UserInfoTable';
@@ -25,8 +25,7 @@ import CustomMarketDialog from '../components/CustomMarketDialog';
 import { notify } from '../utils/notifications';
 import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
-
-const { Option, OptGroup } = Select;
+import FloatingElement from "../components/layout/FloatingElement";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -117,7 +116,7 @@ function TradePageInner() {
       );
     } else if (width < 1000) {
       return <RenderSmaller {...componentProps} />;
-    } else if (width < 1600) {
+    } else if (width < 1200) {
       return <RenderSmall {...componentProps} />;
     } else {
       return <RenderNormal {...componentProps} />;
@@ -154,8 +153,8 @@ function TradePageInner() {
       />
       <Wrapper>
           <Row>
-            <Col flex="1 1 5px"> <></> </Col>
-            <Col flex="2 2 auto">
+            <Col span={4}>
+              <h4>Click a market below: </h4>
               <MarketSelector
                 markets={markets}
                 setHandleDeprecated={setHandleDeprecated}
@@ -178,9 +177,10 @@ function TradePageInner() {
                 onClick={() => setAddMarketVisible(true)}
             />
           </Col>
-          <Col flex="5 5 auto"> <></> </Col>
+            <Col span={20}>
+              {component}
+            </Col>
         </Row>
-        {component}
       </Wrapper>
     </>
   );
@@ -211,26 +211,21 @@ function MarketSelector({
     ?.address?.toBase58();
 
   return (
-    <Select
-      showSearch
+      <FloatingElement
+          style={ { flex: 1 } }
+      >
+    <List
       size={'large'}
-      style={{ width: 200 }}
-      placeholder={placeholder || 'Select a market'}
-      optionFilterProp="name"
-      onSelect={onSetMarketAddress}
-      listHeight={400}
-      value={selectedMarket}
-      filterOption={(input, option) =>
-        option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0
-      }
+      style={{ width: '100%' }}
     >
       {customMarkets && customMarkets.length > 0 && (
-        <OptGroup label="Custom">
+          <div>
           {customMarkets.map(({ address, name }, i) => (
-            <Option
+            <List.Item
               value={address}
               key={nanoid()}
               name={name}
+              class="marketSelectorListItem"
               style={{
                 padding: '10px',
                 // @ts-ignore
@@ -251,11 +246,17 @@ function MarketSelector({
                   </Col>
                 )}
               </Row>
-            </Option>
+            </List.Item>
           ))}
-        </OptGroup>
+        </div>
       )}
-      <OptGroup label="Markets">
+      <div
+          style={{
+            marginRight: '-20px',
+            paddingRight: '5px',
+            overflowY: 'scroll',
+            maxHeight: 'calc(100vh - 180px)',
+          }}>
         {markets
           .sort((a, b) =>
             extractQuote(a.name) === 'USDT' && extractQuote(b.name) !== 'USDT'
@@ -273,21 +274,24 @@ function MarketSelector({
               : 0,
           )
           .map(({ address, name, deprecated }, i) => (
-            <Option
+            <List.Item
               value={address.toBase58()}
               key={nanoid()}
               name={name}
               style={{
                 padding: '10px',
                 // @ts-ignore
-                backgroundColor: i % 2 === 0 ? 'rgb(39, 44, 61)' : null,
+                backgroundColor: null,
               }}
+              class="marketSelectorListItem"
+              onClick={() => { onSetMarketAddress(address.toBase58()) }}
             >
               {name} {deprecated ? ' (Deprecated)' : null}
-            </Option>
+            </List.Item>
           ))}
-      </OptGroup>
-    </Select>
+      </div>
+    </List>
+      </FloatingElement>
   );
 }
 
@@ -307,28 +311,20 @@ const DeprecatedMarketsPage = ({ switchToLiveMarkets }) => {
 
 const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
-      <Wrapper>
-        <Row>
-          <Col flex="1 1 auto">
-            <></>
-          </Col>
-          <Col flex="2 2 auto">
+      <Row>
+          <Col span={14}>
             <TVChartContainer/>
             <UserInfoTable />
           </Col>
-          <Col flex="1 1 auto" style={{ height: '100%' }}>
+          <Col span={5} style={{ height: '100%' }}>
             <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
             <TradesTable smallScreen={false} />
           </Col>
-          <Col flex="1 1 300px" style={{ height: '100%'}}>
+          <Col span={5} style={{ height: '100%'}}>
             <TradeForm setChangeOrderRef={onChangeOrderRef} />
             <StandaloneBalancesDisplay />
           </Col>
-          <Col flex="1 1 auto">
-            <></>
-          </Col>
-        </Row>
-      </Wrapper>
+      </Row>
   );
 };
 

@@ -111,7 +111,7 @@ export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
         smallScreen ? { flex: 1 } : { height: '500px', overflow: 'hidden' }
       }
     >
-      <Title>Orderbook</Title>
+      <Title className="tradesTableSizeTitle">Orderbook</Title>
       <SizeTitle>
         <Col span={12} style={{ textAlign: 'left' }}>
           Size ({baseCurrency})
@@ -190,7 +190,9 @@ const OrderbookRow = React.memo(
                 : 'rgba(242, 60, 105, 0.6)'
             }
           />
-          <Price onClick={onPriceClick}>{formattedPrice}</Price>
+          <Price className="tradesTableSizeTitle" onClick={onPriceClick}>
+            {formattedPrice}
+          </Price>
         </Col>
       </Row>
     );

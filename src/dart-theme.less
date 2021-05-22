@@ -1,0 +1,170 @@
+@import '~antd/dist/antd.css';
+@import '~antd/dist/antd.dark.less';
+
+@primary-color: #2abdd2;
+@popover-background: #1a2029;
+
+@primary-color: #1890ff; // primary color for all components
+@link-color: #1890ff; // link color
+@success-color: #52c41a; // success state color
+@warning-color: #faad14; // warning state color
+@error-color: #f5222d; // error state color
+@font-size-base: 14px; // major text font size
+@heading-color: rgba(0, 0, 0, 0.85); // heading text color
+@text-color: rgba(0, 0, 0, 0.65); // major text color
+@text-color-secondary: rgba(0, 0, 0, 0.45); // secondary text color
+@disabled-color: rgba(0, 0, 0, 0.25); // disable state color
+@border-radius-base: 2px; // major border radius
+@border-color-base: #d9d9d9; // major border color
+@box-shadow-base: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+0 9px 28px 8px rgba(0, 0, 0, 0.05); // major shadow for layers
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #000000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.App-link {
+  color: #000000;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+html,body{
+  background: #000000;
+}
+input[type=number]::-webkit-inner-spin-button {
+  opacity: 0;
+}
+input[type=number]:hover::-webkit-inner-spin-button,
+input[type=number]:focus::-webkit-inner-spin-button {
+  opacity: 0.25;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ffffff;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+.ant-slider-track, .ant-slider:hover .ant-slider-track {
+  background-color: #2abdd2;
+  opacity: 0.75;
+}
+.ant-slider-track,
+.ant-slider ant-slider-track:hover {
+  background-color: #2abdd2;
+  opacity: 0.75;
+}
+.ant-slider-dot-active,
+.ant-slider-handle,
+.ant-slider-handle-click-focused,
+.ant-slider:hover .ant-slider-handle:not(.ant-tooltip-open)  {
+  border: 2px solid #2abdd2;
+}
+.ant-table-tbody > tr.ant-table-row:hover > td {
+  background: #273043;
+}
+.ant-table-tbody > tr > td {
+  border-bottom: 8px solid #1A2029;
+}
+.ant-table-container table > thead > tr:first-child th {
+  border-bottom: none;
+}
+.ant-divider-horizontal.ant-divider-with-text::before, .ant-divider-horizontal.ant-divider-with-text::after {
+  border-top: 1px solid #434a59 !important;
+}
+.ant-layout {
+  background: #11161D
+}
+.ant-table {
+  background: #212734;
+}
+.ant-table-thead > tr > th {
+  background: #1A2029;
+}
+.ant-select-item-option-content {
+  img {
+    margin-right: 4px;
+  }
+}
+.ant-modal-content {
+  background-color: #212734;
+}
+
+@-webkit-keyframes highlight {
+  from { background-color: #2abdd2;}
+  to {background-color: #1A2029;}
+}
+@-moz-keyframes highlight {
+  from { background-color: #2abdd2;}
+  to {background-color: #1A2029;}
+}
+@-keyframes highlight {
+  from { background-color: #2abdd2;}
+  to {background-color: #1A2029;}
+}
+.flash {
+  -moz-animation: highlight 0.5s ease 0s 1 alternate ;
+  -webkit-animation: highlight 0.5s ease 0s 1 alternate;
+  animation: highlight 0.5s ease 0s 1 alternate;
+}
+.topBarWrapper {
+  background-color: #000000;
+}
+.logoTitle {
+  color: #2abdd2;
+}
+.topBarMenu {
+  color: #ffffff;
+}
+.floatingElementWrapper {
+  background-color: #1a2029;
+}
+.marketSelectorListItem {
+  background-color: #272c3d;
+}
+.tradesTable, .userInfoTableParagraph {
+  color: #ffffff;
+}
+.tradesTableSizeTitle {
+  color: #434a59;
+}
