@@ -116,7 +116,7 @@ function TradePageInner() {
       );
     } else if (width < 1000) {
       return <RenderSmaller {...componentProps} />;
-    } else if (width < 1200) {
+    } else if (width < 1400) {
       return <RenderSmall {...componentProps} />;
     } else {
       return <RenderNormal {...componentProps} />;
@@ -312,7 +312,7 @@ const DeprecatedMarketsPage = ({ switchToLiveMarkets }) => {
 const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
       <Row>
-          <Col span={14}>
+          <Col span={12}>
             <TVChartContainer/>
             <UserInfoTable />
           </Col>
@@ -320,7 +320,7 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
             <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
             <TradesTable smallScreen={false} />
           </Col>
-          <Col span={5} style={{ height: '100%'}}>
+          <Col span={7} style={{ height: '100%'}}>
             <TradeForm setChangeOrderRef={onChangeOrderRef} />
             <StandaloneBalancesDisplay />
           </Col>
