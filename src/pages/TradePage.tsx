@@ -153,7 +153,7 @@ function TradePageInner() {
       />
       <Wrapper>
           <Row>
-            <Col span={width <1000 ? 24 : 4}>
+            <Col span={width < 1000 ? 24 : 3}>
               <h4>Click a market below: </h4>
               <MarketSelector
                 markets={markets}
@@ -177,7 +177,7 @@ function TradePageInner() {
                 onClick={() => setAddMarketVisible(true)}
             />
           </Col>
-            <Col span={20}>
+            <Col span={width < 1000 ? 24 : 21}>
               {component}
             </Col>
         </Row>
