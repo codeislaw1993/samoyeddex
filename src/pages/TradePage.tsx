@@ -7,14 +7,14 @@ import StandaloneBalancesDisplay from '../components/StandaloneBalancesDisplay';
 import {
   getMarketInfos,
   getTradePageUrl,
-  MarketProvider, useAllMarkets,
+  MarketProvider,
   useMarket,
   useMarketsList,
 } from '../utils/markets';
 import TradeForm from '../components/TradeForm';
 import TradesTable from '../components/TradesTable';
 import LinkAddress from '../components/LinkAddress';
-import { TVChartContainer } from '../components/TradingView';
+//import { TVChartContainer } from '../components/TradingView';
 import DeprecatedMarketsInstructions from '../components/DeprecatedMarketsInstructions';
 import {
   DeleteOutlined,
@@ -28,7 +28,6 @@ import { nanoid } from 'nanoid';
 import FloatingElement from "../components/layout/FloatingElement";
 import { TokenListProvider, TokenInfo, ENV } from '@solana/spl-token-registry';
 import { Avatar } from 'antd';
-import {MarketInfo} from "../utils/types";
 
 const Wrapper = styled.div`
   height: 100%;
