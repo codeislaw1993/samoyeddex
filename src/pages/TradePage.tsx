@@ -7,7 +7,7 @@ import StandaloneBalancesDisplay from '../components/StandaloneBalancesDisplay';
 import {
   getMarketInfos,
   getTradePageUrl,
-  MarketProvider,
+  MarketProvider, useAllMarkets,
   useMarket,
   useMarketsList,
 } from '../utils/markets';
@@ -26,6 +26,9 @@ import { notify } from '../utils/notifications';
 import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import FloatingElement from "../components/layout/FloatingElement";
+import { TokenListProvider, TokenInfo, ENV } from '@solana/spl-token-registry';
+import { Avatar } from 'antd';
+import {MarketInfo} from "../utils/types";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -153,8 +156,8 @@ function TradePageInner() {
       />
       <Wrapper>
           <Row>
-            <Col span={width < 1000 ? 24 : 3}>
-              <h4>Click a market below: </h4>
+            <Col span={width < 1000 ? 24 : 4}>
+              <h4 style={{paddingLeft: '10px'}}>Click a market below: </h4>
               <MarketSelector
                 markets={markets}
                 setHandleDeprecated={setHandleDeprecated}
@@ -177,13 +180,36 @@ function TradePageInner() {
                 onClick={() => setAddMarketVisible(true)}
             />
           </Col>
-            <Col span={width < 1000 ? 24 : 21}>
+            <Col span={width < 1000 ? 24 : 20}>
               {component}
             </Col>
         </Row>
       </Wrapper>
     </>
   );
+}
+
+export const Icon = (props: { mint: string | undefined }) => {
+  const [tokenMap, setTokenMap] = useState<Map<string, TokenInfo>>(new Map());
+
+  useEffect(() => {
+    new TokenListProvider().resolve().then(tokens => {
+      const tokenList = tokens.filterByChainId(ENV.MainnetBeta).getList();
+
+      setTokenMap(tokenList.reduce((map, item) => {
+        map.set(item.symbol, item);
+        return map;
+      }, new Map()));
+    });
+  }, [setTokenMap]);
+
+  if (props.mint === undefined) {
+    return <></>;
+  }
+  const token = tokenMap.get(props.mint);
+  if (!token || !token.logoURI) return null;
+
+  return (<Avatar size="small" src={token.logoURI}/>);
 }
 
 function MarketSelector({
@@ -287,6 +313,8 @@ function MarketSelector({
               onClick={() => { onSetMarketAddress(address.toBase58()) }}
             >
               {name} {deprecated ? ' (Deprecated)' : null}
+              <Icon mint={extractBase(name)}></Icon>
+              <Icon mint={extractQuote(name)}></Icon>
             </List.Item>
           ))}
       </div>
@@ -313,7 +341,6 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
       <Row>
           <Col span={12}>
-            <TVChartContainer/>
             <UserInfoTable />
           </Col>
           <Col span={5} style={{ height: '100%' }}>
@@ -333,7 +360,6 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
     <>
       <Row>
         <Col flex="auto">
-          <TVChartContainer/>
         </Col>
       </Row>
       <Row>
@@ -368,7 +394,7 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
     <>
       <Row>
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
-          <TVChartContainer />
+
         </Col>
       </Row>
       <Row>
