@@ -340,15 +340,15 @@ const DeprecatedMarketsPage = ({ switchToLiveMarkets }) => {
 const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
       <Row>
-          <Col span={12}>
+          <Col span={14}>
             <TVChartContainerTest />
             <UserInfoTable />
           </Col>
-          <Col span={5} style={{ height: '100%' }}>
+          <Col span={4} style={{ height: '100%' }}>
             <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
             <TradesTable smallScreen={false} />
           </Col>
-          <Col span={7} style={{ height: '100%'}}>
+          <Col span={6} style={{ height: '100%'}}>
             <TradeForm setChangeOrderRef={onChangeOrderRef} />
             <StandaloneBalancesDisplay />
           </Col>

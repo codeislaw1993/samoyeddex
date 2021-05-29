@@ -41,11 +41,11 @@ export const TVChartContainerTest = () => {
       DEFAULT_MARKET?.address.toBase58(),
   );
 
-  let url = "https://dex.bonfida.com/#/market/"+marketAddress;
+  let url = "https://dex.raydium.io/#/market/"+marketAddress;
 
-  return <div style={{width: "650px", height: "380px", overflow: "hidden"}}>
-    <iframe title="tradingview" src={url} width="650"
-            height="600"  frameBorder="0" style={{position: "relative", left: "10px", top: "-125px", border: "0"}} scrolling="no">
+  return <div style={{width: "750px", height: "600px", overflow: "hidden"}}>
+    <iframe title="tradingview" src={url} width="1500"
+            height="700"  frameBorder="0" style={{position: "relative", left: "-380px", top: "-125px", border: "0"}} scrolling="no">
     </iframe>
   </div>
 }
