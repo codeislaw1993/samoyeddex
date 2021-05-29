@@ -36,16 +36,15 @@ export interface ChartContainerProps {
 export interface ChartContainerState {}
 
 export const TVChartContainerTest = () => {
-  const { market } = useMarket();
   const [marketAddress] = useLocalStorageState(
       'marketAddress',
       DEFAULT_MARKET?.address.toBase58(),
   );
 
-  let url = "" + "https://dex.bonfida.com/#/market/"+marketAddress;
+  let url = "https://dex.bonfida.com/#/market/"+marketAddress;
 
   return <div style={{width: "650px", height: "380px", overflow: "hidden"}}>
-    <iframe src={url} width="650"
+    <iframe title="tradingview" src={url} width="650"
             height="600"  frameBorder="0" style={{position: "relative", left: "10px", top: "-125px", border: "0"}} scrolling="no">
     </iframe>
   </div>
