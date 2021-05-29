@@ -28,6 +28,7 @@ import { nanoid } from 'nanoid';
 import FloatingElement from "../components/layout/FloatingElement";
 import { TokenListProvider, TokenInfo, ENV } from '@solana/spl-token-registry';
 import { Avatar } from 'antd';
+import {TVChartContainerTest} from "../components/TradingView";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -340,6 +341,7 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
       <Row>
           <Col span={12}>
+            <TVChartContainerTest />
             <UserInfoTable />
           </Col>
           <Col span={5} style={{ height: '100%' }}>
@@ -359,6 +361,7 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
     <>
       <Row>
         <Col flex="auto">
+          <TVChartContainerTest />
         </Col>
       </Row>
       <Row>
@@ -393,7 +396,7 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
     <>
       <Row>
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
-
+          <TVChartContainerTest />
         </Col>
       </Row>
       <Row>
