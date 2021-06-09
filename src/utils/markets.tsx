@@ -25,7 +25,43 @@ import {Order} from '@project-serum/serum/lib/market';
 import BonfidaApi from './bonfidaConnector';
 
 // Used in debugging, should be false in production
-const _IGNORE_DEPRECATED = false;
+const _IGNORE_DEPRECATED = true;
+
+const solUSDTMarketsInfo = {
+  address: new PublicKey("HWHvQhFmJB3NUcu1aihKmrKegfVxBEHzwVX6yZCKEsi1"),
+  deprecated: false,
+  name : "SOL/USDT",
+  quoteLabel: "USDT",
+  baseLabel: "SOL",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+
+const solUSDCMarketsInfo = {
+  address: new PublicKey("9wFFyRfZBsuAha4YcuxcXLKwMxJR43S7fPfQLusDBzvT"),
+  deprecated: false,
+  name : "SOL/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "SOL",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+
+const srmUSDTMarketsInfo = {
+  address: new PublicKey("AtNnsY1AyRERWJ8xCskfz38YdvruWVJQUVXgScC1iPb"),
+  deprecated: false,
+  name : "SRM/USDT",
+  quoteLabel: "USDT",
+  baseLabel: "SRM",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+
+const srmUSDCMarketsInfo = {
+  address: new PublicKey("ByRys5tuUWDgL73G8JBAEfkdFf8JWBzPBDHsBVQ5vbQA"),
+  deprecated: false,
+  name : "SRM/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "SRM",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
 
 const samoUSDCMarketsInfo = {
   address: new PublicKey("FR3SPJmgfRSKKQ2ysUZBu7vJLpzTixXnjzb84bY3Diif"),
@@ -63,17 +99,37 @@ const sHBLUSDCMarketsInfo = {
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
 
+const tulipUSDCMarketsInfo = {
+  address: new PublicKey("8GufnKq7YnXKhnB3WNhgy5PzU9uvHbaaRrZWQK6ixPxW"),
+  deprecated: false,
+  name : "TULIP/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "TULIP",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+
 export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
-  ? MARKETS
+  ? Array<{
+      address: PublicKey;
+      name: string;
+      programId: PublicKey;
+      deprecated: boolean;
+    }>(0)
+        .concat(solUSDTMarketsInfo)
+        .concat(solUSDCMarketsInfo)
+        .concat(srmUSDTMarketsInfo)
+        .concat(srmUSDCMarketsInfo)
         .concat(samoUSDCMarketsInfo)
         .concat(stnkUSDCMarketsInfo)
         .concat(felonUSDCMarketsInfo)
-        .concat(sHBLUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+        .concat(sHBLUSDCMarketsInfo)
+        .concat(tulipUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
   : MARKETS
         .concat(samoUSDCMarketsInfo)
         .concat(stnkUSDCMarketsInfo)
         .concat(felonUSDCMarketsInfo)
-        .concat(sHBLUSDCMarketsInfo);
+        .concat(sHBLUSDCMarketsInfo)
+        .concat(tulipUSDCMarketsInfo);
 
 export function useMarketsList() {
   return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));

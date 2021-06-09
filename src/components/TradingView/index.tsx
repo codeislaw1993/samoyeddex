@@ -5,7 +5,7 @@ import {
   ChartingLibraryWidgetOptions,
   IChartingLibraryWidget,
   ResolutionString,
-} from '../../charting_library/charting_library.min'; // Make sure to follow step 1 of the README
+} from '../../charting_library'; // Make sure to follow step 1 of the README
 import {DEFAULT_MARKET, useMarket} from '../../utils/markets';
 import { BONFIDA_DATA_FEED } from '../../utils/bonfidaConnector';
 import { findTVMarketFromAddress } from '../../utils/tradingview';
@@ -35,26 +35,11 @@ export interface ChartContainerProps {
 
 export interface ChartContainerState {}
 
-export const TVChartContainerTest = () => {
-  const [marketAddress] = useLocalStorageState(
-      'marketAddress',
-      DEFAULT_MARKET?.address.toBase58(),
-  );
-
-  let url = "https://dex.raydium.io/#/market/"+marketAddress;
-
-  return <div style={{width: "750px", height: "600px", overflow: "hidden"}}>
-    <iframe title="tradingview" src={url} width="1500"
-            height="700"  frameBorder="0" style={{position: "relative", left: "-380px", top: "-125px", border: "0"}} scrolling="no">
-    </iframe>
-  </div>
-}
-
 export const TVChartContainer = () => {
   // @ts-ignore
   const defaultProps: ChartContainerProps = {
     symbol: 'BTC/USDC',
-    interval: '60' as ResolutionString,
+    interval: '1' as ResolutionString,
     theme: 'Dark',
     containerId: 'tv_chart_container',
     datafeedUrl: BONFIDA_DATA_FEED,

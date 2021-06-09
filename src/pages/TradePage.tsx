@@ -28,7 +28,7 @@ import { nanoid } from 'nanoid';
 import FloatingElement from "../components/layout/FloatingElement";
 import { TokenListProvider, TokenInfo, ENV } from '@solana/spl-token-registry';
 import { Avatar } from 'antd';
-import {TVChartContainerTest} from "../components/TradingView";
+import {TVChartContainer} from "../components/TradingView";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -340,11 +340,11 @@ const DeprecatedMarketsPage = ({ switchToLiveMarkets }) => {
 const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
       <Row>
-          <Col span={14}>
-            <TVChartContainerTest />
+          <Col span={12}>
+            <TVChartContainer />
             <UserInfoTable />
           </Col>
-          <Col span={4} style={{ height: '100%' }}>
+          <Col span={6} style={{ height: '100%' }}>
             <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
             <TradesTable smallScreen={false} />
           </Col>
@@ -361,7 +361,7 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
     <>
       <Row>
         <Col flex="auto">
-          <TVChartContainerTest />
+          <TVChartContainer />
         </Col>
       </Row>
       <Row>
@@ -396,7 +396,7 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
     <>
       <Row>
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
-          <TVChartContainerTest />
+          <TVChartContainer />
         </Col>
       </Row>
       <Row>

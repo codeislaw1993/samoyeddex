@@ -19,6 +19,7 @@ import {
 	ServerTimeCallback,
 	SubscribeBarsCallback,
 	TimescaleMark,
+	SymbolResolveExtension,
 } from '../../../charting_library/datafeed-api';
 
 import {
@@ -40,10 +41,10 @@ import { SymbolsStorage } from './symbols-storage';
 import { Requester } from './requester';
 
 export interface UdfCompatibleConfiguration extends DatafeedConfiguration {
-	// tslint:disable
+	// tslint:disable:tv-variable-name
 	supports_search?: boolean;
 	supports_group_request?: boolean;
-	// tslint:enable
+	// tslint:enable:tv-variable-name
 }
 
 export interface ResolveSymbolResponse extends LibrarySymbolInfo {
@@ -262,8 +263,10 @@ export class UDFCompatibleDatafeedBase implements IExternalDatafeed, IDatafeedQu
 		}
 	}
 
-	public resolveSymbol(symbolName: string, onResolve: ResolveCallback, onError: ErrorCallback): void {
+	public resolveSymbol(symbolName: string, onResolve: ResolveCallback, onError: ErrorCallback, extension?: SymbolResolveExtension): void {
 		logMessage('Resolve requested');
+
+		const currencyCode = extension && extension.currencyCode;
 
 		const resolveRequestStartTime = Date.now();
 		function onResultReady(symbolInfo: LibrarySymbolInfo): void {
@@ -275,6 +278,9 @@ export class UDFCompatibleDatafeedBase implements IExternalDatafeed, IDatafeedQu
 			const params: RequestParams = {
 				symbol: symbolName,
 			};
+			if (currencyCode !== undefined) {
+				params.currencyCode = currencyCode;
+			}
 
 			this._send<ResolveSymbolResponse | UdfErrorResponse>('symbols', params)
 				.then((response: ResolveSymbolResponse | UdfErrorResponse) => {
@@ -293,7 +299,7 @@ export class UDFCompatibleDatafeedBase implements IExternalDatafeed, IDatafeedQu
 				throw new Error('UdfCompatibleDatafeed: inconsistent configuration (symbols storage)');
 			}
 
-			this._symbolsStorage.resolveSymbol(symbolName).then(onResultReady).catch(onError);
+			this._symbolsStorage.resolveSymbol(symbolName, currencyCode).then(onResultReady).catch(onError);
 		}
 	}
 
@@ -348,7 +354,16 @@ function defaultConfiguration(): UdfCompatibleConfiguration {
 	return {
 		supports_search: false,
 		supports_group_request: true,
-		supported_resolutions: ['1', '5', '15', '30', '60', '1D', '1W', '1M'],
+		supported_resolutions: [
+			'1' as ResolutionString,
+			'5' as ResolutionString,
+			'15' as ResolutionString,
+			'30' as ResolutionString,
+			'60' as ResolutionString,
+			'1D' as ResolutionString,
+			'1W' as ResolutionString,
+			'1M' as ResolutionString,
+		],
 		supports_marks: false,
 		supports_timescale_marks: false,
 	};

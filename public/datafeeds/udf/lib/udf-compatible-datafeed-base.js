@@ -18,10 +18,10 @@ var UDFCompatibleDatafeedBase = /** @class */ (function () {
     requester,
     updateFrequency,
   ) {
+    var _this = this;
     if (updateFrequency === void 0) {
       updateFrequency = 10 * 1000;
     }
-    var _this = this;
     this._configuration = defaultConfiguration();
     this._symbolsStorage = null;
     this._datafeedURL = datafeedURL;
@@ -239,8 +239,10 @@ var UDFCompatibleDatafeedBase = /** @class */ (function () {
     symbolName,
     onResolve,
     onError,
+    extension,
   ) {
     logMessage('Resolve requested');
+    var currencyCode = extension && extension.currencyCode;
     var resolveRequestStartTime = Date.now();
     function onResultReady(symbolInfo) {
       logMessage(
@@ -252,6 +254,9 @@ var UDFCompatibleDatafeedBase = /** @class */ (function () {
       var params = {
         symbol: symbolName,
       };
+      if (currencyCode !== undefined) {
+        params.currencyCode = currencyCode;
+      }
       this._send('symbols', params)
         .then(function (response) {
           if (response.s !== undefined) {
@@ -274,7 +279,7 @@ var UDFCompatibleDatafeedBase = /** @class */ (function () {
         );
       }
       this._symbolsStorage
-        .resolveSymbol(symbolName)
+        .resolveSymbol(symbolName, currencyCode)
         .then(onResultReady)
         .catch(onError);
     }
