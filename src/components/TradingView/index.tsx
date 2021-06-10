@@ -4,7 +4,7 @@ import {
   widget,
   ChartingLibraryWidgetOptions,
   IChartingLibraryWidget,
-  ResolutionString,
+  ResolutionString
 } from '../../charting_library'; // Make sure to follow step 1 of the README
 import {DEFAULT_MARKET, useMarket} from '../../utils/markets';
 import { BONFIDA_DATA_FEED } from '../../utils/bonfidaConnector';
@@ -89,6 +89,11 @@ export const TVChartContainer = () => {
     if (oldMarket !== marketName || oldTheme !== currentTheme) {
       const tvWidget = new widget(widgetOptions);
       tvWidgetRef.current = tvWidget;
+      tvWidget.onChartReady(() => {
+        tvWidget.headerReady().then(() => {
+          tvWidget.activeChart().setChartType(3)
+        })
+      })
     }
 
     setOldMarket(marketName);
