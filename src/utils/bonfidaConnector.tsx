@@ -1,7 +1,7 @@
 import { BonfidaTrade } from './types';
 
 export default class BonfidaApi {
-  static URL: string = 'http://localhost/';
+  static URL: string = 'https://samoyedlovers-api.herokuapp.com/';
 
   static async get(path: string) {
     try {
@@ -17,10 +17,10 @@ export default class BonfidaApi {
   }
 
   static async getRecentTrades(
-    marketAddress: string,
+      marketAddress: string,
   ): Promise<BonfidaTrade[] | null> {
     return BonfidaApi.get(`trades/address/${marketAddress}`);
   }
 }
 
-export const BONFIDA_DATA_FEED = 'http://localhost/tv';
+export const BONFIDA_DATA_FEED = 'https://samoyedlovers-api.herokuapp.com/tv';
