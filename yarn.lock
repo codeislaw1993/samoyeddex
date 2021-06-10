@@ -1536,10 +1536,10 @@
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
   integrity sha512-DetpxZw1fzPD5xUBrIAoplLChO2VB8DlL5Gg+I1IR9b2wPqYIca2WSUxL5g1vLeR4MsQq1NeWriXAVffV+U1Fw==
 
-"@solana/spl-token-registry@^0.2.114":
-  version "0.2.114"
-  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.114.tgz#f7fb744b72035a304332c0c3dee5f2e361397698"
-  integrity sha512-rOEey6OUnJKMXmeig7wR30sIPJTi7ITFHj9KBkrOrTDG4J3U+/CpVTI5hBPCGGIpVgxJBmqOYf0BFxSXrRAeig==
+"@solana/spl-token-registry@^0.2.126":
+  version "0.2.126"
+  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.126.tgz#2d15200c401fcff1da2166682ceed681b448381c"
+  integrity sha512-HCPxlSbPrGEJxrxbZ9OUiTFdKwmHv1lD+VoNdFgyNRicStbqF8y4pc8JIAFh2dc+pdmCEhDenWIfw4c4pvnh+A==
   dependencies:
     cross-fetch "3.0.6"
 

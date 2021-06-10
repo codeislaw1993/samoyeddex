@@ -126,6 +126,24 @@ const rayUSDTMarketsInfo = {
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
 
+const catoUSDCMarketsInfo = {
+  address: new PublicKey("9fe1MWiKqUdwift3dEpxuRHWftG72rysCRHbxDy6i9xB"),
+  deprecated: false,
+  name : "CATO/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "CATO",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+
+const hamsUSDCMarketsInfo = {
+  address: new PublicKey("5j6hdwx4eW3QBYZtRjKiUj7aDA1dxDpveSHBznwq7kUv"),
+  deprecated: false,
+  name : "HAMS/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "HAMS",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+
 export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
   ? Array<{
       address: PublicKey;
@@ -143,7 +161,9 @@ export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
         .concat(sHBLUSDCMarketsInfo)
         .concat(tulipUSDCMarketsInfo)
         .concat(rayUSDCMarketsInfo)
-        .concat(rayUSDTMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+        .concat(rayUSDTMarketsInfo)
+        .concat(catoUSDCMarketsInfo)
+        .concat(hamsUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
   : MARKETS
         .concat(samoUSDCMarketsInfo)
         .concat(stnkUSDCMarketsInfo)
