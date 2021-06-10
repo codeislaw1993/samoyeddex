@@ -135,6 +135,15 @@ const catoUSDCMarketsInfo = {
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
 
+const bdeUSDCMarketsInfo = {
+  address: new PublicKey("2kQer4JyDA8wRxNpSCNG8zAne1zwWVhByTUu8Qi6BEjR"),
+  deprecated: false,
+  name : "BDE/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "BDE",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+}
+
 const hamsUSDCMarketsInfo = {
   address: new PublicKey("5j6hdwx4eW3QBYZtRjKiUj7aDA1dxDpveSHBznwq7kUv"),
   deprecated: false,
@@ -163,7 +172,8 @@ export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
         .concat(rayUSDCMarketsInfo)
         .concat(rayUSDTMarketsInfo)
         .concat(catoUSDCMarketsInfo)
-        .concat(hamsUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+        .concat(hamsUSDCMarketsInfo)
+        .concat(bdeUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
   : MARKETS
         .concat(samoUSDCMarketsInfo)
         .concat(stnkUSDCMarketsInfo)
