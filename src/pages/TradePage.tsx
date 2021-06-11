@@ -192,7 +192,6 @@ function TradePageInner() {
 export const Icon = (props: { mint: string | undefined }) => {
   const [tokenMap, setTokenMap] = useState<Map<string, TokenInfo>>(new Map());
 
-  useEffect(() => {
     new TokenListProvider().resolve().then(tokens => {
       const tokenList = tokens.filterByChainId(ENV.MainnetBeta).getList();
 
@@ -201,11 +200,14 @@ export const Icon = (props: { mint: string | undefined }) => {
         return map;
       }, new Map()));
     });
-  }, [setTokenMap]);
 
   if (props.mint === undefined) {
     return <></>;
   }
+
+  if (props.mint === "HAMS")
+    return <Avatar size="small" src="https://i.ibb.co/XxvTLQV/JG3-DYn-K-400x400.jpg"/>;
+
   const token = tokenMap.get(props.mint);
   if (!token || !token.logoURI) return null;
 
