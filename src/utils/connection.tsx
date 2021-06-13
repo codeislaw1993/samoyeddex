@@ -145,12 +145,20 @@ export function useConnectionConfig() {
     endpointInfo: context.availableEndpoints.find(
       (info) => info.endpoint === context.endpoint,
     ),
+    slippage: context.slippage,
+    setSlippage: context.setSlippage,
     setEndpoint: context.setEndpoint,
     availableEndpoints: context.availableEndpoints,
     setCustomEndpoints: context.setCustomEndpoints,
     tokens: context.tokens,
     tokenMap: context.tokenMap,
   };
+}
+
+export function useSlippageConfig() {
+  const slippage = useConnectionConfig().slippage;
+  const setSlippage = (val) => setSlippage(val.toString());
+  return { slippage, setSlippage };
 }
 
 export function useAccountInfo(

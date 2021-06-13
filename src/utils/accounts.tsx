@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useConnection } from "./connection";
-import { useWallet } from "../context/wallet";
+import { useSwapWallet } from "./../context/wallet";
 import { AccountInfo, Connection, PublicKey } from "@solana/web3.js";
 import { programIds, SWAP_HOST_FEE_ADDRESS, WRAPPED_SOL_MINT } from "./ids";
 import { AccountLayout, u64, MintInfo, MintLayout } from "@solana/spl-token";
@@ -49,7 +49,7 @@ const getMintInfo = async (connection: Connection, pubKey: PublicKey) => {
 };
 
 export interface ParsedAccountBase {
-  pubkey: PublicKey;
+  pubkey?: PublicKey;
   account: AccountInfo<Buffer>;
   info: any; // TODO: change to unkown
 }
@@ -319,7 +319,7 @@ function wrapNativeAccount(
 
 const UseNativeAccount = () => {
   const connection = useConnection();
-  const { wallet } = useWallet();
+  const { wallet } = useSwapWallet();
 
   const [nativeAccount, setNativeAccount] = useState<AccountInfo<Buffer>>();
   useEffect(() => {
@@ -393,7 +393,7 @@ const precacheUserTokenAccounts = async (
 
 export function AccountsProvider({ children = null as any }) {
   const connection = useConnection();
-  const { wallet, connected } = useWallet();
+  const { wallet, connected } = useSwapWallet();
   const [tokenAccounts, setTokenAccounts] = useState<TokenAccount[]>([]);
   const [userAccounts, setUserAccounts] = useState<TokenAccount[]>([]);
   const { nativeAccount } = UseNativeAccount();

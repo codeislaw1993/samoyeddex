@@ -182,6 +182,21 @@ export default function TopBar() {
             </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/convert') && (
+              <Menu.Item key="/add" style={{ margin: '0 10px' }}>
+                Add Liquidity
+              </Menu.Item>
+          )}
+          {(!searchFocussed || location.pathname === '/convert') && (
+              <Menu.Item key="/pool" style={{ margin: '0 10px' }}>
+                Pool
+              </Menu.Item>
+          )}
+          {(!searchFocussed || location.pathname === '/convert') && (
+              <Menu.Item key="/info" style={{ margin: '0 10px' }}>
+                Info
+              </Menu.Item>
+          )}
+          {(!searchFocussed || location.pathname === '/add') && (
               <Menu.Item key="/list-new-market" style={{ margin: '0 10px' }}>
                 Add Market
               </Menu.Item>

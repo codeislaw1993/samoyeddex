@@ -57,9 +57,9 @@ export const WALLET_PROVIDERS = [
   },
 ];
 
-const WalletContext = React.createContext<any>(null);
+const SwapWalletContext = React.createContext<any>(null);
 
-export function WalletProvider({ children = null as any }) {
+export function SwapWalletProvider({ children = null as any }) {
   const { endpoint } = useConnectionConfig();
 
   const [autoConnect, setAutoConnect] = useState(false);
@@ -144,7 +144,7 @@ export function WalletProvider({ children = null as any }) {
   const close = useCallback(() => setIsModalVisible(false), []);
 
   return (
-    <WalletContext.Provider
+    <SwapWalletContext.Provider
       value={{
         wallet,
         connected,
@@ -198,12 +198,12 @@ export function WalletProvider({ children = null as any }) {
           );
         })}
       </Modal>
-    </WalletContext.Provider>
+    </SwapWalletContext.Provider>
   );
 }
 
-export function useWallet() {
-  const context = useContext(WalletContext);
+export function useSwapWallet() {
+  const context = useContext(SwapWalletContext);
   if (!context) {
     throw new Error("Missing wallet context");
   }

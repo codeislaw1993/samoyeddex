@@ -9,6 +9,11 @@ import ListNewMarketPage from './pages/ListNewMarketPage';
 import NewPoolPage from './pages/pools/NewPoolPage';
 import PoolPage from './pages/pools/PoolPage';
 import PoolListPage from './pages/pools/PoolListPage';
+import {CurrencyPairProvider} from "./utils/currencyPair";
+import {MarketProvider} from "./context/market";
+import { ExchangeView } from "./components/exchange";
+import { PoolOverview } from "./components/pool/view";
+import { ChartsView } from "./components/charts";
 
 export function Routes() {
   return (
@@ -39,6 +44,16 @@ export function Routes() {
             <Route exact path="/pools/:poolAddress">
               <PoolPage />
             </Route>
+
+            <CurrencyPairProvider>
+              <Route exact path="/add" component={ExchangeView} />
+              <Route exact path="/info" component={() => <ChartsView />} />
+              <Route
+                  exact
+                  path="/pool"
+                  component={() => <PoolOverview />}
+              />
+            </CurrencyPairProvider>
           </Switch>
         </BasicLayout>
       </HashRouter>
