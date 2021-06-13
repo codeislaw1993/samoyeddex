@@ -1,13 +1,23 @@
 import { useLocalStorageState } from './utils';
-import { Account, AccountInfo, Connection, PublicKey } from '@solana/web3.js';
-import React, { useContext, useEffect, useMemo, useRef } from 'react';
+import {Account, AccountInfo, Connection, PublicKey, Transaction, TransactionInstruction} from '@solana/web3.js';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { setCache, useAsyncData } from './fetch-loop';
 import tuple from 'immutable-tuple';
+import { setProgramIds } from "./ids";
+import { notify } from "./notifications";
+import { ExplorerLink } from "../components/explorerLink";
 import { ConnectionContextValues, EndpointInfo } from './types';
+import {
+  TokenListProvider,
+  ENV as ChainID,
+  TokenInfo,
+} from "@solana/spl-token-registry";
+
+export type ENV = "mainnet-beta" | "localnet";
 
 export const ENDPOINTS: EndpointInfo[] = [
   {
-    name: 'mainnet-beta',
+    name: 'mainnet-beta' as ENV,
     endpoint: 'https://solana-api.projectserum.com',
     custom: false,
   },
@@ -15,6 +25,9 @@ export const ENDPOINTS: EndpointInfo[] = [
 ];
 
 const accountListenerCount = new Map();
+
+const DEFAULT = ENDPOINTS[0].endpoint;
+const DEFAULT_SLIPPAGE = 0.25;
 
 const ConnectionContext: React.Context<null | ConnectionContextValues> = React.createContext<null | ConnectionContextValues>(
   null,
@@ -25,6 +38,12 @@ export function ConnectionProvider({ children }) {
     'connectionEndpts',
     ENDPOINTS[0].endpoint,
   );
+
+  const [slippage, setSlippage] = useLocalStorageState(
+      "slippage",
+      DEFAULT_SLIPPAGE.toString()
+  );
+
   const [customEndpoints, setCustomEndpoints] = useLocalStorageState<
     EndpointInfo[]
   >('customConnectionEndpoints', []);
@@ -36,6 +55,14 @@ export function ConnectionProvider({ children }) {
   const sendConnection = useMemo(() => new Connection(endpoint, 'recent'), [
     endpoint,
   ]);
+
+  const chain =
+      ENDPOINTS.find((end) => end.endpoint === endpoint) || ENDPOINTS[0];
+
+  const env = chain.name as ENV;
+
+  const [tokens, setTokens] = useState<TokenInfo[]>([]);
+  const [tokenMap, setTokenMap] = useState<Map<string, TokenInfo>>(new Map());
 
   // The websocket library solana/web3.js uses closes its websocket connection when the subscription list
   // is empty after opening its first time, preventing subsequent subscriptions from receiving responses.
@@ -76,10 +103,15 @@ export function ConnectionProvider({ children }) {
       value={{
         endpoint,
         setEndpoint,
+        slippage: parseFloat(slippage),
+        setSlippage: (val) => setSlippage(val.toString()),
         connection,
         sendConnection,
         availableEndpoints,
         setCustomEndpoints,
+        tokens,
+        tokenMap,
+        env,
       }}
     >
       {children}
@@ -116,6 +148,8 @@ export function useConnectionConfig() {
     setEndpoint: context.setEndpoint,
     availableEndpoints: context.availableEndpoints,
     setCustomEndpoints: context.setCustomEndpoints,
+    tokens: context.tokens,
+    tokenMap: context.tokenMap,
   };
 }
 
@@ -178,3 +212,91 @@ export function useAccountData(publicKey) {
   const [accountInfo] = useAccountInfo(publicKey);
   return accountInfo && accountInfo.data;
 }
+
+const getErrorForTransaction = async (connection: Connection, txid: string) => {
+  // wait for all confirmation before geting transaction
+  await connection.confirmTransaction(txid, "max");
+
+  const tx = await connection.getParsedConfirmedTransaction(txid);
+
+  const errors: string[] = [];
+  if (tx?.meta && tx.meta.logMessages) {
+    tx.meta.logMessages.forEach((log) => {
+      const regex = /Error: (.*)/gm;
+      let m;
+      while ((m = regex.exec(log)) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+
+        if (m.length > 1) {
+          errors.push(m[1]);
+        }
+      }
+    });
+  }
+
+  return errors;
+};
+
+export const sendTransaction = async (
+    connection: Connection,
+    wallet: any,
+    instructions: TransactionInstruction[],
+    signers: Account[],
+    awaitConfirmation = true
+) => {
+  let transaction = new Transaction();
+  instructions.forEach((instruction) => transaction.add(instruction));
+  transaction.recentBlockhash = (
+      await connection.getRecentBlockhash("max")
+  ).blockhash;
+  transaction.setSigners(
+      // fee payied by the wallet owner
+      wallet.publicKey,
+      ...signers.map((s) => s.publicKey)
+  );
+  if (signers.length > 0) {
+    transaction.partialSign(...signers);
+  }
+  transaction = await wallet.signTransaction(transaction);
+  const rawTransaction = transaction.serialize();
+  let options = {
+    skipPreflight: true,
+    commitment: "singleGossip",
+  };
+
+  const txid = await connection.sendRawTransaction(rawTransaction, options);
+
+  if (awaitConfirmation) {
+    const status = (
+        await connection.confirmTransaction(
+            txid,
+            options && (options.commitment as any)
+        )
+    ).value;
+
+    if (status?.err) {
+      const errors = await getErrorForTransaction(connection, txid);
+      notify({
+        message: "Transaction failed...",
+        description: (
+            <>
+              {errors.map((err) => (
+                  <div>{err}</div>
+              ))}
+              <ExplorerLink address={txid} type="transaction" />
+            </>
+        ),
+        type: "error",
+      });
+
+      throw new Error(
+          `Raw transaction ${txid} failed (${JSON.stringify(status)})`
+      );
+    }
+  }
+
+  return txid;
+};

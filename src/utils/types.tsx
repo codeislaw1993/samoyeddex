@@ -4,13 +4,35 @@ import { Event } from '@project-serum/serum/lib/queue';
 import { Order } from '@project-serum/serum/lib/market';
 import { WalletAdapter } from '../wallet-adapters';
 
+export type ENV = "mainnet-beta" | "localnet";
+
+export interface TokenInfo {
+  readonly chainId: number;
+  readonly address: string;
+  readonly name: string;
+  readonly decimals: number;
+  readonly symbol: string;
+  readonly logoURI?: string;
+  readonly tags?: string[];
+  readonly extensions?: TokenExtensions;
+}
+
+export interface TokenExtensions {
+  readonly website?: string;
+}
+
 export interface ConnectionContextValues {
   endpoint: string;
   setEndpoint: (newEndpoint: string) => void;
+  slippage: number;
+  setSlippage: (val: number) => void;
   connection: Connection;
   sendConnection: Connection;
   availableEndpoints: EndpointInfo[];
   setCustomEndpoints: (newCustomEndpoints: EndpointInfo[]) => void;
+  tokens: TokenInfo[];
+  tokenMap: Map<string, TokenInfo>;
+  env: ENV;
 }
 
 export interface WalletContextValues {
