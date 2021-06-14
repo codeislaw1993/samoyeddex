@@ -64,6 +64,22 @@ export function ConnectionProvider({ children }) {
   const [tokens, setTokens] = useState<TokenInfo[]>([]);
   const [tokenMap, setTokenMap] = useState<Map<string, TokenInfo>>(new Map());
 
+  new TokenListProvider().resolve().then((tokens) => {
+    const tokenList = tokens.filterByClusterSlug(chain.name).getList();
+    setTokens(tokenList);
+  });
+
+  useEffect(() => {
+    new TokenListProvider().resolve().then(tokens => {
+      const tokenList = tokens.filterByClusterSlug(chain.name).getList();
+
+      setTokenMap(tokenList.reduce((map, item) => {
+        map.set(item.address, item);
+        return map;
+      },new Map()));
+    });
+  }, [setTokenMap]);
+
   // The websocket library solana/web3.js uses closes its websocket connection when the subscription list
   // is empty after opening its first time, preventing subsequent subscriptions from receiving responses.
   // This is a hack to prevent the list from every getting empty
