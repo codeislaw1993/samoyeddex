@@ -26,8 +26,6 @@ import { notify } from '../utils/notifications';
 import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import FloatingElement from "../components/layout/FloatingElement";
-import { TokenListProvider, TokenInfo, ENV } from '@solana/spl-token-registry';
-import { Avatar } from 'antd';
 import {TVChartContainer} from "../components/TradingView";
 
 const Wrapper = styled.div`
@@ -189,31 +187,6 @@ function TradePageInner() {
   );
 }
 
-export const Icon = (props: { mint: string | undefined }) => {
-  const [tokenMap, setTokenMap] = useState<Map<string, TokenInfo>>(new Map());
-
-    new TokenListProvider().resolve().then(tokens => {
-      const tokenList = tokens.filterByChainId(ENV.MainnetBeta).getList();
-
-      setTokenMap(tokenList.reduce((map, item) => {
-        map.set(item.symbol, item);
-        return map;
-      }, new Map()));
-    });
-
-  if (props.mint === undefined) {
-    return <></>;
-  }
-
-  if (props.mint === "HAMS")
-    return <Avatar size="small" src="https://i.ibb.co/XxvTLQV/JG3-DYn-K-400x400.jpg"/>;
-
-  const token = tokenMap.get(props.mint);
-  if (!token || !token.logoURI) return null;
-
-  return (<Avatar size="small" src={token.logoURI}/>);
-}
-
 function MarketSelector({
   markets,
   placeholder,
@@ -315,8 +288,6 @@ function MarketSelector({
               onClick={() => { onSetMarketAddress(address.toBase58()) }}
             >
               {name} {deprecated ? ' (Deprecated)' : null}
-              <Icon mint={extractBase(name)}></Icon>
-              <Icon mint={extractQuote(name)}></Icon>
             </List.Item>
           ))}
       </div>
