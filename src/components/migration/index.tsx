@@ -7,7 +7,7 @@ import {
   removeLiquidity,
   useOwnedPools,
 } from "../../utils/pools";
-import { useSwapWallet } from "../../context/wallet";
+import { useWallet } from "../../utils/wallet";
 import { PoolAccounts } from "../pool/quickView";
 import { LiquidityComponent } from "../../models";
 
@@ -17,7 +17,7 @@ export const MigrationModal = () => {
   const [executing, setExecuting] = useState(false);
   const [completed, setCompleted] = useState(false);
 
-  const { wallet, connected } = useSwapWallet();
+  const { wallet, connected } = useWallet();
   const connection = useConnection();
   const { slippage } = useSlippageConfig();
 

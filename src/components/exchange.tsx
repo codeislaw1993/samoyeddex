@@ -1,9 +1,7 @@
 import React from "react";
-import { Button, Card, Popover } from "antd";
+import { Card } from "antd";
 import { TradeEntry } from "./trade";
 import { AddToLiquidity } from "./pool/add";
-import { SwapSettings } from './SwapSettings';
-import { SettingOutlined } from "@ant-design/icons";
 import { useHistory, useLocation } from "react-router-dom";
 
 export const ExchangeView = (props: {}) => {
@@ -11,14 +9,14 @@ export const ExchangeView = (props: {}) => {
   const tabList = [
     {
       key: "trade",
-      tab: <div style={tabStyle}>Trade</div>,
+      tab: <div style={tabStyle}>Swap</div>,
       render: () => {
         return <TradeEntry />;
       },
     },
     {
       key: "pool",
-      tab: <div style={tabStyle}>Pool</div>,
+      tab: <div style={tabStyle}>Add Liquidity</div>,
       render: () => {
         return <AddToLiquidity />;
       },
@@ -40,22 +38,29 @@ export const ExchangeView = (props: {}) => {
   };
 
   return (
-    <>
-      <Card
-        className="exchange-card"
-        headStyle={{ padding: 0 }}
-        bodyStyle={{ position: "relative" }}
-        tabList={tabList}
-        tabProps={{
-          tabBarGutter: 0,
-        }}
-        activeTabKey={activeTab}
-        onTabChange={(key) => {
-          handleTabChange(key);
-        }}
-      >
-        {tabList.find((t) => t.key === activeTab)?.render()}
-      </Card>
-    </>
+    <div style={{
+      display: 'table',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      height: '100%',
+      width: '100%'}}>
+      <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
+        <Card
+          className="exchange-card"
+          style={{marginLeft: 'auto', width: '500px', marginRight: 'auto'}}
+          tabList={tabList}
+          tabProps={{
+            tabBarGutter: 0,
+          }}
+          activeTabKey={activeTab}
+          onTabChange={(key) => {
+            handleTabChange(key);
+          }}
+        >
+          {tabList.find((t) => t.key === activeTab)?.render()}
+        </Card>
+      </div>
+    </div>
   );
 };

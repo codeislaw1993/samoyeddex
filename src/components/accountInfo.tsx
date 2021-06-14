@@ -1,12 +1,12 @@
 import React from "react";
-import { useSwapWallet } from "../context/wallet";
+import { useWallet } from "../utils/wallet";
 import { shortenAddress } from "./../utils/utils";
 import { Identicon } from "./identicon";
 import { useNativeAccount } from "./../utils/accounts";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 export const AccountInfo = (props: {}) => {
-  const { wallet } = useSwapWallet();
+  const { wallet } = useWallet();
   const { account } = useNativeAccount();
 
   if (!wallet || !wallet.publicKey) {

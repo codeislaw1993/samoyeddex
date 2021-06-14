@@ -10,7 +10,6 @@ import NewPoolPage from './pages/pools/NewPoolPage';
 import PoolPage from './pages/pools/PoolPage';
 import PoolListPage from './pages/pools/PoolListPage';
 import {CurrencyPairProvider} from "./utils/currencyPair";
-import {MarketProvider} from "./context/market";
 import { ExchangeView } from "./components/exchange";
 import { PoolOverview } from "./components/pool/view";
 import { ChartsView } from "./components/charts";
@@ -22,7 +21,7 @@ export function Routes() {
         <BasicLayout>
           <Switch>
             <Route exact path="/">
-              <Redirect to={'/convert'} />
+              <Redirect to={'/trade'} />
             </Route>
             <Route exact path="/convert" component={ConvertPage} />
             <Route exact path="/market/:marketAddress">

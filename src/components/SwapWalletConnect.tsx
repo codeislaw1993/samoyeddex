@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { Dropdown, Menu } from "antd";
-import { useSwapWallet } from "../context/wallet";
+import { useWallet } from "../utils/wallet";
 import { ExplorerLink } from "./explorerLink";
 
 export const SwapWalletConnect: FunctionComponent = ({ children }) => {
-  const { connected, wallet, select, connect, disconnect } = useSwapWallet();
+  const { connected, wallet, select, connect, disconnect } = useWallet();
   const publicKey = (connected && wallet?.publicKey?.toBase58()) || "";
 
   const menu = (

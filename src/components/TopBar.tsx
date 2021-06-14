@@ -176,14 +176,9 @@ export default function TopBar() {
           <Menu.Item key={tradePageUrl} style={{ margin: '0 10px 0 20px' }}>
             Order book
           </Menu.Item>
-          {(!searchFocussed || location.pathname === '/convert') && (
-            <Menu.Item key="/convert" style={{ margin: '0 10px' }}>
-              Swap
-            </Menu.Item>
-          )}
           {(!searchFocussed || location.pathname === '/trade') && (
               <Menu.Item key="/trade" style={{ margin: '0 10px' }}>
-                Swap v2
+                Swap
               </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/convert') && (
@@ -193,7 +188,7 @@ export default function TopBar() {
           )}
           {(!searchFocussed || location.pathname === '/convert') && (
               <Menu.Item key="/pool" style={{ margin: '0 10px' }}>
-                Pool
+                My Provided Liquidity
               </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/convert') && (

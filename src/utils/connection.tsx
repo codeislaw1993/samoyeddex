@@ -3,13 +3,11 @@ import {Account, AccountInfo, Connection, PublicKey, Transaction, TransactionIns
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { setCache, useAsyncData } from './fetch-loop';
 import tuple from 'immutable-tuple';
-import { setProgramIds } from "./ids";
 import { notify } from "./notifications";
 import { ExplorerLink } from "../components/explorerLink";
 import { ConnectionContextValues, EndpointInfo } from './types';
 import {
   TokenListProvider,
-  ENV as ChainID,
   TokenInfo,
 } from "@solana/spl-token-registry";
 
@@ -26,7 +24,6 @@ export const ENDPOINTS: EndpointInfo[] = [
 
 const accountListenerCount = new Map();
 
-const DEFAULT = ENDPOINTS[0].endpoint;
 const DEFAULT_SLIPPAGE = 0.25;
 
 const ConnectionContext: React.Context<null | ConnectionContextValues> = React.createContext<null | ConnectionContextValues>(
@@ -65,13 +62,13 @@ export function ConnectionProvider({ children }) {
   const [tokenMap, setTokenMap] = useState<Map<string, TokenInfo>>(new Map());
 
   new TokenListProvider().resolve().then((tokens) => {
-    const tokenList = tokens.filterByClusterSlug(chain.name).getList();
+    const tokenList = tokens.filterByClusterSlug('mainnet-beta').getList();
     setTokens(tokenList);
   });
 
   useEffect(() => {
     new TokenListProvider().resolve().then(tokens => {
-      const tokenList = tokens.filterByClusterSlug(chain.name).getList();
+      const tokenList = tokens.filterByClusterSlug('mainnet-beta').getList();
 
       setTokenMap(tokenList.reduce((map, item) => {
         map.set(item.address, item);

@@ -9,7 +9,6 @@ import {
   Button,
   Card,
   Col,
-  Popover,
   Row,
   Table,
   Tooltip,

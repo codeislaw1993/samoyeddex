@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Radio, Row, Slider, Spin, Typography } from "antd";
 
 import { removeLiquidity, removeExactOneLiquidity } from "../../utils/pools";
-import { useSwapWallet } from "../../context/wallet";
+import { useWallet } from "../../utils/wallet";
 import { useConnection, useConnectionConfig } from "../../utils/connection";
 import { PoolInfo, TokenAccount, TokenSwapLayout } from "../../models";
 import { notify } from "../../utils/notifications";
@@ -29,7 +29,7 @@ export const RemoveLiquidity = (props: {
   const { account, pool } = props.instance;
   const { removeRatio, withdrawType, amount, withdrawToken } = props;
   const [pendingTx, setPendingTx] = useState(false);
-  const { wallet, connected } = useSwapWallet();
+  const { wallet, connected } = useWallet();
   const connection = useConnection();
   const { tokenMap } = useConnectionConfig();
   const mint = useMint(withdrawToken);

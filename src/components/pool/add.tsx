@@ -5,14 +5,14 @@ import {
   PoolOperation,
 } from "../../utils/pools";
 import { Button, Card, Col, Dropdown, Popover, Radio, Row } from "antd";
-import { useSwapWallet } from "../../context/wallet";
+import { useWallet } from "../../utils/wallet";
 import {
   useConnection,
   useConnectionConfig,
   useSlippageConfig,
 } from "../../utils/connection";
 import { Spin } from "antd";
-import { LoadingOutlined, SettingOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import { notify } from "../../utils/notifications";
 import { SupplyOverview } from "./supplyOverview";
 import { CurrencyInput } from "../currencyInput";
@@ -36,7 +36,7 @@ import { programIds } from "../../utils/ids";
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 export const AddToLiquidity = () => {
-  const { wallet, connect, connected } = useSwapWallet();
+  const { wallet, connect, connected } = useWallet();
   const connection = useConnection();
   const [pendingTx, setPendingTx] = useState(false);
   const [depositType, setDepositType] = useState("both");

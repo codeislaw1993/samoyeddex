@@ -11,7 +11,6 @@ import {
   LoadingOutlined,
   SwapOutlined,
   QuestionCircleOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
 import {
   swap,
