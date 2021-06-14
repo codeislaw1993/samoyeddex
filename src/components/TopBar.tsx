@@ -196,11 +196,6 @@ export default function TopBar() {
                 Pool Info
               </Menu.Item>
           )}
-          {(!searchFocussed || location.pathname === '/add') && (
-              <Menu.Item key="/list-new-market" style={{ margin: '0 10px' }}>
-                Add Market
-              </Menu.Item>
-          )}
           {(!searchFocussed || location.pathname === '/twitter') && (
               <Menu.Item key="/twitter" style={{ margin: '0 10px' }}>
                 <a

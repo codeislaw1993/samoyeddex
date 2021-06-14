@@ -41,7 +41,7 @@ export const ExchangeView = (props: {}) => {
     <div style={{
       display: 'table',
       position: 'absolute',
-      top: 0,
+      top: 50,
       left: 0,
       height: '100%',
       width: '100%'}}>
