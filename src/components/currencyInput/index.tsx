@@ -82,7 +82,6 @@ export const CurrencyInput = (props: {
   const mint = cache.getMint(props.mint);
 
   const { tokens, tokenMap } = useConnectionConfig();
-
   const renderPopularTokens = tokens.map((item) => {
     return (
       <Option

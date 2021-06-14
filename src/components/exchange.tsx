@@ -32,7 +32,7 @@ export const ExchangeView = (props: {}) => {
   const handleTabChange = (key: any) => {
     if (activeTab !== key) {
       if (key === "trade") {
-        history.push("/");
+        history.push("/trade");
       } else {
         history.push("/add");
       }

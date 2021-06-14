@@ -46,6 +46,7 @@ export function Routes() {
             </Route>
 
             <CurrencyPairProvider>
+              <Route exact path="/trade" component={ExchangeView} />
               <Route exact path="/add" component={ExchangeView} />
               <Route exact path="/info" component={() => <ChartsView />} />
               <Route

@@ -181,6 +181,11 @@ export default function TopBar() {
               Swap
             </Menu.Item>
           )}
+          {(!searchFocussed || location.pathname === '/trade') && (
+              <Menu.Item key="/trade" style={{ margin: '0 10px' }}>
+                Swap v2
+              </Menu.Item>
+          )}
           {(!searchFocussed || location.pathname === '/convert') && (
               <Menu.Item key="/add" style={{ margin: '0 10px' }}>
                 Add Liquidity

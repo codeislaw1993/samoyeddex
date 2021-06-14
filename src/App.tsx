@@ -26,7 +26,6 @@ export default function App() {
           <ErrorBoundary>
             <ConnectionProvider>
               <WalletProvider>
-                  <SwapWalletProvider>
                       <AccountsProvider>
                           <MarketProvider>
                                 <PreferencesProvider>
@@ -36,7 +35,6 @@ export default function App() {
                                 </PreferencesProvider>
                           </MarketProvider>
                       </AccountsProvider>
-                  </SwapWalletProvider>
               </WalletProvider>
             </ConnectionProvider>
           </ErrorBoundary>

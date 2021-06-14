@@ -591,56 +591,55 @@ export const usePools = () => {
 
       return poolsArray;
     };
-    //
-    // Promise.all([
-    //   queryPools(programIds().swap),
-    //   ...programIds().swap_legacy.map((leg) => queryPools(leg, true)),
-    // ]).then((all) => {
-    //   setPools(all.flat());
-    // });
+
+    Promise.all([
+      queryPools(new PublicKey("SwaPpA9LAaLfeLi3a68M4DjnLqgtticKg6CnyNwgAC8")),
+    ]).then((all) => {
+      setPools(all.flat());
+    });
   }, [connection]);
 
-  // useEffect(() => {
-  //   const subID = connection.onProgramAccountChange(
-  //     programIds().swap,
-  //     async (info) => {
-  //       const id = (info.accountId as unknown) as string;
-  //       if (info.accountInfo.data.length === programIds().swapLayout.span) {
-  //         const account = info.accountInfo;
-  //         const updated = {
-  //           data: programIds().swapLayout.decode(account.data),
-  //           account: account,
-  //           pubkey: new PublicKey(id),
-  //         };
-  //
-  //         const index =
-  //           pools &&
-  //           pools.findIndex((p) => p.pubkeys.account.toBase58() === id);
-  //         if (index && index >= 0 && pools) {
-  //           // TODO: check if account is empty?
-  //
-  //           const filtered = pools.filter((p, i) => i !== index);
-  //           setPools([...filtered, toPoolInfo(updated, programIds().swap)]);
-  //         } else {
-  //           let pool = toPoolInfo(updated, programIds().swap);
-  //
-  //           pool.pubkeys.feeAccount = new PublicKey(updated.data.feeAccount);
-  //           pool.pubkeys.holdingMints = [
-  //             new PublicKey(updated.data.mintA),
-  //             new PublicKey(updated.data.mintB),
-  //           ] as PublicKey[];
-  //
-  //           setPools([...pools, pool]);
-  //         }
-  //       }
-  //     },
-  //     "singleGossip"
-  //   );
-  //
-  //   return () => {
-  //     connection.removeProgramAccountChangeListener(subID);
-  //   };
-  // }, [connection, pools]);
+  useEffect(() => {
+    const subID = connection.onProgramAccountChange(
+        new PublicKey("SwaPpA9LAaLfeLi3a68M4DjnLqgtticKg6CnyNwgAC8"),
+      async (info) => {
+        const id = (info.accountId as unknown) as string;
+        if (info.accountInfo.data.length === programIds().swapLayout.span) {
+          const account = info.accountInfo;
+          const updated = {
+            data: programIds().swapLayout.decode(account.data),
+            account: account,
+            pubkey: new PublicKey(id),
+          };
+
+          const index =
+            pools &&
+            pools.findIndex((p) => p.pubkeys.account.toBase58() === id);
+          if (index && index >= 0 && pools) {
+            // TODO: check if account is empty?
+
+            const filtered = pools.filter((p, i) => i !== index);
+            setPools([...filtered, toPoolInfo(updated, programIds().swap)]);
+          } else {
+            let pool = toPoolInfo(updated, programIds().swap);
+
+            pool.pubkeys.feeAccount = new PublicKey(updated.data.feeAccount);
+            pool.pubkeys.holdingMints = [
+              new PublicKey(updated.data.mintA),
+              new PublicKey(updated.data.mintB),
+            ] as PublicKey[];
+
+            setPools([...pools, pool]);
+          }
+        }
+      },
+      "singleGossip"
+    );
+
+    return () => {
+      connection.removeProgramAccountChangeListener(subID);
+    };
+  }, [connection, pools]);
 
   return { pools };
 };

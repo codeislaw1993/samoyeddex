@@ -5,7 +5,7 @@ import {
   useConnectionConfig,
   useSlippageConfig,
 } from "../../utils/connection";
-import { useSwapWallet } from "../../context/wallet";
+import { useWallet } from "../../utils/wallet";
 import { CurrencyInput } from "../currencyInput";
 import {
   LoadingOutlined,
@@ -34,7 +34,7 @@ const { Text } = Typography;
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 export const TradeEntry = () => {
-  const { wallet, connect, connected } = useSwapWallet();
+  const { wallet, connect, connected } = useWallet();
   const connection = useConnection();
   const [pendingTx, setPendingTx] = useState(false);
   const {

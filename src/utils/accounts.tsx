@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useConnection } from "./connection";
-import { useSwapWallet } from "./../context/wallet";
+import { useWallet } from "./../utils/wallet";
 import { AccountInfo, Connection, PublicKey } from "@solana/web3.js";
 import { programIds, SWAP_HOST_FEE_ADDRESS, WRAPPED_SOL_MINT } from "./ids";
 import { AccountLayout, u64, MintInfo, MintLayout } from "@solana/spl-token";
@@ -291,10 +291,14 @@ function tokenAccountFactory(pubKey: PublicKey, info: AccountInfo<Buffer>) {
 }
 
 function wrapNativeAccount(
-  pubkey: PublicKey,
+  pubkey?: PublicKey,
   account?: AccountInfo<Buffer>
 ): TokenAccount | undefined {
   if (!account) {
+    return undefined;
+  }
+
+  if (!pubkey) {
     return undefined;
   }
 
@@ -319,7 +323,7 @@ function wrapNativeAccount(
 
 const UseNativeAccount = () => {
   const connection = useConnection();
-  const { wallet } = useSwapWallet();
+  const { wallet } = useWallet();
 
   const [nativeAccount, setNativeAccount] = useState<AccountInfo<Buffer>>();
   useEffect(() => {
@@ -393,7 +397,7 @@ const precacheUserTokenAccounts = async (
 
 export function AccountsProvider({ children = null as any }) {
   const connection = useConnection();
-  const { wallet, connected } = useSwapWallet();
+  const { wallet, connected } = useWallet();
   const [tokenAccounts, setTokenAccounts] = useState<TokenAccount[]>([]);
   const [userAccounts, setUserAccounts] = useState<TokenAccount[]>([]);
   const { nativeAccount } = UseNativeAccount();
