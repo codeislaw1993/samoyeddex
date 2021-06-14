@@ -188,12 +188,12 @@ export default function TopBar() {
           )}
           {(!searchFocussed || location.pathname === '/convert') && (
               <Menu.Item key="/pool" style={{ margin: '0 10px' }}>
-                My Provided Liquidity
+                Provided Liquidity
               </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/convert') && (
               <Menu.Item key="/info" style={{ margin: '0 10px' }}>
-                Info
+                Pool Info
               </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/add') && (
