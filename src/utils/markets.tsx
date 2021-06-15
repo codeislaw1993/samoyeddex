@@ -338,13 +338,13 @@ export function getMarketDetails(
     (market?.baseMintAddress &&
       TOKEN_MINTS.find((token) => token.address.equals(market.baseMintAddress))
         ?.name) ||
-    (marketInfo?.baseLabel && `${marketInfo?.baseLabel}*`) ||
+    (marketInfo?.baseLabel && `${marketInfo?.baseLabel}`) ||
     'UNKNOWN';
   const quoteCurrency =
     (market?.quoteMintAddress &&
       TOKEN_MINTS.find((token) => token.address.equals(market.quoteMintAddress))
         ?.name) ||
-    (marketInfo?.quoteLabel && `${marketInfo?.quoteLabel}*`) ||
+    (marketInfo?.quoteLabel && `${marketInfo?.quoteLabel}`) ||
     'UNKNOWN';
 
   return {
