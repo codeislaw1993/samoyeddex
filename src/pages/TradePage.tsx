@@ -26,7 +26,6 @@ import { notify } from '../utils/notifications';
 import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import FloatingElement from "../components/layout/FloatingElement";
-import { TokenListProvider, TokenInfo, ENV } from '@solana/spl-token-registry';
 import { Avatar } from 'antd';
 import {TVChartContainer} from "../components/TradingView";
 
@@ -189,31 +188,8 @@ function TradePageInner() {
   );
 }
 
-export const Icon = (props: { mint: string | undefined }) => {
-  const [tokenMap, setTokenMap] = useState<Map<string, TokenInfo>>(new Map());
-
-    new TokenListProvider().resolve().then(tokens => {
-      const tokenList = tokens.filterByChainId(ENV.MainnetBeta).getList();
-
-      setTokenMap(tokenList.reduce((map, item) => {
-        map.set(item.symbol, item);
-        return map;
-      }, new Map()));
-    });
-
-  if (props.mint === undefined) {
-    return <></>;
-  }
-
-  if (props.mint === "HAMS")
-    return <Avatar size="small" src="https://i.ibb.co/XxvTLQV/JG3-DYn-K-400x400.jpg"/>;
-  if (props.mint === "LIQ")
-    return <Avatar size="small" src="https://liqsolana.com/wp-content/uploads/2021/06/200x.png"/>;
-
-  const token = tokenMap.get(props.mint);
-  if (!token || !token.logoURI) return null;
-
-  return (<Avatar size="small" src={token.logoURI}/>);
+export const Icon = (props: { url: string }) => {
+  return (<Avatar size="small" src={encodeURI(props.url)}/>);
 }
 
 function MarketSelector({
@@ -303,7 +279,7 @@ function MarketSelector({
               ? 1
               : 0,
           )
-          .map(({ address, name, deprecated }, i) => (
+          .map(({ address, name, deprecated, quoteUrl, baseUrl }, i) => (
             <List.Item
               value={address.toBase58()}
               key={nanoid()}
@@ -317,8 +293,8 @@ function MarketSelector({
               onClick={() => { onSetMarketAddress(address.toBase58()) }}
             >
               {name} {deprecated ? ' (Deprecated)' : null}
-              <Icon mint={extractBase(name)}></Icon>
-              <Icon mint={extractQuote(name)}></Icon>
+              <Icon url={baseUrl}></Icon>
+              <Icon url={quoteUrl}></Icon>
             </List.Item>
           ))}
       </div>
