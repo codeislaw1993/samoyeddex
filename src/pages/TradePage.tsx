@@ -207,6 +207,8 @@ export const Icon = (props: { mint: string | undefined }) => {
 
   if (props.mint === "HAMS")
     return <Avatar size="small" src="https://i.ibb.co/XxvTLQV/JG3-DYn-K-400x400.jpg"/>;
+  if (props.mint === "LIQ")
+    return <Avatar size="small" src="https://liqsolana.com/wp-content/uploads/2021/06/200x.png"/>;
 
   const token = tokenMap.get(props.mint);
   if (!token || !token.logoURI) return null;

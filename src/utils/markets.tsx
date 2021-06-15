@@ -153,6 +153,15 @@ const hamsUSDCMarketsInfo = {
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
 
+const liqUSDCMarketsInfo = {
+  address: new PublicKey("FLKUQGh9VAG4otn4njLPUf5gaUPx5aAZ2Q6xWiD3hH5u"),
+  deprecated: false,
+  name : "LIQ/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "LIQ",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+
 export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
   ? Array<{
       address: PublicKey;
@@ -173,13 +182,15 @@ export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
         .concat(rayUSDTMarketsInfo)
         .concat(catoUSDCMarketsInfo)
         .concat(hamsUSDCMarketsInfo)
-        .concat(bdeUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+        .concat(bdeUSDCMarketsInfo)
+        .concat(liqUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
   : MARKETS
         .concat(samoUSDCMarketsInfo)
         .concat(stnkUSDCMarketsInfo)
         .concat(felonUSDCMarketsInfo)
         .concat(sHBLUSDCMarketsInfo)
-        .concat(tulipUSDCMarketsInfo);
+        .concat(tulipUSDCMarketsInfo)
+        .concat(liqUSDCMarketsInfo);
 
 export function useMarketsList() {
   return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));
