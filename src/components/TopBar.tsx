@@ -158,7 +158,7 @@ export default function TopBar() {
       <Wrapper className="topBarWrapper">
         <LogoWrapper className="logoTitle" onClick={() => history.push(tradePageUrl)}>
           <img src={logo} alt="" />
-          {'Samoyed Lover BUIDL Samoyed DEX'}
+          {'SAMO DEX'}
         </LogoWrapper>
         <Menu
           mode="horizontal"
