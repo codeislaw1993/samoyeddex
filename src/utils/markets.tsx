@@ -192,6 +192,17 @@ function getDefaultMarkets () {
     baseUrl: "https://liqsolana.com/wp-content/uploads/2021/06/200x.png"
   };
 
+  const snowshoeUSDCMarketsInfo = {
+    address: new PublicKey("56ZFVzqMqtDmyry9bK7vi1szUV2nuQ4kT6CzFAB649wE"),
+    deprecated: false,
+    name : "SNOWSHOE/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "SNOWSHOE",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://i.ibb.co/2s3hKGX/2021-06-17-00-41-21.jpg"
+  };
+
   return Array<{
     address: PublicKey;
     name: string;
@@ -212,7 +223,8 @@ function getDefaultMarkets () {
       .concat(catoUSDCMarketsInfo)
       .concat(hamsUSDCMarketsInfo)
       .concat(bdeUSDCMarketsInfo)
-      .concat(liqUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+      .concat(liqUSDCMarketsInfo)
+      .concat(snowshoeUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
 }
 
 export function useMarketsList() {

@@ -152,7 +152,7 @@ function TradePageInner() {
       />
       <Wrapper>
           <Row>
-            <Col span={width < 1000 ? 24 : 3}>
+            <Col span={width < 1000 ? 24 : 4}>
               <h4 style={{paddingLeft: '10px'}}>Click a pair below: </h4>
               <MarketSelector
                 markets={markets}
@@ -172,7 +172,7 @@ function TradePageInner() {
               </Popover>
             ) : null}
           </Col>
-            <Col span={width < 1000 ? 24 : 21}>
+            <Col span={width < 1000 ? 24 : 20}>
               {component}
             </Col>
         </Row>
