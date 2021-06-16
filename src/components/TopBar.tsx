@@ -1,12 +1,10 @@
 import {
-  InfoCircleOutlined,
-  PlusCircleOutlined,
   SettingOutlined,
   TwitterOutlined,
   GithubOutlined,
   SendOutlined,
 } from '@ant-design/icons';
-import { Button, Col, Menu, Popover, Row, Select } from 'antd';
+import { Button, Col, Menu, Popover, Row } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.jpg';
@@ -14,23 +12,11 @@ import styled from 'styled-components';
 import { useWallet } from '../utils/wallet';
 import { ENDPOINTS, useConnectionConfig } from '../utils/connection';
 import Settings from './Settings';
-import CustomClusterEndpointDialog from './CustomClusterEndpointDialog';
-import { EndpointInfo } from '../utils/types';
-import { notify } from '../utils/notifications';
-import { Connection } from '@solana/web3.js';
 import WalletConnect from './WalletConnect';
-import AppSearch from './AppSearch';
 import { getTradePageUrl } from '../utils/markets';
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import { Switch } from "antd";
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  padding: 0px 30px;
-  flex-wrap: wrap;
-`;
 
 const LogoWrapper = styled.div`
   display: flex;
@@ -38,8 +24,8 @@ const LogoWrapper = styled.div`
   font-weight: bold;
   cursor: pointer;
   img {
-    height: 30px;
-    margin-right: 8px;
+    height: 25px;
+    margin-left: 4px;
   }
 `;
 
@@ -60,17 +46,12 @@ const EXTERNAL_LINKS = {
 export default function TopBar() {
   const { connected, wallet } = useWallet();
   const {
-    endpoint,
     endpointInfo,
     setEndpoint,
-    availableEndpoints,
-    setCustomEndpoints,
   } = useConnectionConfig();
-  const [addEndpointVisible, setAddEndpointVisible] = useState(false);
-  const [testingConnection, setTestingConnection] = useState(false);
   const location = useLocation();
   const history = useHistory();
-  const [searchFocussed, setSearchFocussed] = useState(false);
+  const [searchFocussed] = useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState();
   const { switcher, themes } = useThemeSwitcher();
 
@@ -89,48 +70,6 @@ export default function TopBar() {
     },
     [history],
   );
-
-  const onAddCustomEndpoint = (info: EndpointInfo) => {
-    const existingEndpoint = availableEndpoints.some(
-      (e) => e.endpoint === info.endpoint,
-    );
-    if (existingEndpoint) {
-      notify({
-        message: `An endpoint with the given url already exists`,
-        type: 'error',
-      });
-      return;
-    }
-
-    const handleError = (e) => {
-      console.log(`Connection to ${info.endpoint} failed: ${e}`);
-      notify({
-        message: `Failed to connect to ${info.endpoint}`,
-        type: 'error',
-      });
-    };
-
-    try {
-      const connection = new Connection(info.endpoint, 'recent');
-      connection
-        .getEpochInfo()
-        .then((result) => {
-          setTestingConnection(true);
-          console.log(`testing connection to ${info.endpoint}`);
-          const newCustomEndpoints = [
-            ...availableEndpoints.filter((e) => e.custom),
-            info,
-          ];
-          setEndpoint(info.endpoint);
-          setCustomEndpoints(newCustomEndpoints);
-        })
-        .catch(handleError);
-    } catch (e) {
-      handleError(e);
-    } finally {
-      setTestingConnection(false);
-    }
-  };
 
   const endpointInfoCustom = endpointInfo && endpointInfo.custom;
   useEffect(() => {
@@ -158,8 +97,7 @@ export default function TopBar() {
         >
           <Menu.Item key="/">
             <LogoWrapper>
-              <img src={logo} alt="" />
-              {'SAMO DEX'}
+              {'Samoyed Lover DEX'}<img src={logo} alt="" />
             </LogoWrapper>
           </Menu.Item>
           <Menu.Item key={tradePageUrl}>
@@ -167,12 +105,12 @@ export default function TopBar() {
           </Menu.Item>
           {(!searchFocussed || location.pathname === '/convert') && (
             <Menu.Item key="/convert">
-              Swap using order book
+              Swap using trade order
             </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/trade') && (
               <Menu.Item key="/trade">
-                Swap using liquidity
+                Swap
               </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/add') && (
@@ -182,7 +120,7 @@ export default function TopBar() {
           )}
           {(!searchFocussed || location.pathname === '/pool') && (
               <Menu.Item key="/pool">
-                My Staked Pool
+                Your Liquidity
               </Menu.Item>
           )}
           <Menu.Item key="/farm" disabled={true}>

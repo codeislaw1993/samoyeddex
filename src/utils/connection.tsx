@@ -64,7 +64,7 @@ export function ConnectionProvider({ children }) {
   useEffect(() => {
     new TokenListProvider().resolve().then(tokens => {
       const tokenList = tokens.filterByClusterSlug('mainnet-beta').getList();
-
+      setTokens(tokenList);
       setTokenMap(tokenList.reduce((map, item) => {
         map.set(item.address, item);
         return map;

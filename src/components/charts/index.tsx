@@ -1,27 +1,20 @@
 import React, {
-  useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import {
   Button,
-  Card,
-  Col,
-  Row,
   Table,
   Tooltip,
   Typography,
 } from "antd";
 import {
   TableOutlined,
-  OneToOneOutlined,
 } from "@ant-design/icons";
 import { PoolIcon } from "../tokenIcon";
 import { Input } from "antd";
 import "./styles.less";
-import echarts from "echarts";
 import { useEnrichedPools } from "../../context/market";
 import { usePools } from "../../utils/pools";
 import {
@@ -31,9 +24,7 @@ import {
   useLocalStorageState,
 } from "../../utils/utils";
 import { PoolAddress } from "../pool/address";
-import { PoolCard } from "./../pool/card";
 import { MigrationModal } from "../migration";
-import { HistoricalLiquidity, HistoricalVolume } from "./historical";
 
 const { Text } = Typography;
 
@@ -63,13 +54,6 @@ const DEFAULT_DISPLAY_TYPE = "Table";
 
 export const ChartsView = React.memo(() => {
   const [search, setSearch] = useState<string>("");
-  const [totals, setTotals] = useState<Totals>(() => ({
-    liquidity: 0,
-    volume: 0,
-    fees: 0,
-  }));
-  const chartDiv = useRef<HTMLDivElement>(null);
-  const echartsRef = useRef<any>(null);
   const { pools } = usePools();
   const enriched = useEnrichedPools(pools);
 
@@ -78,21 +62,6 @@ export const ChartsView = React.memo(() => {
     DEFAULT_DISPLAY_TYPE
   );
 
-  useEffect(() => {
-    if (chartDiv.current) {
-      echartsRef.current = echarts.init(chartDiv.current);
-    }
-
-    return () => {
-      echartsRef.current.dispose();
-    };
-  }, []);
-
-  // TODO: display user percent in the pool
-  // const { ownedPools } = useOwnedPools();
-
-  // TODO: create cache object with layout type, get, query, add
-
   let searchRegex: RegExp | undefined = useMemo(() => {
     try {
       return new RegExp(search, "i");
@@ -100,66 +69,6 @@ export const ChartsView = React.memo(() => {
       // ignore bad regex typed by user
     }
   }, [search]);
-
-  const updateChart = useCallback(() => {
-    if (echartsRef.current) {
-      echartsRef.current.setOption({
-        series: [
-          {
-            name: "Liquidity",
-            type: "treemap",
-            top: 0,
-            bottom: 10,
-            left: 30,
-            right: 30,
-            animation: false,
-            // visibleMin: 300,
-            label: {
-              show: true,
-              formatter: "{b}",
-            },
-            itemStyle: {
-              normal: {
-                borderColor: "#000",
-              },
-            },
-            breadcrumb: {
-              show: false,
-            },
-            data: enriched
-              .filter(
-                (row) => !search || !searchRegex || searchRegex.test(row.name)
-              )
-              .map((row) => {
-                return {
-                  value: row.liquidity,
-                  name: row.name,
-                  path: `Liquidity/${row.name}`,
-                  data: row,
-                };
-              }),
-          },
-        ],
-      });
-    }
-  }, [enriched, search, searchRegex]);
-
-  // Updates total values
-  useEffect(() => {
-    setTotals(
-      enriched.reduce(
-        (acc, item) => {
-          acc.liquidity = acc.liquidity + item.liquidity;
-          acc.volume = acc.volume + item.volume24h;
-          acc.fees = acc.fees + item.fees;
-          return acc;
-        },
-        { liquidity: 0, volume: 0, fees: 0 } as Totals
-      )
-    );
-
-    updateChart();
-  }, [enriched, updateChart, search]);
 
   const columns = [
     {
@@ -312,46 +221,16 @@ export const ChartsView = React.memo(() => {
             icon={<TableOutlined />}
           />
         </Tooltip>
-        <Tooltip title="Show as cards">
-          <Button
-            size="small"
-            type={infoDisplayType === "Card" ? "primary" : "text"}
-            onClick={() => setInfoDisplayType("Card")}
-            icon={<OneToOneOutlined />}
-          />
-        </Tooltip>
       </div>
-      <Row gutter={16} style={{ padding: "0px 30px", margin: "30px 0px" }}>
-        <Col span={12}>
-          <Card>
-            <HistoricalLiquidity current={formatUSD.format(totals.liquidity)} />
-          </Card>
-        </Col>
-        <Col span={12}>
-          <Card>
-            <HistoricalVolume current={formatUSD.format(totals.volume)} />
-          </Card>
-        </Col>
-      </Row>
-      <div ref={chartDiv} style={{ height: "250px", width: "100%" }} />
-      {infoDisplayType === "Table" ? (
         <Table
           dataSource={enriched.filter(
             (row) => !search || !searchRegex || searchRegex.test(row.name)
           )}
+          style={{margin: '15px', padding: '15px', background: 'unset'}}
           columns={columns}
           size="small"
           pagination={{ pageSize: 10 }}
         />
-      ) : (
-        <div className="pool-grid">
-          {enriched
-            .sort((a, b) => b.liquidity - a.liquidity)
-            .map((p) => {
-              return <PoolCard pool={p.raw} />;
-            })}
-        </div>
-      )}
       <MigrationModal />
     </>
   );

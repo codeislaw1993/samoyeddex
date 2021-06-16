@@ -84,7 +84,7 @@ export const TradeEntry = () => {
         ];
 
         await swap(connection, wallet, components, slippage, pool);
-      } catch {
+      } catch (ex) {
         notify({
           description:
             "Please try again and approve transactions from your wallet",

@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
 import React, { useState } from 'react';
 import TopBar from './TopBar';
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 export default function BasicLayout({ children }) {
   const [collapsed, setCollapsed] = useState('');
@@ -16,7 +16,7 @@ export default function BasicLayout({ children }) {
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <TopBar />
         </Sider>
-        <Content style={{ flex: 1 }}>{children}</Content>
+        <Content style={{ flex: 1, marginTop: '50px' }}>{children}</Content>
       </Layout>
     </React.Fragment>
   );

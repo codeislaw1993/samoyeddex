@@ -604,7 +604,7 @@ export const usePools = () => {
         new PublicKey("SwaPpA9LAaLfeLi3a68M4DjnLqgtticKg6CnyNwgAC8"),
       async (info) => {
         const id = (info.accountId as unknown) as string;
-        if (info.accountInfo.data.length === programIds().swapLayout.span) {
+        if (info.accountInfo.data.length === programIds().swapLayout?.span) {
           const account = info.accountInfo;
           const updated = {
             data: programIds().swapLayout.decode(account.data),

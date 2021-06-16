@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Col, Popover, Row, List, Menu } from 'antd';
+import { Col, Popover, Row, Menu } from 'antd';
 import styled from 'styled-components';
 import Orderbook from '../components/Orderbook';
 import UserInfoTable from '../components/UserInfoTable';
@@ -17,18 +17,14 @@ import LinkAddress from '../components/LinkAddress';
 //import { TVChartContainer } from '../components/TradingView';
 import DeprecatedMarketsInstructions from '../components/DeprecatedMarketsInstructions';
 import {
-  DeleteOutlined,
   InfoCircleOutlined,
-  PlusCircleOutlined,
 } from '@ant-design/icons';
 import CustomMarketDialog from '../components/CustomMarketDialog';
 import { notify } from '../utils/notifications';
 import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
-import FloatingElement from "../components/layout/FloatingElement";
 import { Avatar } from 'antd';
 import {TVChartContainer} from "../components/TradingView";
-import Sider from "antd/lib/layout/Sider";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -79,7 +75,7 @@ function TradePageInner() {
   });
 
   useEffect(() => {
-    document.title = marketName ? `${marketName} — SAMO DEX` : 'SAMO DEX';
+    document.title = marketName ? `${marketName} — Samoyed Lover DEX` : 'Samoyed Lover DEX';
   }, [marketName]);
 
   const changeOrderRef = useRef<
@@ -156,7 +152,7 @@ function TradePageInner() {
       />
       <Wrapper>
           <Row>
-            <Col span={width < 1000 ? 24 : 4}>
+            <Col span={width < 1000 ? 24 : 3}>
               <h4 style={{paddingLeft: '10px'}}>Click a pair below: </h4>
               <MarketSelector
                 markets={markets}
@@ -176,7 +172,7 @@ function TradePageInner() {
               </Popover>
             ) : null}
           </Col>
-            <Col span={width < 1000 ? 24 : 20}>
+            <Col span={width < 1000 ? 24 : 21}>
               {component}
             </Col>
         </Row>
@@ -192,7 +188,7 @@ function MarketSelector({
   customMarkets,
   onDeleteCustomMarket,
 }) {
-  const { market, setMarketAddress } = useMarket();
+  const { setMarketAddress } = useMarket();
 
   const onSetMarketAddress = (marketAddress) => {
     setHandleDeprecated(false);
