@@ -25104,6 +25104,9 @@ input[type='number']:hover::-webkit-inner-spin-button {
 .ant-divider-horizontal.ant-divider-with-text::before {
   border-top: 1px solid #d0f6fd !important;
 }
+.ant-menu {
+  background-color: #83d4ff;
+}
 .ant-slider ant-slider-track:hover,
 .ant-slider-track,
 .ant-slider:hover .ant-slider-track {

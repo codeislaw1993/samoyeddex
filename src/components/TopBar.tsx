@@ -38,7 +38,7 @@ const LogoWrapper = styled.div`
   font-weight: bold;
   cursor: pointer;
   img {
-    height: 50px;
+    height: 30px;
     margin-right: 8px;
   }
 `;
@@ -149,23 +149,49 @@ export default function TopBar() {
 
   return (
     <>
-        <LogoWrapper className="logoTitle" onClick={() => history.push(tradePageUrl)}>
-          <img src={logo} alt="" />
-          {'SAMO DEX'}
-        </LogoWrapper>
         <Menu
-          mode="vertical-left"
+          mode="inline"
+          style={{height: "100%"}}
           theme={isDarkMode? 'dark':'light'}
           onClick={handleClick}
           selectedKeys={[location.pathname]}
         >
+          <Menu.Item key="/">
+            <LogoWrapper>
+              <img src={logo} alt="" />
+              {'SAMO DEX'}
+            </LogoWrapper>
+          </Menu.Item>
           <Menu.Item key={tradePageUrl}>
             Order book
           </Menu.Item>
           {(!searchFocussed || location.pathname === '/convert') && (
             <Menu.Item key="/convert">
-              Swap
+              Swap using order book
             </Menu.Item>
+          )}
+          {(!searchFocussed || location.pathname === '/trade') && (
+              <Menu.Item key="/trade">
+                Swap using liquidity
+              </Menu.Item>
+          )}
+          {(!searchFocussed || location.pathname === '/add') && (
+              <Menu.Item key="/add">
+                Add Liquidity
+              </Menu.Item>
+          )}
+          {(!searchFocussed || location.pathname === '/pool') && (
+              <Menu.Item key="/pool">
+                My Staked Pool
+              </Menu.Item>
+          )}
+          <Menu.Item key="/farm" disabled={true}>
+            Farm
+          </Menu.Item>
+          {(!searchFocussed || location.pathname === '/info') && (
+              <Menu.Item key="/info">
+                View Pool
+              </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/twitter') && (
               <Menu.Item key="/twitter">
@@ -174,7 +200,7 @@ export default function TopBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                  <TwitterOutlined className="topBarMenu" />
+                  <TwitterOutlined className="topBarMenu" /> Twitter
                 </a>
               </Menu.Item>
           )}
@@ -185,7 +211,7 @@ export default function TopBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                  <SendOutlined className="topBarMenu" />
+                  <SendOutlined className="topBarMenu" /> Telegram
                 </a>
               </Menu.Item>
           )}
@@ -196,7 +222,7 @@ export default function TopBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                  <GithubOutlined className="topBarMenu" />
+                  <GithubOutlined className="topBarMenu" /> Github
                 </a>
               </Menu.Item>
           )}

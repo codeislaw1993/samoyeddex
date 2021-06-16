@@ -61,11 +61,6 @@ export function ConnectionProvider({ children }) {
   const [tokens, setTokens] = useState<TokenInfo[]>([]);
   const [tokenMap, setTokenMap] = useState<Map<string, TokenInfo>>(new Map());
 
-  new TokenListProvider().resolve().then((tokens) => {
-    const tokenList = tokens.filterByClusterSlug('mainnet-beta').getList();
-    setTokens(tokenList);
-  });
-
   useEffect(() => {
     new TokenListProvider().resolve().then(tokens => {
       const tokenList = tokens.filterByClusterSlug('mainnet-beta').getList();

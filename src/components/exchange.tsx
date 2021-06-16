@@ -38,14 +38,6 @@ export const ExchangeView = (props: {}) => {
   };
 
   return (
-    <div style={{
-      display: 'table',
-      position: 'absolute',
-      top: 50,
-      left: 0,
-      height: '100%',
-      width: '100%'}}>
-      <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
         <Card
           className="exchange-card"
           style={{marginLeft: 'auto', width: '500px', marginRight: 'auto'}}
@@ -60,7 +52,5 @@ export const ExchangeView = (props: {}) => {
         >
           {tabList.find((t) => t.key === activeTab)?.render()}
         </Card>
-      </div>
-    </div>
   );
 };

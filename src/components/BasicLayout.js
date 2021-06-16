@@ -13,7 +13,7 @@ export default function BasicLayout({ children }) {
   return (
     <React.Fragment>
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsed={collapsed} onCollapse={onCollapse}>
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <TopBar />
         </Sider>
         <Content style={{ flex: 1 }}>{children}</Content>
