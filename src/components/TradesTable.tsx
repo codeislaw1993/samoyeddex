@@ -22,7 +22,7 @@ export default function PublicTrades({ smallScreen }) {
         smallScreen
           ? { flex: 1 }
           : {
-              height: '400px',
+              height: '430px',
             }
       }
     >
