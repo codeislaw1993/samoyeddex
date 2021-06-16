@@ -16,7 +16,7 @@ export default function FloatingElement({
       className="floatingElementWrapper"
       style={{
         height: stretchVertical ? 'calc(100% - 10px)' : undefined,
-        borderRadius: '10px',
+        borderRadius: '0px',
         marginLeft: '15px',
         border: '1px solid #1890ff',
         ...style,

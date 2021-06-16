@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Col, Popover, Row, List } from 'antd';
+import { Col, Popover, Row, List, Menu } from 'antd';
 import styled from 'styled-components';
 import Orderbook from '../components/Orderbook';
 import UserInfoTable from '../components/UserInfoTable';
@@ -28,6 +28,7 @@ import { nanoid } from 'nanoid';
 import FloatingElement from "../components/layout/FloatingElement";
 import { Avatar } from 'antd';
 import {TVChartContainer} from "../components/TradingView";
+import Sider from "antd/lib/layout/Sider";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -174,10 +175,6 @@ function TradePageInner() {
                 <InfoCircleOutlined style={{ color: '#2abdd2',  marginLeft: '5px' }} />
               </Popover>
             ) : null}
-            <PlusCircleOutlined
-                style={{ color: '#2abdd2', marginLeft: '5px' }}
-                onClick={() => setAddMarketVisible(true)}
-            />
           </Col>
             <Col span={width < 1000 ? 24 : 20}>
               {component}
@@ -186,10 +183,6 @@ function TradePageInner() {
       </Wrapper>
     </>
   );
-}
-
-export const Icon = (props: { url: string }) => {
-  return (<Avatar size="small" src={encodeURI(props.url)}/>);
 }
 
 function MarketSelector({
@@ -209,97 +202,54 @@ function MarketSelector({
   const extractBase = (a) => a.split('/')[0];
   const extractQuote = (a) => a.split('/')[1];
 
-  const selectedMarket = getMarketInfos(customMarkets)
-    .find(
-      (proposedMarket) =>
-        market?.address && proposedMarket.address.equals(market.address),
-    )
-    ?.address?.toBase58();
-
   return (
-      <FloatingElement
-          style={ { flex: 1 } }
-      >
-    <List
-      size={'large'}
-      style={{ width: '100%' }}
-    >
-      {customMarkets && customMarkets.length > 0 && (
-          <div>
-          {customMarkets.map(({ address, name }, i) => (
-            <List.Item
-              value={address}
-              key={nanoid()}
-              name={name}
-              class="marketSelectorListItem"
-              style={{
-                padding: '10px',
-                // @ts-ignore
-                backgroundColor: i % 2 === 0 ? 'rgb(39, 44, 61)' : null,
-              }}
-            >
-              <Row>
-                <Col flex="auto">{name}</Col>
-                {selectedMarket !== address && (
-                  <Col>
-                    <DeleteOutlined
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.nativeEvent.stopImmediatePropagation();
-                        onDeleteCustomMarket && onDeleteCustomMarket(address);
-                      }}
-                    />
-                  </Col>
-                )}
-              </Row>
-            </List.Item>
-          ))}
-        </div>
-      )}
-      <div
-          style={{
-            marginRight: '-20px',
-            paddingRight: '5px',
-            overflowY: 'scroll',
-            maxHeight: 'calc(100vh - 180px)',
-          }}>
-        {markets
-          .sort((a, b) =>
-            extractQuote(a.name) === 'USDT' && extractQuote(b.name) !== 'USDT'
-              ? -1
-              : extractQuote(a.name) !== 'USDT' &&
-                extractQuote(b.name) === 'USDT'
-              ? 1
-              : 0,
-          )
-          .sort((a, b) =>
-            extractBase(a.name) < extractBase(b.name)
-              ? -1
-              : extractBase(a.name) > extractBase(b.name)
-              ? 1
-              : 0,
-          )
-          .map(({ address, name, deprecated, quoteUrl, baseUrl }, i) => (
-            <List.Item
-              value={address.toBase58()}
-              key={nanoid()}
-              name={name}
-              style={{
-                padding: '10px',
-                // @ts-ignore
-                backgroundColor: null,
-              }}
-              class="marketSelectorListItem"
-              onClick={() => { onSetMarketAddress(address.toBase58()) }}
-            >
-              {name} {deprecated ? ' (Deprecated)' : null}
-              <Icon url={baseUrl}></Icon>
-              <Icon url={quoteUrl}></Icon>
-            </List.Item>
-          ))}
-      </div>
-    </List>
-      </FloatingElement>
+        <Menu style={{
+              marginRight: '-20px',
+              paddingRight: '5px',
+              overflowY: 'scroll',
+              backgroundColor: 'rgba(0, 0, 0, 0)',
+              maxHeight: '90%',
+            }} mode="inline"
+            defaultSelectedKeys={['1']} >
+          {markets
+            .sort((a, b) =>
+              extractQuote(a.name) === 'USDT' && extractQuote(b.name) !== 'USDT'
+                ? -1
+                : extractQuote(a.name) !== 'USDT' &&
+                  extractQuote(b.name) === 'USDT'
+                ? 1
+                : 0,
+            )
+            .sort((a, b) =>
+              extractBase(a.name) < extractBase(b.name)
+                ? -1
+                : extractBase(a.name) > extractBase(b.name)
+                ? 1
+                : 0,
+            )
+            .map(({ address, name, deprecated, quoteUrl, baseUrl }, i) => (
+              <Menu.Item
+                value={address.toBase58()}
+                key={nanoid()}
+                name={name}
+                style={{
+                  // @ts-ignore
+                  backgroundColor: null,
+                }}
+                class="marketSelectorListItem"
+                icon={
+                  <div style={{width: '100%', display: 'flex', justifyContent: 'space-around'}}>
+                    {name}
+                    <div>
+                      <Avatar size="small" src={encodeURI(baseUrl)}/>
+                      <Avatar size="small" src={encodeURI(quoteUrl)}/>
+                    </div>
+                  </div>}
+                onClick={() => { onSetMarketAddress(address.toBase58()) }}
+              >
+              </Menu.Item>
+            ))}
+        </Menu>
   );
 }
 
