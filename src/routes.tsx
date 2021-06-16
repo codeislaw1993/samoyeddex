@@ -21,7 +21,7 @@ export function Routes() {
         <BasicLayout>
           <Switch>
             <Route exact path="/">
-              <Redirect to={'/trade'} />
+              <Redirect to={'/market/FR3SPJmgfRSKKQ2ysUZBu7vJLpzTixXnjzb84bY3Diif'} />
             </Route>
             <Route exact path="/convert" component={ConvertPage} />
             <Route exact path="/market/:marketAddress">
