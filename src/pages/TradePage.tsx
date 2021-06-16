@@ -156,7 +156,7 @@ function TradePageInner() {
       <Wrapper>
           <Row>
             <Col span={width < 1000 ? 24 : 4}>
-              <h4 style={{paddingLeft: '10px'}}>Click a market below: </h4>
+              <h4 style={{paddingLeft: '10px'}}>Click a pair below: </h4>
               <MarketSelector
                 markets={markets}
                 setHandleDeprecated={setHandleDeprecated}
