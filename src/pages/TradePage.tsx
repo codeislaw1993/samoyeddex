@@ -78,7 +78,7 @@ function TradePageInner() {
   });
 
   useEffect(() => {
-    document.title = marketName ? `${marketName} — Samoyed DEX` : 'Samoyed DEX';
+    document.title = marketName ? `${marketName} — SAMO DEX` : 'SAMO DEX';
   }, [marketName]);
 
   const changeOrderRef = useRef<
