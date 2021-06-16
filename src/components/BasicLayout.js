@@ -1,17 +1,21 @@
 import { Layout } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import TopBar from './TopBar';
-const { Header, Content } = Layout;
+const { Header, Content, Footer, Sider } = Layout;
 
 export default function BasicLayout({ children }) {
+  const [collapsed, setCollapsed] = useState('');
+
+  const onCollapse = (collapsed) => {
+    setCollapsed(collapsed);
+  };
+
   return (
     <React.Fragment>
-      <Layout
-        style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}
-      >
-        <Header style={{ padding: 0, minHeight: 64, height: 'unset' }}>
+      <Layout style={{ minHeight: '100vh' }}>
+        <Sider collapsed={collapsed} onCollapse={onCollapse}>
           <TopBar />
-        </Header>
+        </Sider>
         <Content style={{ flex: 1 }}>{children}</Content>
       </Layout>
     </React.Fragment>

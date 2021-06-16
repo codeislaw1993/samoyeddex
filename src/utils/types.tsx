@@ -51,6 +51,8 @@ export interface MarketInfo {
   deprecated: boolean;
   quoteLabel?: string;
   baseLabel?: string;
+  quoteUrl?: string;
+  baseUrl?: string;
 }
 
 export interface CustomMarketInfo {

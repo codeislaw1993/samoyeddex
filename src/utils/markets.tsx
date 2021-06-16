@@ -1,4 +1,4 @@
-import {Market, MARKETS, OpenOrders, Orderbook, TOKEN_MINTS, TokenInstructions,} from '@project-serum/serum';
+import {Market, OpenOrders, Orderbook, TOKEN_MINTS, TokenInstructions,} from '@project-serum/serum';
 import {PublicKey} from '@solana/web3.js';
 import React, {useContext, useEffect, useState} from 'react';
 import {divideBnToNumber, floorToDecimal, getTokenMultiplierFromDecimals, sleep, useLocalStorageState,} from './utils';
@@ -24,162 +24,196 @@ import {WRAPPED_SOL_MINT} from '@project-serum/serum/lib/token-instructions';
 import {Order} from '@project-serum/serum/lib/market';
 import BonfidaApi from './bonfidaConnector';
 
-// Used in debugging, should be false in production
-const _IGNORE_DEPRECATED = true;
+export const USE_MARKETS: MarketInfo[] = getDefaultMarkets()
 
-const solUSDTMarketsInfo = {
-  address: new PublicKey("HWHvQhFmJB3NUcu1aihKmrKegfVxBEHzwVX6yZCKEsi1"),
-  deprecated: false,
-  name : "SOL/USDT",
-  quoteLabel: "USDT",
-  baseLabel: "SOL",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+function getDefaultMarkets () {
+  const solUSDTMarketsInfo = {
+    address: new PublicKey("HWHvQhFmJB3NUcu1aihKmrKegfVxBEHzwVX6yZCKEsi1"),
+    deprecated: false,
+    name : "SOL/USDT",
+    quoteLabel: "USDT",
+    baseLabel: "SOL",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/explorer/public/tokens/usdt.svg",
+    baseUrl: "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/solana/info/logo.png"
+  };
 
-const solUSDCMarketsInfo = {
-  address: new PublicKey("9wFFyRfZBsuAha4YcuxcXLKwMxJR43S7fPfQLusDBzvT"),
-  deprecated: false,
-  name : "SOL/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "SOL",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const solUSDCMarketsInfo = {
+    address: new PublicKey("9wFFyRfZBsuAha4YcuxcXLKwMxJR43S7fPfQLusDBzvT"),
+    deprecated: false,
+    name : "SOL/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "SOL",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/solana/info/logo.png"
+  };
 
-const srmUSDTMarketsInfo = {
-  address: new PublicKey("AtNnsY1AyRERWJ8xCskfz38YdvruWVJQUVXgScC1iPb"),
-  deprecated: false,
-  name : "SRM/USDT",
-  quoteLabel: "USDT",
-  baseLabel: "SRM",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const srmUSDTMarketsInfo = {
+    address: new PublicKey("AtNnsY1AyRERWJ8xCskfz38YdvruWVJQUVXgScC1iPb"),
+    deprecated: false,
+    name : "SRM/USDT",
+    quoteLabel: "USDT",
+    baseLabel: "SRM",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/explorer/public/tokens/usdt.svg",
+    baseUrl: "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/ethereum/assets/0x476c5E26a75bd202a9683ffD34359C0CC15be0fF/logo.png"
+  };
 
-const srmUSDCMarketsInfo = {
-  address: new PublicKey("ByRys5tuUWDgL73G8JBAEfkdFf8JWBzPBDHsBVQ5vbQA"),
-  deprecated: false,
-  name : "SRM/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "SRM",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const srmUSDCMarketsInfo = {
+    address: new PublicKey("ByRys5tuUWDgL73G8JBAEfkdFf8JWBzPBDHsBVQ5vbQA"),
+    deprecated: false,
+    name : "SRM/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "SRM",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/ethereum/assets/0x476c5E26a75bd202a9683ffD34359C0CC15be0fF/logo.png"
+  };
 
-const samoUSDCMarketsInfo = {
-  address: new PublicKey("FR3SPJmgfRSKKQ2ysUZBu7vJLpzTixXnjzb84bY3Diif"),
-  deprecated: false,
-  name : "SAMO/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "SAMO",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const samoUSDCMarketsInfo = {
+    address: new PublicKey("FR3SPJmgfRSKKQ2ysUZBu7vJLpzTixXnjzb84bY3Diif"),
+    deprecated: false,
+    name : "SAMO/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "SAMO",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/solana/info/logo.png",
+    baseUrl: "https://i.ibb.co/tLGpvNf/samo.png"
+  };
 
-const stnkUSDCMarketsInfo = {
-  address: new PublicKey("7vJhxNnkPBTJKNHsbjZUhmCVCxmYKgV6vgJ56eH2MQaC"),
-  deprecated: false,
-  name : "STNK/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "STNK",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const stnkUSDCMarketsInfo = {
+    address: new PublicKey("7vJhxNnkPBTJKNHsbjZUhmCVCxmYKgV6vgJ56eH2MQaC"),
+    deprecated: false,
+    name : "STNK/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "STNK",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/solana/info/logo.png",
+    baseUrl: "https://raw.githubusercontent.com/StonksDev/Resource/main/StonksIcon250.png"
+  };
 
-const felonUSDCMarketsInfo = {
-  address: new PublicKey("HwmgM7i8wo5qCjyQsrQxrDJEs3eJULXmiKAStWLUQJf"),
-  deprecated: false,
-  name : "FELON/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "FELON",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const felonUSDCMarketsInfo = {
+    address: new PublicKey("HwmgM7i8wo5qCjyQsrQxrDJEs3eJULXmiKAStWLUQJf"),
+    deprecated: false,
+    name : "FELON/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "FELON",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://i.ibb.co/yW2zDZ4/E1-Oso-Gt-XEAMUX4l.jpg"
+  };
 
-const sHBLUSDCMarketsInfo = {
-  address: new PublicKey("9G2bAA5Uv8JyPZteuP73GJLUGg5CMbhMLCRSBUBLoXyt"),
-  deprecated: false,
-  name : "SHBL/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "SHBL",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const sHBLUSDCMarketsInfo = {
+    address: new PublicKey("9G2bAA5Uv8JyPZteuP73GJLUGg5CMbhMLCRSBUBLoXyt"),
+    deprecated: false,
+    name : "SHBL/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "SHBL",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/solana/info/logo.png",
+    baseUrl: "https://cdn.jsdelivr.net/gh/leafwind/shoebill-coin/shoebill.png"
+  };
 
-const tulipUSDCMarketsInfo = {
-  address: new PublicKey("8GufnKq7YnXKhnB3WNhgy5PzU9uvHbaaRrZWQK6ixPxW"),
-  deprecated: false,
-  name : "TULIP/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "TULIP",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const tulipUSDCMarketsInfo = {
+    address: new PublicKey("8GufnKq7YnXKhnB3WNhgy5PzU9uvHbaaRrZWQK6ixPxW"),
+    deprecated: false,
+    name : "TULIP/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "TULIP",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/solana/info/logo.png",
+    baseUrl: "https://solfarm.io/solfarm-logo.svg"
+  };
 
-const rayUSDCMarketsInfo = {
-  address: new PublicKey("2xiv8A5xrJ7RnGdxXB42uFEkYHJjszEhaJyKKt4WaLep"),
-  deprecated: false,
-  name : "RAY/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "RAY",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const rayUSDCMarketsInfo = {
+    address: new PublicKey("2xiv8A5xrJ7RnGdxXB42uFEkYHJjszEhaJyKKt4WaLep"),
+    deprecated: false,
+    name : "RAY/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "RAY",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/RVKd61ztZW9GUwhRbbLoYVRE5Xf1B2tVscKqwZqXgEr/logo.png",
+  };
 
-const rayUSDTMarketsInfo = {
-  address: new PublicKey("teE55QrL4a4QSfydR9dnHF97jgCfptpuigbb53Lo95g"),
-  deprecated: false,
-  name : "RAY/USDT",
-  quoteLabel: "USDT",
-  baseLabel: "TULIP",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const rayUSDTMarketsInfo = {
+    address: new PublicKey("teE55QrL4a4QSfydR9dnHF97jgCfptpuigbb53Lo95g"),
+    deprecated: false,
+    name : "RAY/USDT",
+    quoteLabel: "USDT",
+    baseLabel: "RAY",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/explorer/public/tokens/usdt.svg",
+    baseUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/RVKd61ztZW9GUwhRbbLoYVRE5Xf1B2tVscKqwZqXgEr/logo.png",
+  };
 
-const catoUSDCMarketsInfo = {
-  address: new PublicKey("9fe1MWiKqUdwift3dEpxuRHWftG72rysCRHbxDy6i9xB"),
-  deprecated: false,
-  name : "CATO/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "CATO",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
+  const catoUSDCMarketsInfo = {
+    address: new PublicKey("9fe1MWiKqUdwift3dEpxuRHWftG72rysCRHbxDy6i9xB"),
+    deprecated: false,
+    name : "CATO/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "CATO",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://raw.githubusercontent.com/SOL-CAT/SOL-CAT/main/CAT512.jpg"
+  };
 
-const bdeUSDCMarketsInfo = {
-  address: new PublicKey("2kQer4JyDA8wRxNpSCNG8zAne1zwWVhByTUu8Qi6BEjR"),
-  deprecated: false,
-  name : "BDE/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "BDE",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+  const bdeUSDCMarketsInfo = {
+    address: new PublicKey("2kQer4JyDA8wRxNpSCNG8zAne1zwWVhByTUu8Qi6BEjR"),
+    deprecated: false,
+    name : "BDE/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "BDE",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://raw.githubusercontent.com/bitcoinoverdose/bitcoinoverdose/main/bde.png",
+  }
+
+  const hamsUSDCMarketsInfo = {
+    address: new PublicKey("5j6hdwx4eW3QBYZtRjKiUj7aDA1dxDpveSHBznwq7kUv"),
+    deprecated: false,
+    name : "HAMS/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "HAMS",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://i.ibb.co/XxvTLQV/JG3-DYn-K-400x400.jpg"
+  };
+
+  const liqUSDCMarketsInfo = {
+    address: new PublicKey("FLKUQGh9VAG4otn4njLPUf5gaUPx5aAZ2Q6xWiD3hH5u"),
+    deprecated: false,
+    name : "LIQ/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "LIQ",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://liqsolana.com/wp-content/uploads/2021/06/200x.png"
+  };
+
+  return Array<{
+    address: PublicKey;
+    name: string;
+    programId: PublicKey;
+    deprecated: boolean;
+  }>(0)
+      .concat(solUSDTMarketsInfo)
+      .concat(solUSDCMarketsInfo)
+      .concat(srmUSDTMarketsInfo)
+      .concat(srmUSDCMarketsInfo)
+      .concat(samoUSDCMarketsInfo)
+      .concat(stnkUSDCMarketsInfo)
+      .concat(felonUSDCMarketsInfo)
+      .concat(sHBLUSDCMarketsInfo)
+      .concat(tulipUSDCMarketsInfo)
+      .concat(rayUSDCMarketsInfo)
+      .concat(rayUSDTMarketsInfo)
+      .concat(catoUSDCMarketsInfo)
+      .concat(hamsUSDCMarketsInfo)
+      .concat(bdeUSDCMarketsInfo)
+      .concat(liqUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
 }
-
-const hamsUSDCMarketsInfo = {
-  address: new PublicKey("5j6hdwx4eW3QBYZtRjKiUj7aDA1dxDpveSHBznwq7kUv"),
-  deprecated: false,
-  name : "HAMS/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "HAMS",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
-
-export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
-  ? Array<{
-      address: PublicKey;
-      name: string;
-      programId: PublicKey;
-      deprecated: boolean;
-    }>(0)
-        .concat(solUSDTMarketsInfo)
-        .concat(solUSDCMarketsInfo)
-        .concat(srmUSDTMarketsInfo)
-        .concat(srmUSDCMarketsInfo)
-        .concat(samoUSDCMarketsInfo)
-        .concat(stnkUSDCMarketsInfo)
-        .concat(felonUSDCMarketsInfo)
-        .concat(sHBLUSDCMarketsInfo)
-        .concat(tulipUSDCMarketsInfo)
-        .concat(rayUSDCMarketsInfo)
-        .concat(rayUSDTMarketsInfo)
-        .concat(catoUSDCMarketsInfo)
-        .concat(hamsUSDCMarketsInfo)
-        .concat(bdeUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
-  : MARKETS
-        .concat(samoUSDCMarketsInfo)
-        .concat(stnkUSDCMarketsInfo)
-        .concat(felonUSDCMarketsInfo)
-        .concat(sHBLUSDCMarketsInfo)
-        .concat(tulipUSDCMarketsInfo);
 
 export function useMarketsList() {
   return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));
@@ -308,7 +342,7 @@ const _SLOW_REFRESH_INTERVAL = 5 * 1000;
 // For things that change frequently
 const _FAST_REFRESH_INTERVAL = 1000;
 
-export const DEFAULT_MARKET = USE_MARKETS.concat(samoUSDCMarketsInfo).find(
+export const DEFAULT_MARKET = USE_MARKETS.find(
   ({ name, deprecated }) => name === 'SAMO/USDC' && !deprecated,
 );
 
@@ -327,13 +361,13 @@ export function getMarketDetails(
     (market?.baseMintAddress &&
       TOKEN_MINTS.find((token) => token.address.equals(market.baseMintAddress))
         ?.name) ||
-    (marketInfo?.baseLabel && `${marketInfo?.baseLabel}*`) ||
+    (marketInfo?.baseLabel && `${marketInfo?.baseLabel}`) ||
     'UNKNOWN';
   const quoteCurrency =
     (market?.quoteMintAddress &&
       TOKEN_MINTS.find((token) => token.address.equals(market.quoteMintAddress))
         ?.name) ||
-    (marketInfo?.quoteLabel && `${marketInfo?.quoteLabel}*`) ||
+    (marketInfo?.quoteLabel && `${marketInfo?.quoteLabel}`) ||
     'UNKNOWN';
 
   return {

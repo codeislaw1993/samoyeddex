@@ -38,7 +38,7 @@ const LogoWrapper = styled.div`
   font-weight: bold;
   cursor: pointer;
   img {
-    height: 30px;
+    height: 50px;
     margin-right: 8px;
   }
 `;
@@ -149,55 +149,26 @@ export default function TopBar() {
 
   return (
     <>
-      <CustomClusterEndpointDialog
-        visible={addEndpointVisible}
-        testingConnection={testingConnection}
-        onAddCustomEndpoint={onAddCustomEndpoint}
-        onClose={() => setAddEndpointVisible(false)}
-      />
-      <Wrapper className="topBarWrapper">
         <LogoWrapper className="logoTitle" onClick={() => history.push(tradePageUrl)}>
           <img src={logo} alt="" />
-          {'Samoyed Lover BUIDL Samoyed DEX'}
+          {'SAMO DEX'}
         </LogoWrapper>
         <Menu
-          mode="horizontal"
+          mode="vertical-left"
+          theme={isDarkMode? 'dark':'light'}
           onClick={handleClick}
           selectedKeys={[location.pathname]}
-          style={{
-            borderBottom: 'none',
-            backgroundColor: 'transparent',
-            display: 'flex',
-            alignItems: 'flex-end',
-            flex: 1,
-          }}
-          className="topBarMenu"
         >
-          <Menu.Item key={tradePageUrl} style={{ margin: '0 10px 0 20px' }}>
+          <Menu.Item key={tradePageUrl}>
             Order book
           </Menu.Item>
-          {(!searchFocussed || location.pathname === '/trade') && (
-              <Menu.Item key="/trade" style={{ margin: '0 10px' }}>
-                Swap
-              </Menu.Item>
-          )}
           {(!searchFocussed || location.pathname === '/convert') && (
-              <Menu.Item key="/add" style={{ margin: '0 10px' }}>
-                Add Liquidity
-              </Menu.Item>
-          )}
-          {(!searchFocussed || location.pathname === '/convert') && (
-              <Menu.Item key="/pool" style={{ margin: '0 10px' }}>
-                Provided Liquidity
-              </Menu.Item>
-          )}
-          {(!searchFocussed || location.pathname === '/convert') && (
-              <Menu.Item key="/info" style={{ margin: '0 10px' }}>
-                Pool Info
-              </Menu.Item>
+            <Menu.Item key="/convert">
+              Swap
+            </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/twitter') && (
-              <Menu.Item key="/twitter" style={{ margin: '0 10px' }}>
+              <Menu.Item key="/twitter">
                 <a
                     href={EXTERNAL_LINKS['/twitter']}
                     target="_blank"
@@ -208,7 +179,7 @@ export default function TopBar() {
               </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/telegram') && (
-              <Menu.Item key="/telegram" style={{ margin: '0 10px' }}>
+              <Menu.Item key="/telegram">
                 <a
                     href={EXTERNAL_LINKS['/telegram']}
                     target="_blank"
@@ -219,7 +190,7 @@ export default function TopBar() {
               </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/github') && (
-              <Menu.Item key="/github" style={{ margin: '0 10px' }}>
+              <Menu.Item key="/github">
                 <a
                     href={EXTERNAL_LINKS['/github']}
                     target="_blank"
@@ -232,10 +203,6 @@ export default function TopBar() {
           {!searchFocussed && (
             <Menu.SubMenu
               title="Learn"
-              onTitleClick={() =>
-                window.open(EXTERNAL_LINKS['/learn'], '_blank')
-              }
-              style={{ margin: '0 0px 0 10px' }}
             >
               <Menu.Item key="/add-market">
                 <a
@@ -293,86 +260,38 @@ export default function TopBar() {
               </Menu.Item>
             </Menu.SubMenu>
           )}
+          <Menu.Item key="/a" disabled={true}>
+            <div style={{
+              alignItems: 'center',
+              paddingRight: 5,
+            }}  className="topBarMenu">
+              <Row>
+                <Col>Light / Dark {'\u00A0'}</Col>
+                <Col><Switch checked={isDarkMode} onChange={toggleTheme} /> </Col>
+              </Row>
+            </div>
+          </Menu.Item>
+          <Menu.Item key="/b" disabled={true}>
+            <WalletConnect />
+          </Menu.Item>
+          <Menu.Item key="/c" disabled={true}>
+            {connected && (
+                <div>
+                  <Popover
+                      content={<Settings autoApprove={wallet?.autoApprove} />}
+                      placement="bottomRight"
+                      title="Settings"
+                      trigger="click"
+                  >
+                    <Button style={{ marginRight: 8 }}>
+                      <SettingOutlined />
+                      Settings
+                    </Button>
+                  </Popover>
+                </div>
+            )}
+          </Menu.Item>
         </Menu>
-        <div
-          style={{
-            display: 'none',
-            alignItems: 'center',
-            paddingRight: 5,
-          }}
-        >
-          <AppSearch
-            onFocus={() => setSearchFocussed(true)}
-            onBlur={() => setSearchFocussed(false)}
-            focussed={searchFocussed}
-            width={searchFocussed ? '350px' : '35px'}
-          />
-        </div>
-        <div style={{display: 'none'}}>
-          <Row
-            align="middle"
-            style={{ paddingLeft: 5, paddingRight: 5 }}
-            gutter={16}
-          >
-            <Col>
-              <PlusCircleOutlined
-                style={{ color: '#2abdd2' }}
-                onClick={() => setAddEndpointVisible(true)}
-              />
-            </Col>
-            <Col>
-              <Popover
-                content={endpoint}
-                placement="bottomRight"
-                title="URL"
-                trigger="hover"
-              >
-                <InfoCircleOutlined style={{ color: '#2abdd2' }} />
-              </Popover>
-            </Col>
-            <Col>
-              <Select
-                onSelect={setEndpoint}
-                value={endpoint}
-                style={{ marginRight: 8, width: '150px' }}
-              >
-                {availableEndpoints.map(({ name, endpoint }) => (
-                  <Select.Option value={endpoint} key={endpoint}>
-                    {name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Col>
-          </Row>
-        </div>
-        <div style={{
-          alignItems: 'center',
-          paddingRight: 5,
-        }}  className="topBarMenu">
-          <Row>
-            <Col>Light / Dark {'\u00A0'}</Col>
-            <Col><Switch checked={isDarkMode} onChange={toggleTheme} /> </Col>
-          </Row>
-        </div>
-        {connected && (
-          <div>
-            <Popover
-              content={<Settings autoApprove={wallet?.autoApprove} />}
-              placement="bottomRight"
-              title="Settings"
-              trigger="click"
-            >
-              <Button style={{ marginRight: 8 }}>
-                <SettingOutlined />
-                Settings
-              </Button>
-            </Popover>
-          </div>
-        )}
-        <div className="topBarMenu">
-          <WalletConnect />
-        </div>
-      </Wrapper>
     </>
   );
 }
