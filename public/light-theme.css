@@ -25199,14 +25199,13 @@ div.ant-typography-edit-content.ant-typography-rtl {
   }
 }
 .App-header {
-  background-color: #fff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #000;
+  background-color: #d0f6fd;
 }
 .App-link {
   color: #000;
@@ -25240,13 +25239,13 @@ input[type='number']:hover::-webkit-inner-spin-button {
   animation: highlight 0.5s ease 0s 1 alternate;
 }
 .topBarWrapper {
-  background-color: #83d4ff;
+  background-color: #fff;
 }
 .logoTitle {
   color: #000c17;
 }
 .topBarMenu {
-  color: #000;
+  color: #fff;
 }
 .ant-layout {
   background: #e9fafe;
@@ -25262,7 +25261,7 @@ input[type='number']:hover::-webkit-inner-spin-button {
 }
 .ant-modal-content,
 .floatingElementWrapper {
-  background-color: #d0f6fd;
+  background-color: #fff;
 }
 .ant-slider-dot-active,
 .ant-slider-handle,
@@ -25277,17 +25276,37 @@ input[type='number']:hover::-webkit-inner-spin-button {
 .ant-divider-horizontal.ant-divider-with-text::before {
   border-top: 1px solid #d0f6fd !important;
 }
-.ant-menu {
-  background-color: #83d4ff;
-}
-.ant-slider ant-slider-track:hover,
-.ant-slider-track,
 .ant-slider:hover .ant-slider-track {
   background-color: #d0f6fd;
   opacity: 0.75;
 }
+.ant-menu {
+  background-color: #fff;
+  font-weight: 700;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-right-color: #eee;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.ant-layout-content,
+.ant-layout-header {
+  background-color: #eee;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.ant-layout-header {
+  background-color: #fff;
+  font-weight: 700;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #eee;
+}
+.ant-slider ant-slider-track:hover,
+.ant-slider-track {
+  background-color: #d0f6fd;
+  opacity: 0.75;
+}
 .marketSelectorListItem {
-  background-color: #9dccf2;
+  background-color: #fff;
 }
 .trade-button {
   width: 100%;

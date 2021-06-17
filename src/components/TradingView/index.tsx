@@ -81,7 +81,6 @@ export const TVChartContainer = () => {
       user_id: defaultProps.userId,
       fullscreen: defaultProps.fullscreen,
       autosize: defaultProps.autosize,
-      height: defaultProps.height,
       studies_overrides: defaultProps.studiesOverrides,
       theme: currentTheme === 'dark' ? 'Dark' : 'Light'
     };
@@ -102,5 +101,5 @@ export const TVChartContainer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [market, currentTheme]);
 
-  return <div id={defaultProps.containerId} className="tradingview-chart" />;
+  return   <div id={defaultProps.containerId} className="tradingview-chart" />;
 };

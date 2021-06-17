@@ -1,7 +1,11 @@
-import { Layout } from 'antd';
+import { Layout, Popover, Button, Col, Row } from 'antd';
 import React, { useState } from 'react';
 import TopBar from './TopBar';
-const { Content, Sider } = Layout;
+import WalletConnect from './WalletConnect';
+import { SettingOutlined } from '@ant-design/icons';
+import Settings from './Settings';
+import { useWallet } from '../utils/wallet';
+const { Header, Content, Sider } = Layout;
 
 export default function BasicLayout({ children }) {
   const [collapsed, setCollapsed] = useState('');
@@ -10,13 +14,42 @@ export default function BasicLayout({ children }) {
     setCollapsed(collapsed);
   };
 
+  const { connected, wallet } = useWallet();
+
   return (
     <React.Fragment>
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-          <TopBar />
-        </Sider>
-        <Content style={{ flex: 1, marginTop: '50px' }}>{children}</Content>
+        <Header className="header" mode="inline">
+          <Row justify="center">
+            <Col span={20}>{'Samoyed Lover DEX'}</Col>
+            <Col span={2}>
+              {connected && (
+                <div>
+                  <Popover
+                    content={<Settings autoApprove={wallet?.autoApprove} />}
+                    placement="bottomRight"
+                    title="Settings"
+                    trigger="click"
+                  >
+                    <Button style={{ marginRight: 8 }}>
+                      <SettingOutlined />
+                      Settings
+                    </Button>
+                  </Popover>
+                </div>
+              )}
+            </Col>
+            <Col span={2}>
+              <WalletConnect />
+            </Col>
+          </Row>
+        </Header>
+        <Layout>
+          <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+            <TopBar />
+          </Sider>
+          <Content style={{ flex: 1 }}>{children}</Content>
+        </Layout>
       </Layout>
     </React.Fragment>
   );

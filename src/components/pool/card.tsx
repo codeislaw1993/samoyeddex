@@ -101,6 +101,7 @@ export const PoolCard = (props: { pool: PoolInfo; account?: TokenAccount }) => {
   return (
     <Card
       className="pool-card"
+      style={{borderRadius: '15px'}}
       title={
         <>
           <PoolIcon

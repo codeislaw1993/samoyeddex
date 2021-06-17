@@ -4,6 +4,8 @@ import "./view.less";
 import { useWallet } from "../../utils/wallet";
 import { PoolCard } from "./card";
 import { MigrationModal } from "../migration";
+import WalletConnect from "../WalletConnect";
+import {Card} from "antd";
 
 export const PoolOverview = () => {
   const owned = useOwnedPools();
@@ -11,7 +13,7 @@ export const PoolOverview = () => {
 
   return (
     <>
-      <div className="pool-grid">
+      <div className="pool-grid" style={{marginTop: '50px'}}>
         {owned.map((o) => (
           <PoolCard
             key={o.pool.pubkeys.account.toBase58()}
@@ -19,9 +21,16 @@ export const PoolOverview = () => {
             account={o.account}
           />
         ))}
-        {!connected && <h3>Connect to a wallet to view your liquidity.</h3>}
+        {!connected &&
+            <Card style={{marginTop: '50px'}}>
+                <div style={{margin: '50px'}}>
+                    <b>Please connect your wallet to view your liquidity.</b>
+                    <WalletConnect />
+                </div>
+            </Card>
+        }
       </div>
       <MigrationModal />
     </>
   );
-};
+}

@@ -25,6 +25,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import { Avatar } from 'antd';
 import {TVChartContainer} from "../components/TradingView";
+import FloatingElement from "../components/layout/FloatingElement";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -153,7 +154,6 @@ function TradePageInner() {
       <Wrapper>
           <Row>
             <Col span={width < 1000 ? 24 : 4}>
-              <h4 style={{paddingLeft: '10px'}}>Click a pair below: </h4>
               <MarketSelector
                 markets={markets}
                 setHandleDeprecated={setHandleDeprecated}
@@ -200,13 +200,17 @@ function MarketSelector({
 
   return (
         <Menu style={{
-              marginRight: '-20px',
               paddingRight: '5px',
               overflowY: 'scroll',
-              backgroundColor: 'rgba(0, 0, 0, 0)',
-              maxHeight: '90%',
+              marginTop: '5px',
+              maxHeight: '62%',
+              border: '1px solid #E0E0FB',
+              borderRadius: '15px'
             }} mode="inline"
             defaultSelectedKeys={['1']} >
+          <Menu.Item disabled>
+            <b>Click a pair below: </b>
+          </Menu.Item>
           {markets
             .sort((a, b) =>
               extractQuote(a.name) === 'USDT' && extractQuote(b.name) !== 'USDT'
@@ -266,15 +270,17 @@ const DeprecatedMarketsPage = ({ switchToLiveMarkets }) => {
 const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
       <Row>
-          <Col span={12}>
-            <TVChartContainer />
+          <Col span={10}>
+            <FloatingElement>
+              <TVChartContainer />
+            </FloatingElement>
             <UserInfoTable />
           </Col>
           <Col span={6} style={{ height: '100%' }}>
             <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
             <TradesTable smallScreen={false} />
           </Col>
-          <Col span={6} style={{ height: '100%'}}>
+          <Col span={8} style={{ height: '100%'}}>
             <TradeForm setChangeOrderRef={onChangeOrderRef} />
             <StandaloneBalancesDisplay />
           </Col>

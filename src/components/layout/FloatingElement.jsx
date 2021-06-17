@@ -15,6 +15,8 @@ export default function FloatingElement({
     <Wrapper
       className="floatingElementWrapper"
       style={{
+        border: '1px solid #E0E0FB',
+        borderRadius: '15px',
         height: stretchVertical ? 'calc(100% - 10px)' : undefined,
         marginLeft: '15px',
         ...style,

@@ -1,33 +1,18 @@
 import {
-  SettingOutlined,
   TwitterOutlined,
   GithubOutlined,
   SendOutlined,
+  SwapOutlined,
+  AppstoreFilled,
+  UnorderedListOutlined,
 } from '@ant-design/icons';
-import { Button, Col, Menu, Popover, Row } from 'antd';
+import { Menu} from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import logo from '../assets/logo.jpg';
-import styled from 'styled-components';
-import { useWallet } from '../utils/wallet';
 import { ENDPOINTS, useConnectionConfig } from '../utils/connection';
-import Settings from './Settings';
-import WalletConnect from './WalletConnect';
 import { getTradePageUrl } from '../utils/markets';
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import { Switch } from "antd";
-
-
-const LogoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  cursor: pointer;
-  img {
-    height: 25px;
-    margin-left: 4px;
-  }
-`;
 
 const EXTERNAL_LINKS = {
   '/learn': 'https://serum-academy.com/en/serum-dex/',
@@ -44,7 +29,6 @@ const EXTERNAL_LINKS = {
 };
 
 export default function TopBar() {
-  const { connected, wallet } = useWallet();
   const {
     endpointInfo,
     setEndpoint,
@@ -54,13 +38,6 @@ export default function TopBar() {
   const [searchFocussed] = useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState();
   const { switcher, themes } = useThemeSwitcher();
-
-  const toggleTheme = (isChecked) => {
-    setIsDarkMode(isChecked);
-    switcher({
-      theme: isChecked ? themes.dark : themes.light
-    });
-  };
 
   const handleClick = useCallback(
     (e) => {
@@ -82,6 +59,13 @@ export default function TopBar() {
     return () => window.removeEventListener('beforeunload', handler);
   }, [endpointInfoCustom, setEndpoint]);
 
+  const toggleTheme = (isChecked) => {
+    setIsDarkMode(isChecked);
+    switcher({
+      theme: isChecked ? themes.dark : themes.light
+    });
+  };
+
   const tradePageUrl = location.pathname.startsWith('/market/')
     ? location.pathname
     : getTradePageUrl();
@@ -95,40 +79,37 @@ export default function TopBar() {
           onClick={handleClick}
           selectedKeys={[location.pathname]}
         >
-          <Menu.Item key="/">
-            <LogoWrapper>
-              {'Samoyed Lover DEX'}<img src={logo} alt="" />
-            </LogoWrapper>
-          </Menu.Item>
-          <Menu.Item key={tradePageUrl}>
-            Order book
-          </Menu.Item>
-          {(!searchFocussed || location.pathname === '/convert') && (
-            <Menu.Item key="/convert">
-              Swap using trade order
+          <Menu.SubMenu icon={<SwapOutlined />} title="Trade" >
+            <Menu.Item key={tradePageUrl}>
+                Order book
             </Menu.Item>
-          )}
-          {(!searchFocussed || location.pathname === '/trade') && (
-              <Menu.Item key="/trade">
-                Swap
+            {(!searchFocussed || location.pathname === '/convert') && (
+              <Menu.Item key="/convert">
+                Swap using trades
               </Menu.Item>
-          )}
-          {(!searchFocussed || location.pathname === '/add') && (
-              <Menu.Item key="/add">
-                Add Liquidity
-              </Menu.Item>
-          )}
-          {(!searchFocussed || location.pathname === '/pool') && (
-              <Menu.Item key="/pool">
-                Your Liquidity
-              </Menu.Item>
-          )}
+            )}
+            {(!searchFocussed || location.pathname === '/trade') && (
+                <Menu.Item key="/trade">
+                  Swap
+                </Menu.Item>
+            )}
+            {(!searchFocussed || location.pathname === '/add') && (
+                <Menu.Item key="/add">
+                  Add Liquidity
+                </Menu.Item>
+            )}
+            {(!searchFocussed || location.pathname === '/pool') && (
+                <Menu.Item key="/pool">
+                  Your Liquidity
+                </Menu.Item>
+            )}
+          </Menu.SubMenu>
           <Menu.Item key="/farm" disabled={true}>
-            Farm
+            <AppstoreFilled />  Farms
           </Menu.Item>
           {(!searchFocussed || location.pathname === '/info') && (
               <Menu.Item key="/info">
-                View Pool
+                <UnorderedListOutlined /> Pools
               </Menu.Item>
           )}
           {(!searchFocussed || location.pathname === '/twitter') && (
@@ -138,7 +119,7 @@ export default function TopBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                  <TwitterOutlined className="topBarMenu" /> Twitter
+                  <TwitterOutlined className="" /> Twitter
                 </a>
               </Menu.Item>
           )}
@@ -149,7 +130,7 @@ export default function TopBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                  <SendOutlined className="topBarMenu" /> Telegram
+                  <SendOutlined className="" /> Telegram
                 </a>
               </Menu.Item>
           )}
@@ -160,7 +141,7 @@ export default function TopBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                  <GithubOutlined className="topBarMenu" /> Github
+                  <GithubOutlined className="" /> Github
                 </a>
               </Menu.Item>
           )}
@@ -224,37 +205,9 @@ export default function TopBar() {
               </Menu.Item>
             </Menu.SubMenu>
           )}
-          <Menu.Item key="/a" disabled={true}>
-            <div style={{
-              alignItems: 'center',
-              paddingRight: 5,
-            }}  className="topBarMenu">
-              <Row>
-                <Col>Light / Dark {'\u00A0'}</Col>
-                <Col><Switch checked={isDarkMode} onChange={toggleTheme} /> </Col>
-              </Row>
-            </div>
-          </Menu.Item>
-          <Menu.Item key="/b" disabled={true}>
-            <WalletConnect />
-          </Menu.Item>
-          <Menu.Item key="/c" disabled={true}>
-            {connected && (
-                <div>
-                  <Popover
-                      content={<Settings autoApprove={wallet?.autoApprove} />}
-                      placement="bottomRight"
-                      title="Settings"
-                      trigger="click"
-                  >
-                    <Button style={{ marginRight: 8 }}>
-                      <SettingOutlined />
-                      Settings
-                    </Button>
-                  </Popover>
-                </div>
-            )}
-          </Menu.Item>
+          <div style={{margin: '25px'}}>
+            Light / Dark {'\u00A0'}<Switch checked={isDarkMode} onChange={toggleTheme} />
+          </div>
         </Menu>
     </>
   );

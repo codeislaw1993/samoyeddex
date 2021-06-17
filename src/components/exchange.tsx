@@ -40,7 +40,13 @@ export const ExchangeView = (props: {}) => {
   return (
         <Card
           className="exchange-card"
-          style={{marginLeft: 'auto', width: '500px', marginRight: 'auto'}}
+          style={{
+            marginLeft: 'auto',
+            width: '500px',
+            marginRight: 'auto',
+            border: '1px solid #E0E0FB',
+            borderRadius: '15px',
+            marginTop: '50px'}}
           tabList={tabList}
           tabProps={{
             tabBarGutter: 0,
