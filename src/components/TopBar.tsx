@@ -6,7 +6,7 @@ import {
   AppstoreFilled,
   UnorderedListOutlined,
 } from '@ant-design/icons';
-import { Menu} from 'antd';
+import { Menu } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ENDPOINTS, useConnectionConfig } from '../utils/connection';
@@ -205,9 +205,9 @@ export default function TopBar() {
               </Menu.Item>
             </Menu.SubMenu>
           )}
-          <div style={{margin: '25px'}}>
+          <Menu.Item key="/switch" disabled={true} >
             Light / Dark {'\u00A0'}<Switch checked={isDarkMode} onChange={toggleTheme} />
-          </div>
+          </Menu.Item>
         </Menu>
     </>
   );
