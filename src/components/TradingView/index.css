@@ -1,8 +1,8 @@
 .TVChartContainer {
-  height: 100%;
+  height: 80%;
   width: 100%;
 }
 
 .tradingview-chart {
-  height: 750px !important;
+  height: 100%;
 }

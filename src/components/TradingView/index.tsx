@@ -39,7 +39,7 @@ export const TVChartContainer = () => {
   // @ts-ignore
   const defaultProps: ChartContainerProps = {
     symbol: 'BTC/USDC',
-    interval: '1' as ResolutionString,
+    interval: '15' as ResolutionString,
     theme: 'Dark',
     containerId: 'tv_chart_container',
     datafeedUrl: BONFIDA_DATA_FEED,
