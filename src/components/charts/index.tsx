@@ -57,6 +57,12 @@ export const ChartsView = React.memo(() => {
   const { pools } = usePools();
   const enriched = useEnrichedPools(pools);
 
+
+  React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pools]);
+
+
   const [infoDisplayType, setInfoDisplayType] = useLocalStorageState(
     "infoDisplayType",
     DEFAULT_DISPLAY_TYPE
@@ -98,7 +104,7 @@ export const ChartsView = React.memo(() => {
       render(text: string, record: any) {
         return {
           props: {
-            style: { textAlign: "right" },
+            style: { textAlign: "" },
           },
           children: (
             <div>
@@ -127,7 +133,7 @@ export const ChartsView = React.memo(() => {
       render(text: string, record: any) {
         return {
           props: {
-            style: { textAlign: "right" },
+            style: { textAlign: "" },
           },
           children: <FlashText text={text} val={record.supply} />,
         };
@@ -141,7 +147,7 @@ export const ChartsView = React.memo(() => {
       render(text: string, record: any) {
         return {
           props: {
-            style: { textAlign: "right" },
+            style: { textAlign: "" },
           },
           children: (
             <FlashText
@@ -160,7 +166,7 @@ export const ChartsView = React.memo(() => {
       render(text: string, record: any) {
         return {
           props: {
-            style: { textAlign: "right" },
+            style: { textAlign: "" },
           },
           children: (
             <FlashText
@@ -179,7 +185,7 @@ export const ChartsView = React.memo(() => {
       render(text: string, record: any) {
         return {
           props: {
-            style: { textAlign: "right" },
+            style: { textAlign: "" },
           },
           children: formatPct.format(record.apy),
         };
@@ -203,9 +209,9 @@ export const ChartsView = React.memo(() => {
 
   return (
     <>
-      <div className="info-header">
+      <div className="info-header" style={{marginTop: '40px'}}>
+        Showing {enriched.length} Pools
         <Search
-          className="search-input"
           placeholder="Filter"
           type="search"
           value={search}

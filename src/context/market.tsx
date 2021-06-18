@@ -21,7 +21,7 @@ import { AccountInfo, Connection, PublicKey } from "@solana/web3.js";
 import { useMemo } from "react";
 import { PoolInfo } from "../models";
 import { EventEmitter } from "./../utils/eventEmitter";
-import { LIQUIDITY_PROVIDER_FEE, SERUM_FEE } from "../utils/pools";
+import {LIQUIDITY_PROVIDER_FEE, SERUM_FEE} from "../utils/pools";
 
 interface RecentPoolData {
   pool_identifier: string;
@@ -466,7 +466,7 @@ function createEnrichedPools(
       const lpMint = cache.getMint(p.pubkeys.mint);
 
       const name = getPoolName(tokenMap, p);
-      const link = `#/?pair=${getPoolName(tokenMap, p, false).replace(
+      const link = `#/trade?pair=${getPoolName(tokenMap, p, false).replace(
         "/",
         "-"
       )}`;

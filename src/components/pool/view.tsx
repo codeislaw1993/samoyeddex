@@ -24,7 +24,7 @@ export const PoolOverview = () => {
         {!connected &&
             <Card style={{marginTop: '50px'}}>
                 <div style={{margin: '50px'}}>
-                    <b>Please connect your wallet to view your liquidity.</b>
+                    <b>Please connect your wallet to view your liquidity.</b>{'\u00A0'}{'\u00A0'}
                     <WalletConnect />
                 </div>
             </Card>
