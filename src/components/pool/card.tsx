@@ -109,6 +109,7 @@ export const PoolCard = (props: { pool: PoolInfo; account?: TokenAccount }) => {
             mintB={quoteMintAddress}
             className="left-icon"
           />
+          <br/>
           {enriched?.name}
           <Popover
             placement="topRight"
