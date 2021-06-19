@@ -25281,24 +25281,17 @@ input[type='number']:hover::-webkit-inner-spin-button {
   opacity: 0.75;
 }
 .ant-menu {
-  background-color: #fff;
-  font-weight: 700;
   border-right-style: solid;
   border-right-width: 1px;
   border-right-color: #eee;
-  font-family: Arial, Helvetica, sans-serif;
-}
-.ant-menu-item-disabled {
-  color: #000;
-  opacity: 1;
 }
 .ant-layout-content,
-.ant-layout-header {
+.ant-layout-header,
+.ant-menu {
   background-color: #fff;
   font-family: Arial, Helvetica, sans-serif;
 }
 .ant-layout-header {
-  font-weight: 700;
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: #eee;
