@@ -1,10 +1,11 @@
-import { Layout, Popover, Button, Col, Row } from 'antd';
+import { Layout, Popover, Button, Col, Row, Image } from 'antd';
 import React, { useState } from 'react';
 import TopBar from './TopBar';
 import WalletConnect from './WalletConnect';
 import { SettingOutlined } from '@ant-design/icons';
 import Settings from './Settings';
 import { useWallet } from '../utils/wallet';
+import logo from '../assets/logo.png';
 const { Header, Content, Sider } = Layout;
 
 export default function BasicLayout({ children }) {
@@ -21,7 +22,11 @@ export default function BasicLayout({ children }) {
       <Layout style={{ minHeight: '100vh' }}>
         <Header className="header" mode="inline">
           <Row justify="center">
-            <Col span={20}>{'Samoyed Lover DEX'}</Col>
+            <Col span={20}>
+              <span>
+                <Image width={14} src={logo}></Image> Samoyed Lover DEX
+              </span>
+            </Col>
             <Col span={2}>
               {connected && (
                 <div>
