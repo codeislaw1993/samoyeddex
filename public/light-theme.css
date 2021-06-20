@@ -25186,6 +25186,14 @@ div.ant-typography-edit-content.ant-typography-rtl {
   width: 100%;
   position: relative;
 }
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v27/KFOkCnqEu92Fr1MmgWxP.ttf)
+    format('truetype');
+}
 .App {
   text-align: center;
 }
@@ -25327,4 +25335,16 @@ input[type='number']:hover::-webkit-inner-spin-button {
   position: absolute;
   right: 0;
   top: 0;
+}
+.contentWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60%;
+  font-size: 30px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+  margin-top: 90px;
 }

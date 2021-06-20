@@ -4,7 +4,7 @@ import {
   SendOutlined,
   SwapOutlined,
   AppstoreFilled,
-  UnorderedListOutlined,
+  UnorderedListOutlined, HomeFilled,
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -79,6 +79,9 @@ export default function TopBar() {
           onClick={handleClick}
           selectedKeys={[location.pathname]}
         >
+          <Menu.Item key={"/home"}>
+            <HomeFilled /> Home
+          </Menu.Item>
           <Menu.SubMenu icon={<SwapOutlined />} title="Trade" >
             <Menu.Item key={tradePageUrl}>
                 Order book

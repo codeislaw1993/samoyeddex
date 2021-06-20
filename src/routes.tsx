@@ -2,6 +2,7 @@ import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import TradePage from './pages/TradePage';
 import OpenOrdersPage from './pages/OpenOrdersPage';
 import React from 'react';
+import HomePage from './pages/HomePage';
 import BalancesPage from './pages/BalancesPage';
 import ConvertPage from './pages/ConvertPage';
 import BasicLayout from './components/BasicLayout';
@@ -21,8 +22,9 @@ export function Routes() {
         <BasicLayout>
           <Switch>
             <Route exact path="/">
-              <Redirect to={'/market/FR3SPJmgfRSKKQ2ysUZBu7vJLpzTixXnjzb84bY3Diif'} />
+              <Redirect to={'/convert'} />
             </Route>
+            <Route exact path="/home" component={HomePage} />
             <Route exact path="/convert" component={ConvertPage} />
             <Route exact path="/market/:marketAddress">
               <TradePage />

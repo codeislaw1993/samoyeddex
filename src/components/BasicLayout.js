@@ -23,7 +23,7 @@ export default function BasicLayout({ children }) {
         <Header className="header" mode="inline">
           <Row justify="center">
             <Col span={20}>
-              <span>
+              <span style={{ height: '10px', padding: '2px', margin: '0px' }}>
                 <Image width={14} src={logo}></Image> Samoyed Lover DEX
               </span>
             </Col>
