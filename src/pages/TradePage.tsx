@@ -215,7 +215,6 @@ function MarketSelector({
           <Menu.Item disabled>
             <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
               <div>Name</div>
-              <div>Icon</div>
               <div>%(24hr)</div>
             </div>
           </Menu.Item>
@@ -247,10 +246,10 @@ function MarketSelector({
                 class="marketSelectorListItem"
                 icon={
                   <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
-                    {name}
                     <div>
                       <Avatar size="small" src={encodeURI(baseUrl)}/>
                       <Avatar size="small" src={encodeURI(quoteUrl)}/>
+                       {' ' + name}
                     </div>
                     <div>
                       {!!volumes && loaded ?
