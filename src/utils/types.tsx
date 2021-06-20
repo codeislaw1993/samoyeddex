@@ -163,3 +163,14 @@ export interface BonfidaTrade {
   feeCost: number;
   marketAddress: string;
 }
+
+
+export interface Volume {
+  m: string;
+  t: number[];
+  c: number[];
+  o: number[];
+  h: number[];
+  l: number[];
+  v: number[];
+}

@@ -1,4 +1,4 @@
-import { BonfidaTrade } from './types';
+import {BonfidaTrade, Volume} from './types';
 
 export default class BonfidaApi {
   static URL: string = 'https://samoyedlovers-api.herokuapp.com/';
@@ -20,6 +20,12 @@ export default class BonfidaApi {
       marketAddress: string,
   ): Promise<BonfidaTrade[] | null> {
     return BonfidaApi.get(`trades/address/${marketAddress}`);
+  }
+
+  static async getRecentVolumes(
+      marketAddress: string,
+  ): Promise<Volume[] | null> {
+    return BonfidaApi.get(`pools/volumes`);
   }
 }
 

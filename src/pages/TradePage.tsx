@@ -9,7 +9,7 @@ import {
   getTradePageUrl,
   MarketProvider,
   useMarket,
-  useMarketsList,
+  useMarketsList, useRecentVolumes,
 } from '../utils/markets';
 import TradeForm from '../components/TradeForm';
 import TradesTable from '../components/TradesTable';
@@ -153,7 +153,7 @@ function TradePageInner() {
       />
       <Wrapper>
           <Row>
-            <Col span={width < 1000 ? 24 : 4}>
+            <Col span={width < 1000 ? 24 : 5}>
               <MarketSelector
                 markets={markets}
                 setHandleDeprecated={setHandleDeprecated}
@@ -172,7 +172,7 @@ function TradePageInner() {
               </Popover>
             ) : null}
           </Col>
-            <Col span={width < 1000 ? 24 : 20}>
+            <Col span={width < 1000 ? 24 : 19}>
               {component}
             </Col>
         </Row>
@@ -189,6 +189,7 @@ function MarketSelector({
   onDeleteCustomMarket,
 }) {
   const { setMarketAddress } = useMarket();
+  const [volumes, loaded] = useRecentVolumes();
 
   const onSetMarketAddress = (marketAddress) => {
     setHandleDeprecated(false);
@@ -210,6 +211,13 @@ function MarketSelector({
             defaultSelectedKeys={['1']} >
           <Menu.Item disabled>
             <b>Click a pair below: </b>
+          </Menu.Item>
+          <Menu.Item disabled>
+            <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+              <div>Name</div>
+              <div>Icon</div>
+              <div>%(24hr)</div>
+            </div>
           </Menu.Item>
           {markets
             .sort((a, b) =>
@@ -238,11 +246,39 @@ function MarketSelector({
                 }}
                 class="marketSelectorListItem"
                 icon={
-                  <div style={{width: '100%', display: 'flex', justifyContent: 'space-around'}}>
+                  <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
                     {name}
                     <div>
                       <Avatar size="small" src={encodeURI(baseUrl)}/>
                       <Avatar size="small" src={encodeURI(quoteUrl)}/>
+                    </div>
+                    <div>
+                      {!!volumes && loaded ?
+                        (Math.round(
+                            (volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] -
+                                volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0])
+                            / volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0]
+                            * 10000.0
+                        ) / 100.0) >= 0 ?
+                            <span style={{color: '#2abdd2'}}>
+                                +{(Math.round(
+                                (volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] -
+                                    volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0])
+                                / volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0]
+                                * 10000.0
+                            ) / 100.0)} %
+                              </span>
+                            :
+                            <span style={{color: 'rgb(242, 59, 105)'}}>
+                                {(Math.round(
+                                    (volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] -
+                                        volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0])
+                                    / volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0]
+                                    * 10000.0
+                                ) / 100.0)} %
+                              </span>
+                         : <span></span>
+                      }
                     </div>
                   </div>}
                 onClick={() => { onSetMarketAddress(address.toBase58()) }}

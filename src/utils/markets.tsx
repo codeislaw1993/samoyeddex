@@ -18,7 +18,7 @@ import {
   MarketInfo,
   OrderWithMarketAndMarketName,
   SelectedTokenAccounts,
-  TokenAccount,
+  TokenAccount, Volume,
 } from './types';
 import {WRAPPED_SOL_MINT} from '@project-serum/serum/lib/token-instructions';
 import {Order} from '@project-serum/serum/lib/market';
@@ -562,6 +562,25 @@ export function useBonfidaTrades() {
     tuple('getBonfidaTrades', marketAddress),
     { refreshInterval: _SLOW_REFRESH_INTERVAL },
     false,
+  );
+}
+
+export function useRecentVolumes() {
+  const { market } = useMarket();
+  const marketAddress = market?.address.toBase58();
+
+  async function getRecentVolumes() {
+    if (!marketAddress) {
+      return null;
+    }
+    return await BonfidaApi.getRecentVolumes(marketAddress);
+  }
+
+  return useAsyncData<Volume[] | null>(
+      getRecentVolumes,
+      tuple('getRecentVolumes', marketAddress),
+      { refreshInterval: _SLOW_REFRESH_INTERVAL },
+      false,
   );
 }
 
