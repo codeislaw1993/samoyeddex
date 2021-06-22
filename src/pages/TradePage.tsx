@@ -198,13 +198,14 @@ function MarketSelector({
 
   const extractBase = (a) => a.split('/')[0];
   const extractQuote = (a) => a.split('/')[1];
+  const addCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   return (
         <Menu style={{
               paddingRight: '5px',
               overflowY: 'scroll',
               marginTop: '5px',
-              height: '63%',
+              height: '85vh',
               border: '1px solid #E0E0FB',
               borderRadius: '15px'
             }} mode="inline"
@@ -212,10 +213,19 @@ function MarketSelector({
           <Menu.Item disabled>
             <b>Click a pair below: </b>
           </Menu.Item>
-          <Menu.Item disabled>
+          <Menu.Item disabled
+                     style={{
+                       // @ts-ignore
+                       backgroundColor: null,
+                       height: '80px'
+                     }}>
             <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
               <div>Name</div>
               <div>%(24hr)</div>
+            </div>
+            <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+              <div>Vol(24hr)</div>
+              <div>$</div>
             </div>
           </Menu.Item>
           {markets
@@ -242,44 +252,83 @@ function MarketSelector({
                 style={{
                   // @ts-ignore
                   backgroundColor: null,
+                  height: '80px',
+                  paddingTop: '0px',
+                  paddingBottom: '0px',
+                  margin: '0px'
                 }}
                 class="marketSelectorListItem"
                 icon={
-                  <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
-                    <div>
-                      <Avatar size="small" src={encodeURI(baseUrl)}/>
-                      <Avatar size="small" src={encodeURI(quoteUrl)}/>
-                       {' ' + name}
-                    </div>
-                    <div>
-                      {!!volumes && loaded ?
-                        (Math.round(
-                            (volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] -
-                                volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0])
-                            / volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0]
-                            * 10000.0
-                        ) / 100.0) >= 0 ?
-                            <span style={{color: '#2abdd2'}}>
-                                +{(Math.round(
+                  <Row>
+                    <Col span={24}>
+                      <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', }}>
+                        <div>
+                          <Avatar size="small" src={encodeURI(baseUrl)}/>
+                          <Avatar size="small" src={encodeURI(quoteUrl)}/>
+                           {' ' + name}
+                        </div>
+                        <div>
+                          {!!volumes && loaded ?
+                            (Math.round(
                                 (volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] -
                                     volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0])
                                 / volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0]
                                 * 10000.0
-                            ) / 100.0)} %
-                              </span>
-                            :
-                            <span style={{color: 'rgb(242, 59, 105)'}}>
-                                {(Math.round(
+                            ) / 100.0) >= 0 ?
+                                <span style={{color: '#2abdd2'}}>
+                                    +{(Math.round(
                                     (volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] -
                                         volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0])
                                     / volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0]
                                     * 10000.0
                                 ) / 100.0)} %
+                                  </span>
+                                :
+                                <span style={{color: 'rgb(242, 59, 105)'}}>
+                                    {(Math.round(
+                                        (volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] -
+                                            volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0])
+                                        / volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0]
+                                        * 10000.0
+                                    ) / 100.0)} %
+                                  </span>
+                             : <span></span>
+                          }
+                        </div>
+                      </div>
+                    </Col>
+                    <Col span={24}>
+                      <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+                        <div>
+                          {!!volumes && loaded ? (
+                              <span style={{color: ''}}>
+                                {addCommas(Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).v[0]).toPrecision(4)))}
                               </span>
-                         : <span></span>
-                      }
-                    </div>
-                  </div>}
+                          ) : ''
+                          }
+                        </div>
+                        <div>
+                          {!!volumes && loaded ? (
+                              (
+                                  Math.round(
+                                  (volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] -
+                                      volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0])
+                                  / volumes.filter(v => v.m === address.toBase58()).reduce(v => v).o[0]
+                                  * 10000.0) / 100.0
+                              ) >= 0 ?
+                                  <span style={{color: ''}}>
+                                    $ {Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0]).toPrecision(3))}
+                                  </span> :
+                                  <span style={{color: ''}}>
+                                    $ {Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0]).toPrecision(3))}
+                                  </span>
+                            ) : ''
+                          }
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                }
                 onClick={() => { onSetMarketAddress(address.toBase58()) }}
               >
               </Menu.Item>
