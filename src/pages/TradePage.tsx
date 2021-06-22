@@ -263,7 +263,7 @@ function MarketSelector({
                     <Col span={24}>
                       <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', }}>
                         <div>
-                          <Avatar size="small" src={encodeURI(baseUrl)}/>
+                          <Avatar  style={{ marginRight: "-7px", zIndex: 10}} size="small" src={encodeURI(baseUrl)}/>
                           <Avatar size="small" src={encodeURI(quoteUrl)}/>
                            {' ' + name}
                         </div>
