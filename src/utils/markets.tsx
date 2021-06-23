@@ -203,6 +203,39 @@ function getDefaultMarkets () {
     baseUrl: "https://i.ibb.co/2s3hKGX/2021-06-17-00-41-21.jpg"
   };
 
+  const btcUSDCMarketsInfo = {
+    address: new PublicKey("A8YFbxQYFVqKZaoYJLLUVcQiWP7G2MeEgW5wsAQgMvFw"),
+    deprecated: false,
+    name: "BTC/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "BTC",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/bitcoin/info/logo.png"
+  }
+
+  const ethUSDTMarketsInfo = {
+    address: new PublicKey("4tSvZvnbyzHXLMTiFonMyxZoHmFqau1XArcRCVHLZ5gX"),
+    deprecated: false,
+    name: "ETH/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "ETH",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png"
+  }
+
+  const usdtUSDCMarketsInfo = {
+    address: new PublicKey("77quYg4MGneUdjgXCunt9GgM1usmrxKY31twEy3WHwcS"),
+    deprecated: false,
+    name: "USDT/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "USDT",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://cdn.jsdelivr.net/gh/solana-labs/explorer/public/tokens/usdt.svg"
+  }
+
   return Array<{
     address: PublicKey;
     name: string;
@@ -224,7 +257,10 @@ function getDefaultMarkets () {
       .concat(hamsUSDCMarketsInfo)
       .concat(bdeUSDCMarketsInfo)
       .concat(liqUSDCMarketsInfo)
-      .concat(snowshoeUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+      .concat(snowshoeUSDCMarketsInfo)
+      .concat(btcUSDCMarketsInfo)
+      .concat(ethUSDTMarketsInfo)
+      .concat(usdtUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
 }
 
 export function useMarketsList() {

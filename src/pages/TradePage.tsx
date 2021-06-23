@@ -302,7 +302,7 @@ function MarketSelector({
                         <div>
                           {!!volumes && loaded ? (
                               <span style={{color: ''}}>
-                                {addCommas(Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).v[0] * volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] ).toPrecision(4)))}
+                                {addCommas(Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).v[0] * volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] )?.toPrecision(4))) + ' ' + extractQuote(name) }
                               </span>
                           ) : ''
                           }
@@ -317,10 +317,10 @@ function MarketSelector({
                                   * 10000.0) / 100.0
                               ) >= 0 ?
                                   <span style={{color: ''}}>
-                                    $ {Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0]).toPrecision(3))}
+                                    $ {Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0])?.toPrecision(3))}
                                   </span> :
                                   <span style={{color: ''}}>
-                                    $ {Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0]).toPrecision(3))}
+                                    $ {Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0])?.toPrecision(3))}
                                   </span>
                             ) : ''
                           }
