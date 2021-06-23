@@ -317,10 +317,10 @@ function MarketSelector({
                                   * 10000.0) / 100.0
                               ) >= 0 ?
                                   <span style={{color: ''}}>
-                                    $ {Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0])?.toPrecision(10))}
+                                    $ {Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0])?.toPrecision(6))}
                                   </span> :
                                   <span style={{color: ''}}>
-                                    $ {Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0])?.toPrecision(10))}
+                                    $ {Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0])?.toPrecision(6))}
                                   </span>
                             ) : ''
                           }
