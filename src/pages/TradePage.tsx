@@ -302,7 +302,7 @@ function MarketSelector({
                         <div>
                           {!!volumes && loaded ? (
                               <span style={{color: ''}}>
-                                {addCommas(Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).v[0]).toPrecision(4)))}
+                                {addCommas(Number((volumes.filter(v => v.m === address.toBase58()).reduce(v => v).v[0] * volumes.filter(v => v.m === address.toBase58()).reduce(v => v).c[0] ).toPrecision(4)))}
                               </span>
                           ) : ''
                           }
