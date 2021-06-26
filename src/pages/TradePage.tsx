@@ -190,6 +190,22 @@ function MarketSelector({
 }) {
   const { setMarketAddress } = useMarket();
   const [volumes, loaded] = useRecentVolumes();
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const onSetMarketAddress = (marketAddress) => {
     setHandleDeprecated(false);
@@ -205,7 +221,7 @@ function MarketSelector({
               paddingRight: '5px',
               overflowY: 'scroll',
               marginTop: '5px',
-              height: '85vh',
+              height: (dimensions.width >= 1000 ? '85vh':'40vh'),
               border: '1px solid #E0E0FB',
               borderRadius: '15px'
             }} mode="inline"
@@ -408,6 +424,11 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
 const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
     <>
+      <Col span={24}>
+        <FloatingElement style={{height: '400px'}}>
+          <TVChartContainer />
+        </FloatingElement>
+      </Col>
       <Row>
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
           <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
