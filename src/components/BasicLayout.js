@@ -1,5 +1,5 @@
 import { Layout, Popover, Button, Col, Row, Image } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TopBar from './TopBar';
 import WalletConnect from './WalletConnect';
 import { SettingOutlined } from '@ant-design/icons';
@@ -22,6 +22,24 @@ export default function BasicLayout({ children }) {
   };
 
   const { connected, wallet } = useWallet();
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const width = dimensions?.width;
 
   return (
     <React.Fragment>
@@ -46,17 +64,17 @@ export default function BasicLayout({ children }) {
                   justifyContent: 'space-between',
                 }}
               >
-                <div style={{ width: '20vw' }}>
+                <div style={{ width: '40vw' }}>
                   <span
                     style={{ height: '10px', padding: '2px', margin: '0px' }}
                   >
                     <Image preview={false} width={14} src={logo}></Image>{' '}
-                    Samoyed Lover DEX
+                    {width >= 600 ? 'Samoyed Lover DEX' : ''}
                   </span>
                 </div>
                 <div
                   style={{
-                    width: '80vw',
+                    width: '60vw',
                     height: '100%',
                     display: 'flex',
                     justifyContent: 'flex-end',
