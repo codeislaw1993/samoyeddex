@@ -247,6 +247,17 @@ function getDefaultMarkets () {
     baseUrl: "https://jokesmemes.finance/joketoken.png"
   }
 
+  const boleUSDCMarketsInfo = {
+    address: new PublicKey("9yGqsboBtvztDgGbGFEaBBT2G8dUMhxewXDQpy6T3eDm"),
+    deprecated: false,
+    name: "BOLE/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "BOLE",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://i.ibb.co/YPyhnkS/Bole.jpg"
+  }
+
   return Array<{
     address: PublicKey;
     name: string;
@@ -272,7 +283,8 @@ function getDefaultMarkets () {
       .concat(btcUSDCMarketsInfo)
       .concat(ethUSDTMarketsInfo)
       .concat(usdtUSDCMarketsInfo)
-      .concat(jokeUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+      .concat(jokeUSDCMarketsInfo)
+      .concat(boleUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
 }
 
 export function useMarketsList() {
