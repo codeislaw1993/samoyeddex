@@ -25340,7 +25340,7 @@ input[type='number']:hover::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60%;
+  height: 50%;
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
   text-align: center;
