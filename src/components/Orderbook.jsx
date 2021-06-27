@@ -44,12 +44,7 @@ const Price = styled.div`
   color: white;
 `;
 
-export default function Orderbook({
-  smallScreen,
-  depth = 15,
-  onPrice,
-  onSize,
-}) {
+export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
   const markPrice = useMarkPrice();
   const [orderbook] = useOrderbook();
   const { baseCurrency, quoteCurrency } = useMarket();
@@ -115,6 +110,7 @@ export default function Orderbook({
       style={{
         flex: 1,
         overflowY: 'scroll',
+        minHeight: '400px',
         maxHeight: '400px',
       }}
     >
