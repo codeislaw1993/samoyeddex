@@ -31,7 +31,6 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 16px 16px;
   .borderNone .ant-select-selector {
     border: none !important;
   }
@@ -220,10 +219,8 @@ function MarketSelector({
         <Menu style={{
               paddingRight: '5px',
               overflowY: 'scroll',
-              marginTop: '5px',
               height: (dimensions.width >= 1000 ? '85vh':'40vh'),
               border: '1px solid #E0E0FB',
-              borderRadius: '15px'
             }} mode="inline"
             defaultSelectedKeys={['1']} >
           <Menu.Item disabled>
@@ -432,6 +429,7 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
       <Row>
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
           <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
+          <TradesTable smallScreen={false} />
         </Col>
       </Row>
       <Row>

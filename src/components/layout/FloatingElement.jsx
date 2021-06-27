@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  margin: 5px;
-  padding: 20px;
+  margin: 0px;
+  padding: 15px;
 `;
 
 export default function FloatingElement({
@@ -16,9 +16,9 @@ export default function FloatingElement({
       className="floatingElementWrapper"
       style={{
         border: '1px solid #E0E0FB',
-        borderRadius: '15px',
         height: stretchVertical ? 'calc(100% - 10px)' : undefined,
-        marginLeft: '15px',
+        marginLeft: '-1px',
+        marginBottom: '-1px',
         ...style,
       }}
     >

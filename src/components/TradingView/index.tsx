@@ -90,7 +90,7 @@ export const TVChartContainer = () => {
       tvWidgetRef.current = tvWidget;
       tvWidget.onChartReady(() => {
         tvWidget.headerReady().then(() => {
-          tvWidget.activeChart().setChartType(3)
+          tvWidget.activeChart().setChartType(3);
         })
       })
     }

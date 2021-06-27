@@ -274,9 +274,9 @@ export default function TradeForm({
 
   return (
     <FloatingElement
-      style={{ display: 'flex', flexDirection: 'column', ...style }}
+      style={{ display: 'flex', flexDirection: 'column', marginBottom: '-1px', height: '100%', ...style }}
     >
-      <div style={{ flex: 1 }}>
+      <div>
         <Radio.Group
           onChange={(e) => setSide(e.target.value)}
           value={side}

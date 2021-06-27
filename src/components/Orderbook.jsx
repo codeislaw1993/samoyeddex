@@ -107,9 +107,11 @@ export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
 
   return (
     <FloatingElement
-      style={
-        smallScreen ? { flex: 1 } : { height: '500px', overflow: 'hidden' }
-      }
+      style={{
+        flex: 1,
+        overflowY: 'scroll',
+        maxHeight: '400px',
+      }}
     >
       <Title className="tradesTableSizeTitle">Orderbook</Title>
       <SizeTitle>
@@ -211,7 +213,7 @@ const MarkPriceComponent = React.memo(
         ? '#41C77A'
         : markPrice < previousMarkPrice
         ? '#F23B69'
-        : 'white';
+        : '#41C77A';
 
     let formattedMarkPrice =
       markPrice &&

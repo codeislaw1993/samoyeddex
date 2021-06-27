@@ -39,13 +39,14 @@ export default function PublicTrades({ smallScreen }) {
       {!!trades && loaded && (
         <div
           style={{
-            marginRight: '-20px',
-            paddingRight: '5px',
-            overflowY: 'scroll',
-            maxHeight: smallScreen
-              ? 'calc(100% - 75px)'
-              : '300px',
-          }}
+                flex: 2,
+                marginRight: '-20px',
+                paddingRight: '5px',
+                overflowY: 'scroll',
+                maxHeight: smallScreen
+                  ? 'calc(100% - 75px)'
+                  : '300px',
+              }}
         >
           {trades.map((trade: BonfidaTrade, i: number) => (
             <Row key={i} style={{ marginBottom: 4 }}>
