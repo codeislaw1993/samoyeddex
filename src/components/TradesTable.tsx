@@ -40,7 +40,7 @@ export default function PublicTrades({ smallScreen }) {
         <div
           style={{
                 flex: 2,
-                marginRight: '-20px',
+                marginRight: '-10px',
                 paddingRight: '5px',
                 overflowY: 'scroll',
                 maxHeight: smallScreen
