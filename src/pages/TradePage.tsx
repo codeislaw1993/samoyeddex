@@ -440,6 +440,11 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
           <StandaloneBalancesDisplay />
         </Col>
       </Row>
+      <Row>
+        <Col span={24}>
+          <UserInfoTable />
+        </Col>
+      </Row>
     </>
   );
 };
