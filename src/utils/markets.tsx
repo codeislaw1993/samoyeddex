@@ -258,6 +258,17 @@ function getDefaultMarkets () {
     baseUrl: "https://i.ibb.co/YPyhnkS/Bole.jpg"
   }
 
+  const mngoUSDCMarketsInfo = {
+    address: new PublicKey("3d4rzwpy9iGdCZvgxcu7B1YocYffVLsQXPXkBZKt2zLc"),
+    deprecated: false,
+    name: "MNGO/USDC",
+    quoteLabel: "USDC",
+    baseLabel: "MNGO",
+    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    baseUrl: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac/token.png"
+  }
+
   return Array<{
     address: PublicKey;
     name: string;
@@ -284,7 +295,8 @@ function getDefaultMarkets () {
       .concat(ethUSDTMarketsInfo)
       .concat(usdtUSDCMarketsInfo)
       .concat(jokeUSDCMarketsInfo)
-      .concat(boleUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+      .concat(boleUSDCMarketsInfo)
+      .concat(mngoUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
 }
 
 export function useMarketsList() {
