@@ -192,15 +192,15 @@ function getDefaultMarkets () {
     baseUrl: "https://liqsolana.com/wp-content/uploads/2021/06/200x.png"
   };
 
-  const snowshoeUSDCMarketsInfo = {
+  const ashUSDCMarketsInfo = {
     address: new PublicKey("56ZFVzqMqtDmyry9bK7vi1szUV2nuQ4kT6CzFAB649wE"),
     deprecated: false,
-    name : "SNOWSHOE/USDC",
+    name : "ASH/USDC",
     quoteLabel: "USDC",
-    baseLabel: "SNOWSHOE",
+    baseLabel: "ASH",
     programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
     quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-    baseUrl: "https://i.ibb.co/2s3hKGX/2021-06-17-00-41-21.jpg"
+    baseUrl: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/FY6XDSCubMhpkU9FAsUjB7jmN8YHYZGezHTWo9RHBSyX/logo.png"
   };
 
   const btcUSDCMarketsInfo = {
@@ -290,7 +290,7 @@ function getDefaultMarkets () {
       .concat(hamsUSDCMarketsInfo)
       .concat(bdeUSDCMarketsInfo)
       .concat(liqUSDCMarketsInfo)
-      .concat(snowshoeUSDCMarketsInfo)
+      .concat(ashUSDCMarketsInfo)
       .concat(btcUSDCMarketsInfo)
       .concat(ethUSDTMarketsInfo)
       .concat(usdtUSDCMarketsInfo)
