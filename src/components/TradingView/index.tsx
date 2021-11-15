@@ -39,7 +39,7 @@ export const TVChartContainer = () => {
   // @ts-ignore
   const defaultProps: ChartContainerProps = {
     symbol: 'BTC/USDC',
-    interval: '15' as ResolutionString,
+    interval: '60' as ResolutionString,
     theme: 'Dark',
     containerId: 'tv_chart_container',
     datafeedUrl: BONFIDA_DATA_FEED,
@@ -90,7 +90,7 @@ export const TVChartContainer = () => {
       tvWidgetRef.current = tvWidget;
       tvWidget.onChartReady(() => {
         tvWidget.headerReady().then(() => {
-          tvWidget.activeChart().setChartType(3);
+          tvWidget.activeChart().setChartType(1);
         })
       })
     }
