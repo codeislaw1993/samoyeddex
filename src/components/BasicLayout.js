@@ -204,7 +204,8 @@ export default function BasicLayout({ children }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <TwitterOutlined className="" /> Twitter
+                    <TwitterOutlined className="" />
+                    Twitter
                   </a>
                 </Menu.Item>
               )}
@@ -215,7 +216,8 @@ export default function BasicLayout({ children }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <SendOutlined className="" /> Telegram
+                    <SendOutlined className="" />
+                    Telegram
                   </a>
                 </Menu.Item>
               )}
@@ -226,7 +228,8 @@ export default function BasicLayout({ children }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <GithubOutlined className="" /> Github
+                    <GithubOutlined className="" />
+                    Github
                   </a>
                 </Menu.Item>
               )}
