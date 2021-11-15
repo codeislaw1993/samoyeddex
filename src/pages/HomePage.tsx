@@ -40,21 +40,6 @@ export default function ConvertPage() {
                       <div className="contentWrapper">
                           To provide you the best user interface to trade Solana SPL tokens with enthusiasm.<br />
                       </div>
-                      <div
-                          style={{
-                              height: '100%',
-                              backgroundImage:   "url(" + mobilescreen + ")",
-                              backgroundPosition: 'center',
-                              backgroundSize: 'contain',
-                              backgroundRepeat: 'no-repeat'
-                          }}>
-                      </div> <br /><br />
-                      <AndroidWrapper>
-                          <Row>
-                              <Col span={24}><h2><a href={"http://app.appsgeyser.com/14000580/Samoyed%20Lover%20DEX"} target="_blank" rel="noopener noreferrer" >Download Andriod App</a></h2></Col>
-                              <Col span={24}><Image preview={false}  src={img}></Image></Col>
-                          </Row>
-                      </AndroidWrapper>
               </Content>
           </Layout>
       </Wrapper>

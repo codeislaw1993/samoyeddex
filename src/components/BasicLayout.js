@@ -3,14 +3,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import WalletConnect from './WalletConnect';
 import {
-  AppstoreFilled,
   GithubOutlined,
   HomeFilled,
   SendOutlined,
   SettingOutlined,
   SwapOutlined,
   TwitterOutlined,
-  UnorderedListOutlined,
 } from '@ant-design/icons';
 import Settings from './Settings';
 import { useWallet } from '../utils/wallet';
@@ -191,30 +189,12 @@ export default function BasicLayout({ children }) {
               onClick={handleClick}
               selectedKeys={[location.pathname]}
             >
-              <Menu.Item key={'/home'}>
-                <HomeFilled /> Home
+              <Menu.Item icon={<HomeFilled />} key={tradePageUrl}>
+                Order book
               </Menu.Item>
-              <Menu.SubMenu icon={<SwapOutlined />} title="Trade">
-                <Menu.Item key={tradePageUrl}>Order book</Menu.Item>
-                {(!searchFocussed || location.pathname === '/convert') && (
-                  <Menu.Item key="/convert">Swap using trades</Menu.Item>
-                )}
-                {(!searchFocussed || location.pathname === '/trade') && (
-                  <Menu.Item key="/trade">Swap</Menu.Item>
-                )}
-                {(!searchFocussed || location.pathname === '/add') && (
-                  <Menu.Item key="/add">Add Liquidity</Menu.Item>
-                )}
-                {(!searchFocussed || location.pathname === '/pool') && (
-                  <Menu.Item key="/pool">Your Liquidity</Menu.Item>
-                )}
-              </Menu.SubMenu>
-              <Menu.Item key="/farm" disabled={true}>
-                <AppstoreFilled /> Farms
-              </Menu.Item>
-              {(!searchFocussed || location.pathname === '/info') && (
-                <Menu.Item key="/info">
-                  <UnorderedListOutlined /> Pools
+              {(!searchFocussed || location.pathname === '/convert') && (
+                <Menu.Item icon={<SwapOutlined />} key="/convert">
+                  Swap using trades
                 </Menu.Item>
               )}
               {(!searchFocussed || location.pathname === '/twitter') && (
@@ -249,64 +229,6 @@ export default function BasicLayout({ children }) {
                     <GithubOutlined className="" /> Github
                   </a>
                 </Menu.Item>
-              )}
-              {!searchFocussed && (
-                <Menu.SubMenu title="Learn">
-                  <Menu.Item key="/add-market">
-                    <a
-                      href={EXTERNAL_LINKS['/add-market']}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Adding a market
-                    </a>
-                  </Menu.Item>
-                  <Menu.Item key="/wallet-support">
-                    <a
-                      href={EXTERNAL_LINKS['/wallet-support']}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Supported wallets
-                    </a>
-                  </Menu.Item>
-                  <Menu.Item key="/dex-list">
-                    <a
-                      href={EXTERNAL_LINKS['/dex-list']}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      DEX list
-                    </a>
-                  </Menu.Item>
-                  <Menu.Item key="/developer-resources">
-                    <a
-                      href={EXTERNAL_LINKS['/developer-resources']}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Developer resources
-                    </a>
-                  </Menu.Item>
-                  <Menu.Item key="/explorer">
-                    <a
-                      href={EXTERNAL_LINKS['/explorer']}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Solana block explorer
-                    </a>
-                  </Menu.Item>
-                  <Menu.Item key="/srm-faq">
-                    <a
-                      href={EXTERNAL_LINKS['/srm-faq']}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      SRM FAQ
-                    </a>
-                  </Menu.Item>
-                </Menu.SubMenu>
               )}
               <Menu.Item key="/switch" disabled={true}>
                 Light / Dark {'\u00A0'}

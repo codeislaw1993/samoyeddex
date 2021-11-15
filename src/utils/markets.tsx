@@ -123,7 +123,7 @@ function getDefaultMarkets () {
     baseLabel: "TULIP",
     programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
     quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-    baseUrl: "https://solfarm.io/solfarm-logo.svg"
+    baseUrl: "https://raw.githubusercontent.com/sol-farm/token-logos/main/tulip.png"
   };
 
   const rayUSDCMarketsInfo = {
@@ -236,17 +236,6 @@ function getDefaultMarkets () {
     baseUrl: "https://cdn.jsdelivr.net/gh/solana-labs/explorer/public/tokens/usdt.svg"
   }
 
-  const jokeUSDCMarketsInfo = {
-    address: new PublicKey("3dFAa6MP8RToK7oLQEns1zzWLp7mEPLx4xrV7WTZ4WZW"),
-    deprecated: false,
-    name: "JOKE/USDC",
-    quoteLabel: "USDC",
-    baseLabel: "JOKE",
-    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
-    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-    baseUrl: "https://jokesmemes.finance/joketoken.png"
-  }
-
   const boleUSDCMarketsInfo = {
     address: new PublicKey("9yGqsboBtvztDgGbGFEaBBT2G8dUMhxewXDQpy6T3eDm"),
     deprecated: false,
@@ -294,7 +283,6 @@ function getDefaultMarkets () {
       .concat(btcUSDCMarketsInfo)
       .concat(ethUSDTMarketsInfo)
       .concat(usdtUSDCMarketsInfo)
-      .concat(jokeUSDCMarketsInfo)
       .concat(boleUSDCMarketsInfo)
       .concat(mngoUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
 }
