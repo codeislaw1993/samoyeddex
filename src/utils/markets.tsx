@@ -160,7 +160,7 @@ function getDefaultMarkets () {
   };
 
   const bdeUSDCMarketsInfo = {
-    address: new PublicKey("41ZnP6U4catotV7rFuv7JR9n53jcCGrBTBkowoBaQx5q"),
+    address: new PublicKey("2kQer4JyDA8wRxNpSCNG8zAne1zwWVhByTUu8Qi6BEjR"),
     deprecated: false,
     name : "BDE/USDC",
     quoteLabel: "USDC",
