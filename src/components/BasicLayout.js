@@ -28,7 +28,7 @@ const EXTERNAL_LINKS = {
   '/developer-resources': 'https://serum-academy.com/en/developer-resources/',
   '/explorer': 'https://explorer.solana.com',
   '/srm-faq': 'https://projectserum.com/srm-faq',
-  '/discord': 'https://discord.gg/mD38zFCdYH',
+  '/discord': 'https://discord.gg/sxQcDBJr',
   '/telegram': 'https://t.me/samoyedlovers',
   '/github': 'https://github.com/codeislaw1993/samoyeddex',
   '/twitter': 'https://twitter.com/samoyedloversol',
