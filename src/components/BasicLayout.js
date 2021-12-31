@@ -30,8 +30,8 @@ const EXTERNAL_LINKS = {
   '/srm-faq': 'https://projectserum.com/srm-faq',
   '/discord': 'https://discord.gg/mD38zFCdYH',
   '/telegram': 'https://t.me/samoyedlovers',
-  '/github': 'https://github.com/project-serum/serum-dex-ui',
-  '/twitter': 'https://twitter.com/lover_samoyed',
+  '/github': 'https://github.com/codeislaw1993/samoyeddex',
+  '/twitter': 'https://twitter.com/samoyedloversol',
 };
 
 export default function BasicLayout({ children }) {
@@ -218,6 +218,18 @@ export default function BasicLayout({ children }) {
                   >
                     <SendOutlined className="" />
                     Telegram
+                  </a>
+                </Menu.Item>
+              )}
+              {(!searchFocussed || location.pathname === '/discord') && (
+                <Menu.Item key="/discord">
+                  <a
+                    href={EXTERNAL_LINKS['/discord']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <SendOutlined className="" />
+                    Discord
                   </a>
                 </Menu.Item>
               )}
