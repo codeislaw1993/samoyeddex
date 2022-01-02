@@ -10,6 +10,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { Routes } from './routes';
 import { PreferencesProvider } from './utils/preferences';
 import { ThemeSwitcherProvider } from "react-css-theme-switcher";
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const themes = {
     dark: `${process.env.PUBLIC_URL}/dark-theme.css`,
@@ -17,26 +18,29 @@ const themes = {
 };
 
 export default function App() {
+
   return (
-    <Suspense fallback={() => <Spin size="large" />}>
-        <ThemeSwitcherProvider themeMap={themes} defaultTheme="light">
-          <GlobalStyle />
-          <ErrorBoundary>
-            <ConnectionProvider>
-              <WalletProvider>
-                      <AccountsProvider>
-                          <MarketProvider>
-                                <PreferencesProvider>
-                                  <Suspense fallback={() => <Spin size="large" />}>
-                                    <Routes />
-                                  </Suspense>
-                                </PreferencesProvider>
-                          </MarketProvider>
-                      </AccountsProvider>
-              </WalletProvider>
-            </ConnectionProvider>
-          </ErrorBoundary>
-        </ThemeSwitcherProvider>
-    </Suspense>
+    <Router> 
+      <Suspense fallback={() => <Spin size="large" />}>
+          <ThemeSwitcherProvider themeMap={themes} defaultTheme="light">
+            <GlobalStyle />
+            <ErrorBoundary>
+              <ConnectionProvider>
+                <WalletProvider>
+                        <AccountsProvider>
+                            <MarketProvider>
+                                  <PreferencesProvider>
+                                    <Suspense fallback={() => <Spin size="large" />}>
+                                      <Routes />
+                                    </Suspense>
+                                  </PreferencesProvider>
+                            </MarketProvider>
+                        </AccountsProvider>
+                </WalletProvider>
+              </ConnectionProvider>
+            </ErrorBoundary>
+          </ThemeSwitcherProvider>
+      </Suspense>
+    </Router>
   );
 }
