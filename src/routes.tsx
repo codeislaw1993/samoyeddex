@@ -11,8 +11,9 @@ const usePageTracking = () => {
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    ReactGA.initialize("UA-216167677-1");
-    
+    if (!window.location.href.includes("localhost")) {
+      ReactGA.initialize("UA-216167677-1");
+    }
     setInitialized(true);
   }, []);
 
@@ -25,8 +26,7 @@ const usePageTracking = () => {
 
 
 export function Routes() {
-  usePageTracking();
-
+  usePageTracking(); 
   return (
     <>
       <HashRouter basename={'/'}>

@@ -103,6 +103,12 @@ export async function settleFunds({
     return;
   }
 
+  if (process.env.REACT_APP_USDC_REFERRAL_FEES_ADDRESS) {
+    usdcRef = new PublicKey(process.env.REACT_APP_USDC_REFERRAL_FEES_ADDRESS);
+  }
+  if (process.env.REACT_APP_USDT_REFERRAL_FEES_ADDRESS) {
+    usdtRef = new PublicKey(process.env.REACT_APP_USDT_REFERRAL_FEES_ADDRESS);
+  }
   let createAccountTransaction: Transaction | undefined;
   let baseCurrencyAccountPubkey = baseCurrencyAccount?.pubkey;
   let quoteCurrencyAccountPubkey = quoteCurrencyAccount?.pubkey;
