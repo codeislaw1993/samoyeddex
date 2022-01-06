@@ -5,6 +5,7 @@ import WalletConnect from './WalletConnect';
 import {
   GithubOutlined,
   HomeFilled,
+  HeartOutlined,
   SendOutlined,
   SettingOutlined,
   SwapOutlined,
@@ -21,6 +22,7 @@ import { getTradePageUrl } from '../utils/markets';
 const { Header, Content, Sider } = Layout;
 
 const EXTERNAL_LINKS = {
+  '/nft': 'https://samoyedlovers.holaplex.com/',
   '/learn': 'https://serum-academy.com/en/serum-dex/',
   '/add-market': 'https://serum-academy.com/en/add-market/',
   '/wallet-support': 'https://serum-academy.com/en/wallet-support',
@@ -195,6 +197,18 @@ export default function BasicLayout({ children }) {
               {(!searchFocussed || location.pathname === '/convert') && (
                 <Menu.Item icon={<SwapOutlined />} key="/convert">
                   Swap using trades
+                </Menu.Item>
+              )}
+              {(!searchFocussed || location.pathname === '/nft') && (
+                <Menu.Item key="/nft">
+                  <a
+                    href={EXTERNAL_LINKS['/nft']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <HeartOutlined className="" />
+                    NFT Marketplace
+                  </a>
                 </Menu.Item>
               )}
               {(!searchFocussed || location.pathname === '/twitter') && (
