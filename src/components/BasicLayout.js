@@ -33,7 +33,7 @@ const EXTERNAL_LINKS = {
   '/discord': 'https://discord.gg/sxQcDBJr',
   '/telegram': 'https://t.me/samoyedlovers',
   '/github': 'https://github.com/codeislaw1993/samoyeddex',
-  '/twitter': 'https://twitter.com/samoyedloversol',
+  '/twitter': 'https://twitter.com/lover_samoyed',
 };
 
 export default function BasicLayout({ children }) {
