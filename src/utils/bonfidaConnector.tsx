@@ -1,7 +1,7 @@
 import {BonfidaTrade, Volume} from './types';
 
 export default class BonfidaApi {
-  static URL: string = 'https://api.samoyedlovers.co/';
+  static URL: string = 'https://samoyedloversapi.herokuapp.com/';
 
   static async get(path: string) {
     try {
@@ -29,4 +29,4 @@ export default class BonfidaApi {
   }
 }
 
-export const BONFIDA_DATA_FEED = 'https://api.samoyedlovers.co/tv';
+export const BONFIDA_DATA_FEED = 'https://samoyedloversapi.herokuapp.com/tv';

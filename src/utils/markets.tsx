@@ -269,7 +269,6 @@ function getDefaultMarkets () {
       .concat(srmUSDTMarketsInfo)
       .concat(srmUSDCMarketsInfo)
       .concat(samoUSDCMarketsInfo)
-      .concat(stnkUSDCMarketsInfo)
       .concat(felonUSDCMarketsInfo)
       .concat(sHBLUSDCMarketsInfo)
       .concat(tulipUSDCMarketsInfo)
@@ -284,7 +283,8 @@ function getDefaultMarkets () {
       .concat(ethUSDTMarketsInfo)
       .concat(usdtUSDCMarketsInfo)
       .concat(boleUSDCMarketsInfo)
-      .concat(mngoUSDCMarketsInfo).map((m) => ({ ...m, deprecated: false }))
+      .concat(mngoUSDCMarketsInfo)
+      .map((m) => ({ ...m, deprecated: false }))
 }
 
 export function useMarketsList() {
