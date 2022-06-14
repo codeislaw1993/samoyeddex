@@ -82,16 +82,6 @@ function getDefaultMarkets () {
     baseUrl: "https://i.ibb.co/tLGpvNf/samo.png"
   };
 
-  const stnkUSDCMarketsInfo = {
-    address: new PublicKey("7vJhxNnkPBTJKNHsbjZUhmCVCxmYKgV6vgJ56eH2MQaC"),
-    deprecated: false,
-    name : "STNK/USDC",
-    quoteLabel: "USDC",
-    baseLabel: "STNK",
-    programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
-    quoteUrl: "https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-    baseUrl: "https://raw.githubusercontent.com/StonksDev/Resource/main/StonksIcon250.png"
-  };
 
   const felonUSDCMarketsInfo = {
     address: new PublicKey("HwmgM7i8wo5qCjyQsrQxrDJEs3eJULXmiKAStWLUQJf"),
